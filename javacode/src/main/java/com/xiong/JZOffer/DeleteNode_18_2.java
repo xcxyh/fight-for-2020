@@ -1,9 +1,11 @@
 package com.xiong.JZOffer;
 
+import com.xiong.DataStructureAndAlgorithm.Node;
+
 /**
  * @author ：xiongcong
  * @date ：Created in 2020/1/14 15:44
- * @description： 删除有序链表中重复的结点
+ * @description： 删除 **有序** 链表中重复的结点
  * 例如，链表1->2->3->3->4->4->5 处理后为 1->2->5
  * 分两种情况：
  * 情形1：头结点不重复
@@ -18,12 +20,64 @@ package com.xiong.JZOffer;
 public class DeleteNode_18_2 {
 
     public static void main(String[] args) {
-        System.out.println();
+        ListNode As = new ListNode(1);
+        ListNode A = new ListNode(2,As);
+        ListNode B = new ListNode(2, A);
+        ListNode C = new ListNode(4, B);
+        ListNode D = new ListNode(5, C);
+        ListNode E = new ListNode(6, D);
+        ListNode F = new ListNode(7, E);
+
+        traversalList(new DeleteNode_18_2().deleteDuplication(As));
+    }
+    /**
+     *  @author: xiongcong
+     *  @Date: 2020/1/30 17:39
+     *  @Description: 递归写法
+     */
+    public ListNode deleteDuplication(ListNode pHead) {
+
+        if (pHead == null || pHead.next == null){
+            return pHead;
+        }
+        ListNode next = pHead.next;
+
+        if(pHead.data == next.data){//头节点重复
+
+            while(next != null && pHead.data == next.data){
+                next = next.next;
+            }
+            //重复的头节点删除后  接下来的子链 继续去重
+            return deleteDuplication(next);
+
+        }else{//头节点不重复
+            //该头结点 指向去重后的子链
+            pHead.next = deleteDuplication(pHead.next);
+        }
+        return pHead;
     }
 
-    public ListNode deleteDuplication(ListNode pHead)
-    {
-            return pHead;
+
+    /**
+     *  @author: xiongcong
+     *  @Date: 2020/1/30 17:47
+     *  @Description: 遍历一个链表
+     */
+    public static void traversalList(ListNode head){
+
+        if(head == null){
+            System.out.println("null");
+        }
+        //打印头
+        System.out.print(head.data);
+
+        ListNode temp = head.next;
+        while (temp != null){
+            System.out.print(" -> " + temp.data);
+            temp = temp.next;
+        }
+        //换行
+        System.out.println();
     }
 
 }
