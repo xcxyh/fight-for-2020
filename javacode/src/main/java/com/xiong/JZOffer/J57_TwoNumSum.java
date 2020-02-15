@@ -20,8 +20,8 @@ public class J57_TwoNumSum {
     /**
      *  @author: xiongcong
      *  @Date: 2020/2/13 16:32
-     *  @Description:  数组有序 且为递增排序 .由于两个数字的相差绝对值越大，他们的乘积越小
-     *  双指针法  一个从头部 一个从尾部 开始
+     *  @Description:  数组有序 且为递增排序 .由于两个数字的相差绝对值越大，他们的乘积越小 所以 一个从头部 一个从尾部 开始
+     *  双指针法
      * 如果两个指针指向元素的和 sum == target，那么得到要求的结果；
      * 如果 sum > target，移动较大的元素，使 sum 变小一些；
      * 如果 sum < target，移动较小的元素，使 sum 变大一些。
