@@ -1,5 +1,12 @@
 package com.xiong.LeetCode.BinaryTree;
 
+import sun.reflect.generics.tree.Tree;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
 /**
  * @author ：xiongcong
  * @date ：Created in 2019/12/7 15:33
@@ -97,5 +104,38 @@ public class TreeNode {
         node2.right = node4;
        new TreeNode(1).iterateMediumOrder(root);
     }
+    /**
+     *  @author: xiongcong
+     *  @Date: 2020/2/18 14:41
+     *  @Description: bfs层次遍历 二叉树
+     *
+     */
+    public ArrayList<Integer> bfs(TreeNode root){
+        if (root == null){
+            return new ArrayList<>();
+        }
+        //利用队列
+        Queue<TreeNode> queue = new LinkedList<>();
+        ArrayList<Integer> ret = new ArrayList<>();
 
+        queue.offer(root);
+        while ( !queue.isEmpty()){
+
+            int count = queue.size();
+
+            for (int i = 0; i <count ; i++) {
+                TreeNode temp = queue.poll();
+                if (temp != null){
+                    ret.add(temp.val);
+                    if (temp.left != null){
+                        queue.offer(temp.left);
+                    }
+                    if(temp.right != null){
+                        queue.offer(temp.right);
+                    }
+                }
+            }
+        }
+        return ret;
+    }
 }

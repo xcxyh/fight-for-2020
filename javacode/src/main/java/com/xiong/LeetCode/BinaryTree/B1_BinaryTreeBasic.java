@@ -8,7 +8,7 @@ package com.xiong.LeetCode.BinaryTree;
  * @modified By：
  * @version: $
  */
-public class BinaryTreeBasic {
+public class B1_BinaryTreeBasic {
    private boolean result = true;
     /**
      *  @author: xiongcong

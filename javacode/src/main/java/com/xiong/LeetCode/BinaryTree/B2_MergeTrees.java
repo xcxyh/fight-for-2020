@@ -11,7 +11,7 @@ package com.xiong.LeetCode.BinaryTree;
  * @modified By：
  * @version: $
  */
-public class MergeTrees {
+public class B2_MergeTrees {
 
     public static void main(String[] args) {
         TreeNode root1 = new TreeNode(1);
