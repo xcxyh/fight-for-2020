@@ -1,6 +1,6 @@
 package com.xiong.LeetCode.BinaryTree;
 
-import sun.reflect.generics.tree.Tree;
+import com.xiong.LeetCode.TreeNode;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

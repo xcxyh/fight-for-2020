@@ -1,10 +1,8 @@
-package com.xiong.LeetCode.BinaryTree;
+package com.xiong.LeetCode;
 
-import sun.reflect.generics.tree.Tree;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 /**
@@ -15,9 +13,9 @@ import java.util.Queue;
  * @version: $
  */
 public class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
+    public int val;
+    public TreeNode left;
+    public TreeNode right;
 
     TreeNode(int x) {
         this.val = x;
