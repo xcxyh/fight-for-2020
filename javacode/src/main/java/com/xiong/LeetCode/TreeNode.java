@@ -17,11 +17,11 @@ public class TreeNode {
     public TreeNode left;
     public TreeNode right;
 
-    TreeNode(int x) {
+    public TreeNode(int x) {
         this.val = x;
     }
 
-    TreeNode(int x, TreeNode left, TreeNode right) {
+    public TreeNode(int x, TreeNode left, TreeNode right) {
         this.val = x;
         this.left = left;
         this.right = right;

@@ -9,11 +9,11 @@ package com.xiong.JZOffer;
  */
 public class ListNode {
 
-    ListNode next;
+    public ListNode next;
 
-    int data;
+    public int data;
 
-    ListNode head;
+    public ListNode head;
 
     public ListNode(int x) {
         this.data = x;

@@ -31,7 +31,7 @@ public class J57_TwoNumSum {
         int head =0;
         int tail = array.length - 1;
 
-        for (int i = 0; i <array.length ; i++) {
+        while (head < tail){
             int cur = array[head] + array[tail];
             if(cur < sum){ // 小于 则 head 指针 移动
                 head++;
