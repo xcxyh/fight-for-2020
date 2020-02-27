@@ -248,7 +248,7 @@ public class Node {
 
     /**
      * 删除链表重复数据（冒泡法）保留一个   1 -> 2 -> 3 -> 2 -> 3 -> 6  删除后 1 -> 2 -> 3 -> 6
-     *
+     *   (不能ac)
      * @param head 头节点
      */
     public static void deleteDuplecate(Node head) {
@@ -256,7 +256,7 @@ public class Node {
         //临时节点，(从首节点开始-->真正有数据的节点)
         Node temp = head;
 
-        while (temp.next != null) {
+        while ( temp != null && temp.next != null) {
             //当前节点(首节点)的下一个节点
             Node nextNode = temp;
             while (nextNode.next != null) {

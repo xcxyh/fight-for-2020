@@ -16,6 +16,7 @@ package com.xiong.LeetCode.BinarySearch;
 public class B4_firstBadVersion {
 
     public static void main(String[] args) {
+
         new B4_firstBadVersion().firstBadVersion(9);
     }
     //二分查找
