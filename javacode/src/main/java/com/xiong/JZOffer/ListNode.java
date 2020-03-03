@@ -11,16 +11,16 @@ public class ListNode {
 
     public ListNode next;
 
-    public int data;
+    public int val;
 
     public ListNode head;
 
     public ListNode(int x) {
-        this.data = x;
+        this.val = x;
     }  //赋值链表的值
     public ListNode(int x, ListNode pre) {
         pre.next = this;
-        this.data = x;
+        this.val = x;
 
     }
 }

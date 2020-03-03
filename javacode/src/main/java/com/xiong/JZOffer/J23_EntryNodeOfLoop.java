@@ -28,7 +28,7 @@ public class J23_EntryNodeOfLoop {
         ListNode E = new ListNode(6, D);
         ListNode F = new ListNode(7, E);
         F.next = C;//制造环
-        System.out.println(EntryNodeOfLoop(As).data);
+        System.out.println(EntryNodeOfLoop(As).val);
         System.out.println();
     }
 

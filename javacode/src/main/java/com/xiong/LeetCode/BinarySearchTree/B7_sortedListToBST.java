@@ -18,7 +18,7 @@ public class B7_sortedListToBST {
             return null;
         }
         if (head.next == null) {
-            return new TreeNode(head.data);
+            return new TreeNode(head.val);
         }
         TreeNode root;
         ListNode cur = head;
@@ -31,7 +31,7 @@ public class B7_sortedListToBST {
         }
         //主链 从中断开  此时 slow 为中间节点
         cur.next = null;
-        root = new TreeNode(slow.data);
+        root = new TreeNode(slow.val);
         root.left = sortedListToBST(head); //断开后 为左半部分
         root.right = sortedListToBST(slow.next); //从slow开始为 右
         return root;
@@ -44,11 +44,11 @@ public class B7_sortedListToBST {
      */
     public TreeNode sortedListToBST_2(ListNode head) {
         if (head == null) return null;
-        if (head.next == null) return new TreeNode(head.data);
+        if (head.next == null) return new TreeNode(head.val);
         ListNode preMid = preMid(head);
         ListNode mid = preMid.next;
         preMid.next = null;  // 断开链表
-        TreeNode t = new TreeNode(mid.data);
+        TreeNode t = new TreeNode(mid.val);
         t.left = sortedListToBST(head);
         t.right = sortedListToBST(mid.next);
         return t;

@@ -40,9 +40,9 @@ public class J18_DeleteNode_2 {
         }
         ListNode next = pHead.next;
 
-        if(pHead.data == next.data){//头节点重复
+        if(pHead.val == next.val){//头节点重复
 
-            while(next != null && pHead.data == next.data){
+            while(next != null && pHead.val == next.val){
                 next = next.next;
             }
             //重复的头节点删除后  接下来的子链 继续去重
@@ -67,11 +67,11 @@ public class J18_DeleteNode_2 {
             System.out.println("null");
         }
         //打印头
-        System.out.print(head.data);
+        System.out.print(head.val);
 
         ListNode temp = head.next;
         while (temp != null){
-            System.out.print(" -> " + temp.data);
+            System.out.print(" -> " + temp.val);
             temp = temp.next;
         }
         //换行

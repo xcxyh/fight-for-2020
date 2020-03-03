@@ -21,7 +21,7 @@ public class J22_FindLastKNode {
         ListNode D = new ListNode(5, C);
         ListNode E = new ListNode(6, D);
         ListNode F = new ListNode(7, E);
-        System.out.println(findKthToTail(As,2).data);
+        System.out.println(findKthToTail(As,2).val);
     }
 
     public static ListNode findKthToTail(ListNode head,int k) {

@@ -21,7 +21,7 @@ public class J18_DeleteNode_1 {
         //该节点不为尾节点  复杂度为 O(1)
         if (tobeDelete.next != null) {
             //1 将tobeDelete的next节点的值复制给tobeDelete
-            tobeDelete.data = tobeDelete.next.data;
+            tobeDelete.val = tobeDelete.next.val;
             //2 然后tobeDelete指向它的next.next 节点
             tobeDelete.next = tobeDelete.next.next;
         }

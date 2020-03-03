@@ -56,13 +56,13 @@ public class L2_reverseList {
 
     public static void traverse(ListNode head) {
 
-        System.out.print("data：" + head.data);
+        System.out.print("data：" + head.val);
         //临时节点，从首节点开始
         ListNode temp = head.next;
 
         while (temp != null) {
 
-            System.out.print(" -> " + temp.data);
+            System.out.print(" -> " + temp.val);
 
             //继续下一个
             temp = temp.next;

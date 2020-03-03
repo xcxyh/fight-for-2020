@@ -23,7 +23,7 @@ public class L4_deleteDuplicates {
             return head;
         }
         head.next = deleteDuplicatesR(head.next);
-        return head.data == head.next.data ? head.next : head;
+        return head.val == head.next.val ? head.next : head;
 
     }
 
@@ -42,7 +42,7 @@ public class L4_deleteDuplicates {
 
                 while (next.next != null){
 
-                   if (next.next.data == temp.data) {
+                   if (next.next.val == temp.val) {
                        next.next = next.next.next;
                    }else {
                        next =next.next;

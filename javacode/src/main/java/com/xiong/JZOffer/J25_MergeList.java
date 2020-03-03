@@ -27,7 +27,7 @@ public class J25_MergeList {
         }
         ListNode result = null;
 
-        if(list1.data <= list2.data){
+        if(list1.val <= list2.val){
             result = list1;
             list1.next = merge(list1.next,list2);
         }else {
@@ -51,7 +51,7 @@ public class J25_MergeList {
         ListNode newnode=null;
         while(list1!=null&&list2!=null)
         {
-            if(list1.data<list2.data)
+            if(list1.val<list2.val)
             {
                 if(newnode==null)
                 {

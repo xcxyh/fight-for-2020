@@ -28,7 +28,7 @@ public class J06_PrintListNode {
         ArrayList<Integer> ret = new ArrayList<>();
         if (listNode != null) {
             ret.addAll(printListFromTailToHead_1(listNode.next));
-            ret.add(listNode.data);
+            ret.add(listNode.val);
 
         }
         return ret;
@@ -60,7 +60,7 @@ public class J06_PrintListNode {
         ArrayList<Integer> ret = new ArrayList<>();
         head = head.next;
         while (head != null) {
-            ret.add(head.data);
+            ret.add(head.val);
             head = head.next;
         }
         return ret;
@@ -74,7 +74,7 @@ public class J06_PrintListNode {
     public static ArrayList<Integer> printListFromTailToHead_3(ListNode listNode) {
         Stack<Integer> stack = new Stack<>();
         while (listNode != null) {
-            stack.push(listNode.data);
+            stack.push(listNode.val);
             listNode = listNode.next;
         }
         // 构建 ArrayList

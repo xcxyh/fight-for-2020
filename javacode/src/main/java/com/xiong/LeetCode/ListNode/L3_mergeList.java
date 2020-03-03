@@ -28,7 +28,7 @@ public class L3_mergeList {
 
         while (l1 != null && l2 != null) {
 
-            if (l1.data < l2.data) {
+            if (l1.val < l2.val) {
 
                 curNode.next = l1;
                 curNode = curNode.next;
