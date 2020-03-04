@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="java-code-xiong:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/java_code_xiong_war_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="java-code-xiong/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="java-code-xiong" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
