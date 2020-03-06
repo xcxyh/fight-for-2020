@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiong.Kakou.dao.KakouCarModelMapper">
+
+    <select id="selectHaopai" resultType="String">
+      select hphm from chepai limit 0 , 1000
+    </select>
+
+    <select id="selectByHphm" parameterType="String" resultType="com.xiong.Kakou.entity.KakouCarModel">
+
+      SELECT DISTINCT * from sanhuancore where hphm = #{hphm} ORDER BY gcsj;
+    </select>
+
+</mapper>

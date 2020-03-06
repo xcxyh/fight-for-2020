@@ -2,16 +2,11 @@ package com.xiong.Kakou.dao;
 
 import com.xiong.Kakou.entity.KakouPointModel;
 
+import java.util.List;
+
 public interface KakouPointModelMapper {
-    int deleteByPrimaryKey(Integer FID);
 
-    int insert(KakouPointModel record);
+    List<KakouPointModel> selectByIDLink(String ID_Link);
 
-    int insertSelective(KakouPointModel record);
-
-    KakouPointModel selectByPrimaryKey(Integer FID);
-
-    int updateByPrimaryKeySelective(KakouPointModel record);
-
-    int updateByPrimaryKey(KakouPointModel record);
+    List<KakouPointModel> selectAllStation();
 }

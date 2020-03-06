@@ -35,6 +35,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
     </environments>
     <mappers>
         <mapper resource="mapper/KakouPointModelMapper.xml" />
-
+        <mapper resource="mapper/KakouCarModelMapper.xml" />
+        <mapper resource="mapper/LinkModelMapper.xml" />
     </mappers>
 </configuration>
