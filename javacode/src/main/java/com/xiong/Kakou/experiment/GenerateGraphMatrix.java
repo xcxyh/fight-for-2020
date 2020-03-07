@@ -1,16 +1,12 @@
 package com.xiong.Kakou.experiment;
 
-import com.xiong.Kakou.entity.Graph;
-import com.xiong.Kakou.entity.KakouPointModel;
-import com.xiong.Kakou.entity.LinkModel;
+import com.xiong.Kakou.entity.*;
 import com.xiong.Kakou.service.LinkService;
 import com.xiong.Kakou.service.PointServcie;
-import com.xiong.Kakou.util.GraphGenerator;
+import com.xiong.Kakou.util.Dijkstra;
+import com.xiong.Kakou.util.EdgeWeightedDiGraph;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author ：xiongcong
@@ -24,68 +20,72 @@ public class GenerateGraphMatrix {
     static PointServcie pointServcie = new PointServcie();
 
     static LinkService linkService = new LinkService();
+    //处理节点 新建map 存储 node 和 编号的对应关系
+    static Map<String, Integer> nodeMap = new HashMap<>();
 
     public static void main(String[] args) {
-        //生成 矩阵  weight(link长度)  from(卡口起点)  to(卡口终点)
-        Integer[][] matrix =generatorMatrix();
-       Graph graph = GraphGenerator.creatGraph(matrix);
-        System.out.println(graph.toString());
+        //生成 矩阵  weight(link长度)  from(from_node)  to(to_node)
+        EdgeWeightedDiGraph<String> graph = generatorGraph();
+
+        Dijkstra dijkstra = new Dijkstra(graph);//新建一个dj
+        int from = nodeMap.get("7942");
+        int to = nodeMap.get("8064");
+
+        String str = dijkstra.fromTopath(from, to).toString();
+        System.out.println("from " + from + " to " + to + " shortest: " + str);
+        System.out.println();
     }
 
     /**
      * @author: xiongcong
      * @Date: 2020/3/6 12:10
-     * @Description: 生成矩阵
+     * @Description: 生成graph
      */
-    public static Integer[][] generatorMatrix() {
-        Integer[][] matrix;
-        //取出所有卡口stationid 作为起点
-        List<KakouPointModel> station = pointServcie.selectAllStation();
-        int size = station.size();
+    public static EdgeWeightedDiGraph<String> generatorGraph() {
+        int[][] edges;
+        List<String> vertexInfo;
+        int[] weight;
         List<LinkModel> allLink = linkService.selectAllLink();
+        int size = allLink.size();
+        //初始化
+        edges = new int[size][2];
+        weight = new int[size];
+        vertexInfo = new ArrayList<>();
 
-        //建立linkid 和 length的对应关系
-        Map<String, String> linkMap = new HashMap<>();
-        for (int i = 0; i < allLink.size(); i++) {
-            LinkModel linkModel = allLink.get(i);
-            linkMap.put(linkModel.getID_Link(), linkModel.getLink_length().toString());
-        }
-
-        //建立stationID 和 点ID 的对应关系
-        Map<String, Integer> stationMap = new HashMap<>();
-        for (int i = 0; i < station.size(); i++) {
-            KakouPointModel point = station.get(i);
-            stationMap.put(point.getID_Station(),i);
-        }
-
-
-        //矩阵初始化
-        matrix = new Integer[130][3];
         int k = 0;
         for (int i = 0; i < size; i++) {
+            LinkModel linkModel = allLink.get(i);
+            String node1 = linkModel.getFrom_node();
+            String node2 = linkModel.getTo_node();
 
-            KakouPointModel next = station.get(i);
-            String start_stationID = next.getID_Station();
-            String linkID = next.getID_Link();
-            //根据起点连接的link 去寻找 终点
-            List<KakouPointModel> point = pointServcie.selectByIDLink(linkID);
-
-            if (point.size() > 1) {
-                for (int j = 0; j < point.size(); j++) {
-                    String end_stationID = point.get(j).getID_Station();
-                    if (!end_stationID.equals(start_stationID)) {
-                        //取出link的长度length 作为权重
-                        matrix[k][0] =(int) Double.parseDouble(linkMap.get(linkID)); // weight
-                        matrix[k][1] = stationMap.get(start_stationID); //from
-                        matrix[k][2] =  stationMap.get(end_stationID); //to
-                        k++;
-                    }
-                }
-
+            if (nodeMap.get(node1) == null) {
+                nodeMap.put(node1, k++);
+            }
+            if (nodeMap.get(node2) == null) {
+                nodeMap.put(node2, k++);
             }
         }
-        //生成Matrix[][3]
-        return matrix;
+        //将编号 添加到 vertexInfo
+        for (int i = 0; i < k; i++) {
+            vertexInfo.add(i + "");
+        }
+
+        //生成图  将node 转成 编号
+        for (int i = 0; i < size; i++) {
+            LinkModel linkModel = allLink.get(i);
+            //取出link的长度length 作为权重
+            float len = linkModel.getLink_length();
+            weight[i] = (int) len; // weight
+            edges[i][0] = nodeMap.get(linkModel.getFrom_node()); //from
+            edges[i][1] = nodeMap.get(linkModel.getTo_node());  //to
+        }
+
+
+        EdgeWeightedDiGraph<String> graph = new EdgeWeightedDiGraph<>(vertexInfo, edges, weight);
+
+        System.out.println("该图的邻接表为\n" + graph);
+        System.out.println("该图的所有边：" + graph.edges());
+        return graph;
     }
 
 }

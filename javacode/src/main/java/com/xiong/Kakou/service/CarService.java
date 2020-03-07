@@ -1,9 +1,7 @@
 package com.xiong.Kakou.service;
 
 import com.xiong.Kakou.dao.KakouCarModelMapper;
-import com.xiong.Kakou.dao.KakouPointModelMapper;
 import com.xiong.Kakou.entity.KakouCarModel;
-import com.xiong.Kakou.entity.KakouPointModel;
 import com.xiong.Kakou.util.CSVUtil;
 import com.xiong.Kakou.util.SqlSessionFactoryUtils;
 import org.apache.ibatis.session.SqlSession;
