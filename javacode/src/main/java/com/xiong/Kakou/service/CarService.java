@@ -2,6 +2,7 @@ package com.xiong.Kakou.service;
 
 import com.xiong.Kakou.dao.KakouCarModelMapper;
 import com.xiong.Kakou.entity.KakouCarModel;
+import com.xiong.Kakou.entity.VDToNodeModel;
 import com.xiong.Kakou.util.CSVUtil;
 import com.xiong.Kakou.util.SqlSessionFactoryUtils;
 import org.apache.ibatis.session.SqlSession;
@@ -19,6 +20,25 @@ import java.util.List;
  * @version: $
  */
 public class CarService {
+
+    public ArrayList<VDToNodeModel> mapvdtonode(){
+        //mybatis操作
+        SqlSessionFactory factory = SqlSessionFactoryUtils.sqlSessionFactory_MySQL;
+        //true 不开启事务，自动提交
+        SqlSession s = factory.openSession(true);
+        ArrayList<VDToNodeModel> result = null;
+        try {
+            KakouCarModelMapper mapper = s.getMapper(KakouCarModelMapper.class);
+            result = mapper.mapvdtonode();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            s.close();
+        }
+        return result;
+
+    }
+
 
     public ArrayList<String> selectHaopai() {
         //mybatis操作
@@ -83,6 +103,7 @@ public class CarService {
                     temp[5] = model.getLatitude();
                     csvList.add(temp);
                 }
+                System.out.println("generate："+ carNum);
             }
         }
         //写入csv

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiong.Kakou.dao.ChainModelMapper">
+    <select id="selectChainByhp" parameterType="String" resultType="com.xiong.Kakou.entity.ChainModel">
+
+      SELECT * from chuxinglian where hphm = #{hphm}
+    </select>
+
+    <update id="updateStatus" parameterType="com.xiong.Kakou.entity.ChainModel">
+
+        update chuxinglian set `status` = #{status} where hphm = #{hphm} and gcsj = #{gcsj}
+
+    </update>
+
+
+</mapper>

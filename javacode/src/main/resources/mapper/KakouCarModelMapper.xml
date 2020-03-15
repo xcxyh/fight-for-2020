@@ -3,12 +3,17 @@
 <mapper namespace="com.xiong.Kakou.dao.KakouCarModelMapper">
 
     <select id="selectHaopai" resultType="String">
-      select hphm from chepai limit 0 , 1000
+      select hphm from chepai0709
     </select>
 
     <select id="selectByHphm" parameterType="String" resultType="com.xiong.Kakou.entity.KakouCarModel">
 
-      SELECT DISTINCT * from sanhuancore where hphm = #{hphm} ORDER BY gcsj;
+      SELECT DISTINCT * from sanhuan0709 where hphm = #{hphm}  ORDER BY gcsj;
     </select>
+
+    <select id="mapvdtonode"  resultType="com.xiong.Kakou.entity.VDToNodeModel" >
+        SELECT ID_station as vd , to_node as node from vdtonode
+    </select>
+
 
 </mapper>
