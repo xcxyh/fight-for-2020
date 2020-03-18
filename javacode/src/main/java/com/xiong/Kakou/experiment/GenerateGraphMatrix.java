@@ -31,13 +31,16 @@ public class GenerateGraphMatrix {
     static Map<String, String> vdmap = new HashMap<>();
 
     public static void main(String[] args) throws Exception {
+        //取出对应关系
 
         //使用 最短路径算法 进行 出行链划分
-        separateChain();
-
+        //separateChain();
+        System.out.println("-----出行链划分完毕-----");
         //划分好的出行链分配OD矩阵 是 node 和node 之间的 OD 矩阵
 
-        //将OD 矩阵中node node 经过的link 记录下link上的流量
+        generateOD();
+        System.out.println("-----出行矩阵OD生成完毕-----");
+        //将OD 矩阵进行流量分配  记录下link上的流量
 
         //将 link上的流量和 OD 矩阵分配出的流量进行修正和补全 ？
 
@@ -46,16 +49,85 @@ public class GenerateGraphMatrix {
         // 将 OD 估计的结果 和 link上的流量进行 对比分析
 
     }
+
     /**
-     *  @author: xiongcong
-     *  @Date: 2020/3/15 16:16
-     *  @Description:  使用 最短路径算法 进行 出行链划分
+     * @author: xiongcong
+     * @Date: 2020/3/16 14:17
+     * @Description: 划分好的出行链分配OD矩阵 是 卡口station 和 卡口station 之间的 OD 矩阵
+     */
+    public static void generateOD() {
+        //输出到文件
+        String filepath = "F:\\OD矩阵资料\\实验数据\\ODMAtrix.txt";
+        ArrayList<VDToNodeModel> vdtonode = carService.mapvdtonode();
+        int node_size = vdtonode.size();
+        //编号 从 1 开始到 node_size  卡口station 从 1 开始编号
+        Map<String, Integer> stationMap = new HashMap<>();
+        for (int i = 0; i < node_size; i++) {
+            stationMap.put(vdtonode.get(i).getVd(), i + 1);
+        }
+
+        int[][] od_matrix = new int[node_size + 1][node_size + 1];
+
+        //行 列 初始化
+        for (int i = 1; i < od_matrix.length; i++) {
+            od_matrix[i][0] = i;
+        }
+        for (int i = 1; i < od_matrix[0].length; i++) {
+            od_matrix[0][i] = i;
+        }
+
+        String carid = "Car0";
+        for (int i = 1; i <= 22206; i++) {
+            String hphm = carid + i;
+            ArrayList<ChainModel> chainModels = chainService.selectChainByhp(hphm);
+            int from_node = -1;
+            int to_node = -1;
+            for (int j = 0; j < chainModels.size(); j++) {
+                ChainModel temp = chainModels.get(j);
+
+                if ("O".equals(temp.getStatus())) {
+                    from_node = stationMap.get(temp.getSbbh());
+                }
+                if ("D".equals(temp.getStatus())) {
+
+                    to_node = stationMap.get(temp.getSbbh());
+                    if (from_node == -1) {  // 如果单独 则 既是O 点也是D点
+                        from_node = to_node;
+                    }
+                    od_matrix[from_node][to_node] += 1;
+                    from_node = -1; // 避免 O D D 的清况
+                    to_node = -1;
+                }
+            }
+            System.out.println("车辆 " + i + " 处理完");
+        }
+        int sum = 0;
+        List<String> result = new ArrayList<>();
+        for (int i = 0; i < od_matrix.length; i++) {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int j = 0; j < od_matrix[0].length; j++) {
+                int temp = od_matrix[i][j];
+                if (i != 0 && j != 0) {
+                    sum += temp;
+                }
+                stringBuilder.append(temp + " ");
+            }
+            result.add(stringBuilder.toString());
+        }
+        System.out.println("该时段内该区域总OD对的数量为：" + sum);
+        TXTUtil.writeTxt(filepath, result);
+    }
+
+    /**
+     * @author: xiongcong
+     * @Date: 2020/3/15 16:16
+     * @Description: 使用 最短路径算法 进行 出行链划分
      */
     private static void separateChain() throws ParseException {
+
         //生成 矩阵  weight(link长度)  from(from_node)  to(to_node)
         EdgeWeightedDiGraph<String> graph = generatorGraph();
 
-        //取出对应关系
         ArrayList<VDToNodeModel> vdtonode = carService.mapvdtonode();
         for (VDToNodeModel model : vdtonode) {
             vdmap.put(model.getVd(), model.getNode());
@@ -85,16 +157,17 @@ public class GenerateGraphMatrix {
                 }
                 if (flag) {
                     if (j == 0) {
-                        node1.setStatus("S");
+                        node1.setStatus("O");
                     }
-                    node2.setStatus("P");
+                    node2.setStatus("M");
                 } else {
-                    node1.setStatus("E");
-                    node2.setStatus("S");
+                    //此时 node1 和node2 分别 属于不同的出行链
+                    node1.setStatus("D");
+                    node2.setStatus("O");
                 }
                 //如果到达最后
                 if (j == chainModels.size() - 2) {
-                    node2.setStatus("E");
+                    node2.setStatus("D");
                 }
                 chainService.updateStatus(node1);
                 chainService.updateStatus(node2);
@@ -188,11 +261,11 @@ public class GenerateGraphMatrix {
      * @Description: 生成graph
      */
     public static EdgeWeightedDiGraph<String> generatorGraph() {
+        List<LinkModel> allLink = linkService.selectAllLink();
+        int size = allLink.size();
         int[][] edges;
         List<String> vertexInfo;
         int[] weight;
-        List<LinkModel> allLink = linkService.selectAllLink();
-        int size = allLink.size();
         //初始化
         edges = new int[size][2];
         weight = new int[size];
