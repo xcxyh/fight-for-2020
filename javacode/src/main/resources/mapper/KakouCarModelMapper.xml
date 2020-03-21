@@ -12,7 +12,7 @@
     </select>
 
     <select id="mapvdtonode"  resultType="com.xiong.Kakou.entity.VDToNodeModel" >
-        SELECT ID_station as vd , to_node as node from vdtonode
+        SELECT FID, ID_station as vd , to_node as node,xqbh from vdtonode
     </select>
 
 

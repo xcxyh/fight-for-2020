@@ -26,6 +26,9 @@ public class GenerateGraphMatrix {
     //处理节点 新建map 存储 node 和 编号的对应关系  K nodeid  V  i
     static Map<String, Integer> nodeMap = new HashMap<>();
 
+    //编号 从 1 开始到 node_size  卡口station 从 1 开始编号
+    static Map<String, Integer> stationMap = new HashMap<>();
+
     private static final String FORMAT = "yyyy-MM-dd HH:mm:ss";
     //存储 node 和  卡口编号之间的关系 vdmap    K vd  V  nodeid
     static Map<String, String> vdmap = new HashMap<>();
@@ -38,13 +41,49 @@ public class GenerateGraphMatrix {
         System.out.println("-----出行链划分完毕-----");
         //划分好的出行链分配OD矩阵 是 node 和node 之间的 OD 矩阵
 
-        generateOD();
+        int[][] od_matrix = generateOD();
         System.out.println("-----出行矩阵OD生成完毕-----");
-        //将OD 矩阵进行流量分配  记录下link上的流量
 
-        //将 link上的流量和 OD 矩阵分配出的流量进行修正和补全 ？
+        //交通小区 聚类
 
-        //得到最终的node 到 node 的OD 矩阵  然后通过聚类 得到交通小区之间的OD 矩阵 ？
+        //AreaCluster 文件完成
+
+        //聚类 得到交通小区之间的OD 矩阵
+        String filepath = "F:\\OD矩阵资料\\实验数据\\ODMAtrix_xq.txt";
+        ArrayList<VDToNodeModel> vdtonode = carService.mapvdtonode();
+        Map<Integer, Integer> clusterMap = new HashMap<>();
+
+        for (VDToNodeModel model : vdtonode) {
+            clusterMap.put(model.getFID(), Integer.parseInt(model.getXqbh()));
+        }
+
+        int[][] xqbh_matrix = new int[21][21];
+
+        //行列初始化
+        for (int i = 1; i < xqbh_matrix.length; i++) {
+            xqbh_matrix[i][0] = i;
+        }
+        for (int i = 1; i < xqbh_matrix[0].length; i++) {
+            xqbh_matrix[0][i] = i;
+        }
+
+        for (int i = 1; i < od_matrix.length; i++) {
+            for (int j = 1; j < od_matrix[0].length; j++) {
+                xqbh_matrix[clusterMap.get(i)][clusterMap.get(j)] += od_matrix[i][j];
+            }
+        }
+
+        List<String> result = new ArrayList<>();
+        for (int i = 0; i < xqbh_matrix.length; i++) {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int j = 0; j < xqbh_matrix[0].length; j++) {
+                int temp = xqbh_matrix[i][j];
+                stringBuilder.append(temp + " ");
+            }
+            result.add(stringBuilder.toString());
+        }
+        //交通小区间的OD 矩阵为 xqbh_matrix
+        TXTUtil.writeTxt(filepath, result);
 
         // 将 OD 估计的结果 和 link上的流量进行 对比分析
 
@@ -55,15 +94,13 @@ public class GenerateGraphMatrix {
      * @Date: 2020/3/16 14:17
      * @Description: 划分好的出行链分配OD矩阵 是 卡口station 和 卡口station 之间的 OD 矩阵
      */
-    public static void generateOD() {
+    public static int[][] generateOD() {
         //输出到文件
         String filepath = "F:\\OD矩阵资料\\实验数据\\ODMAtrix.txt";
         ArrayList<VDToNodeModel> vdtonode = carService.mapvdtonode();
         int node_size = vdtonode.size();
-        //编号 从 1 开始到 node_size  卡口station 从 1 开始编号
-        Map<String, Integer> stationMap = new HashMap<>();
         for (int i = 0; i < node_size; i++) {
-            stationMap.put(vdtonode.get(i).getVd(), i + 1);
+            stationMap.put(vdtonode.get(i).getVd(), vdtonode.get(i).getFID());
         }
 
         int[][] od_matrix = new int[node_size + 1][node_size + 1];
@@ -116,6 +153,7 @@ public class GenerateGraphMatrix {
         }
         System.out.println("该时段内该区域总OD对的数量为：" + sum);
         TXTUtil.writeTxt(filepath, result);
+        return od_matrix;
     }
 
     /**

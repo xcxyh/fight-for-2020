@@ -10,16 +10,27 @@ package com.xiong.Kakou.entity;
  */
 public class VDToNodeModel {
 
-
+    private Integer FID;
     private String vd;
     private String node;
+    private String xqbh;
 
     @Override
     public String toString() {
         return "VDToNodeModel{" +
-                "vd='" + vd + '\'' +
+                "FID=" + FID +
+                ", vd='" + vd + '\'' +
                 ", node='" + node + '\'' +
+                ", xqbh='" + xqbh + '\'' +
                 '}';
+    }
+
+    public Integer getFID() {
+        return FID;
+    }
+
+    public void setFID(Integer FID) {
+        this.FID = FID;
     }
 
     public String getVd() {
@@ -36,5 +47,13 @@ public class VDToNodeModel {
 
     public void setNode(String node) {
         this.node = node;
+    }
+
+    public String getXqbh() {
+        return xqbh;
+    }
+
+    public void setXqbh(String xqbh) {
+        this.xqbh = xqbh;
     }
 }
