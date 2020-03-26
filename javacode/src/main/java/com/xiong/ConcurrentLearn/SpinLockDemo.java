@@ -52,7 +52,11 @@ public class SpinLockDemo {
 
       new Thread(() -> {
           spinLockDemo.mylock();
+          spinLockDemo.mylock();
+          spinLockDemo.mylock();
           try{TimeUnit.SECONDS.sleep(5);} catch (InterruptedException e){e.printStackTrace();}
+          spinLockDemo.myunlock();
+          spinLockDemo.myunlock();
           spinLockDemo.myunlock();
       },"t1").start();
 

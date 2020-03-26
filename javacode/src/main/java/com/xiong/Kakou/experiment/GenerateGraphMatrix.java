@@ -37,7 +37,7 @@ public class GenerateGraphMatrix {
         //取出对应关系
 
         //使用 最短路径算法 进行 出行链划分
-        //separateChain();
+        separateChain();
         System.out.println("-----出行链划分完毕-----");
         //划分好的出行链分配OD矩阵 是 node 和node 之间的 OD 矩阵
 
