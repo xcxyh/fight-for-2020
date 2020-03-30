@@ -10,4 +10,5 @@ package com.xiong.LeetCode;
  */
 public class Solution {
 
+
 }

@@ -1,4 +1,4 @@
-package com.xiong.DataStructureAndAlgorithm;
+package com.xiong.SortAlgorithm;
 
 import java.util.Arrays;
 

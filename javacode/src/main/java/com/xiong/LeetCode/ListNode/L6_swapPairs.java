@@ -18,7 +18,7 @@ public class L6_swapPairs {
         if (head == null || head.next ==null){
             return head;
         }
-        ListNode next = head.next; //记录 head 的相邻节点
+        ListNode next = head.next; //记录 head 的下一节点
         head.next = swapPairs(next.next); //head 指向 交换后的子链
         next.next = head; // next 指向 head
 
