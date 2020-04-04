@@ -38,7 +38,7 @@ public class SortUtil {
 				}
 			}
 			if (ischanged == 0) {
-				break;
+				return arr;
 			}
 		}
 		return arr;

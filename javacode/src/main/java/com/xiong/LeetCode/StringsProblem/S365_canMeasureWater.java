@@ -62,4 +62,8 @@ public class S365_canMeasureWater {
         return a == b ? a : mcd(b, a - b);
 
     }
+    //碾转相除法 求最大公约数
+    private static int gcd(int a, int b){
+        return b == 0 ? a : gcd(b, a % b);
+    }
 }

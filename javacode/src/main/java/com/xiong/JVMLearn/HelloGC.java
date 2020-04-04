@@ -31,14 +31,14 @@ public class HelloGC {
      *
      *  例如 垃圾回收器的选择 四种算法  7 种实现
      *
-     *  -XX:+UseSerialGC   新生代 串行垃圾回收器  采用复制算法； 单线程收集； serial & serial old 同时开启
-     *  -XX:+UseParallelGC 新生代 并行垃圾回收器  Parallel Scavenge & Parallel Old 同时开启
+     *  -XX:+UseSerialGC   新生代 串行垃圾回收器  采用复制算法； 单线程收集； serial 和 serial old 同时开启
+     *  -XX:+UseParallelGC 新生代 并行垃圾回收器 (java 8 默认) Parallel Scavenge & Parallel Old 同时开启
      *  -XX:+UseParNewGC   新生代  ParNew垃圾收集器是Serial收集器的多线程版本。 强制指定使用ParNew
      *  =======================
      *  -XX:+UseConcMarkSweepGC  针对老年代；基于"标记-清除"算法(不进行压缩操作，产生内存碎片)；
      *                              指定使用CMS后，会默认使用ParNew作为新生代收集器； ParNew & CMS 同时开启（Serial Old作为替补）
-     *  Serial Old   老年代
-     *  Parallel Old    老年代
+     *  Serial Old   老年代 ( 弃用 )
+     *  -XX:+UseParallelOldGC  老年代  并行垃圾回收器
      *  =======================
      *  -XX:+UseG1GC    指定使用G1收集器； 独立商用
      *
