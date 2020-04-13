@@ -1,8 +1,6 @@
 package com.xiong.LeetCode;
 
-
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * @author ：xiongcong
@@ -12,7 +10,5 @@ import java.util.Queue;
  * @version: $
  */
 public class Solution {
-    public static void main(String[] args) {
 
-    }
 }

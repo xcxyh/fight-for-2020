@@ -1,5 +1,7 @@
 package com.xiong.LeetCode.StringsProblem;
 
+import java.util.Stack;
+
 /**
  * @author ：xiongcong
  * @date ：Created in 2020/3/17 11:26
@@ -7,92 +9,104 @@ package com.xiong.LeetCode.StringsProblem;
  * s = "I am a student"
  * Return "student a am I"
  *  将每个单词翻转，然后将整个字符串翻转。
+ *  有两个版本：
+ *  1  需要保留所有的空格
+ *  2  不需要保留多余的空格 只保证单词间有一个空格
+ *
  * @modified By：
  * @version: $
  */
 public class S3_reverseWords {
 
     public static void main(String[] args) {
-        System.out.println(swapWords("I am     a       students"));
+        System.out.println(reverseWords("  I   am     a       student   "));
     }
 
-    public static String reverseWords(String words){
-        StringBuilder stringBuilder = new StringBuilder();
-        String[] strs = words.split("\\s+");
-        for (int i = 0; i <strs.length ; i++) {
-            strs[i] = reverseStr(strs[i]);
-            if (i == strs.length - 1){
-                stringBuilder.append(strs[i]);
-            }else{
-                stringBuilder.append(strs[i] + " ");
-            }
-        }
-        return reverseStr(stringBuilder.toString());
-        
-    }
-    /**
-     *  @author: xiongcong
-     *  @Date: 2020/3/17 11:32
-     *  @Description: 翻转字符串
-     */
-    private static String reverseStr(String str){
 
-        StringBuilder stringBuilder = new StringBuilder();
-
-        for (int i = str.length() - 1; i >= 0 ; i--) {
-            stringBuilder.append(str.charAt(i));
-        }
-        return stringBuilder.toString();
-    }
     /**
      *  @author: xiongcong
      *  @Date: 2020/3/17 11:50
-     *  @Description: 别人的答案  可以有多个空格  "I am     a       student"
+     *  @Description: 可以有多个空格  "   I   am     a       student  "
+     *   这个版本是保留所有的空格
      */
-    public static String swapWords(String s) {
-        if (s == null) {
-            return null;
+    public static String reverseWords(String s) {
+        if(s == null || s.length() == 0){
+            return s;
         }
-        String ret = "";
-        if (!s.endsWith(" ")) {
-            s += " ";
-        }
-        char[] charArr = s.toCharArray();
-        int begin = 0;
-
+        //单个单词翻转 再整体翻转
+        char[] chars = s.toCharArray();
+        int len = chars.length;
         int i = 0;
-        while (i < charArr.length) {
-            while (charArr[i] == ' ') {
+        int begin = 0;
+        int j = 0;
+        while(i < len){
+            while(i < len && chars[i] == ' '){
                 i++;
             }
-            begin = i; // 获取单词的第一个字母对应的位置
-            while (charArr[i] != ' ') { // 找到单词后第一个空格对应的位置
+            begin = i;
+            while(i < len && chars[i] != ' '){
                 i++;
             }
-            reverseString(charArr, begin, i - 1);
+            reverse(chars,begin,i - 1);
             i++;
         }
-        //因为前面多加了一个空格 这里 charArr.length -2
-        reverseString(charArr,0,charArr.length - 2);
-        ret = new String(charArr);
-        return ret;
+        //整体翻转
+        reverse(chars,0 , len - 1);
+        return new String(chars);
     }
-    /**
-     * @author: xiongcong
-     * @Date: 2020/3/17 11:13
-     * @Description: 翻转一个char数组中的部分元素
-     */
-    private static void reverseString(char[] chars, int left, int right) {
-        if (chars.length <= 1) {
+
+    private static void reverse(char[] chars, int start, int end){
+        if (chars.length <= 1){
             return;
         }
-        while (left < right) {
-            //交换
-            char temp = chars[left];
-            chars[left] = chars[right];
-            chars[right] = temp;
-            left++;
-            right--;
+        while(start < end){
+            char c  = chars[start];
+            chars[start] = chars[end];
+            chars[end] = c;
+            start++;
+            end--;
         }
+    }
+    // 不包含空格的版本 返回   "students a am I"  去掉多余的空格
+
+    public String reverseWords_nospaceStack(String s) {
+        Stack<String> stack = new Stack<>();
+        StringBuilder temp = new StringBuilder();
+        s += " ";
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == ' ') {
+                if (temp.length() != 0) {
+                    stack.push(temp.toString());
+                    temp = new StringBuilder();
+                }
+            } else {
+                temp.append(s.charAt(i));
+            }
+        }
+        if (stack.isEmpty()) {
+            return "";
+        }
+        StringBuilder res = new StringBuilder();
+        res.append(stack.pop());
+        while (!stack.isEmpty()) {
+            res.append(" ");
+            res.append(stack.pop());
+        }
+        return res.toString();
+    }
+
+    public String reverseWords_noSpace(String s) {
+        StringBuilder sb = new StringBuilder();
+        s= s.trim();
+        String[] strs = s.split(" ");
+        for (int i = 0; i <strs.length ; i++) {
+            if(!strs[strs.length - i - 1].isEmpty()) {
+                sb.append(strs[strs.length - i - 1]);
+                if (i != strs.length - 1) {
+                    sb.append(" ");
+                }
+            }
+        }
+        return sb.toString();
     }
 }

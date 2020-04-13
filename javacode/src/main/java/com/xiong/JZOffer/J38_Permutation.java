@@ -7,6 +7,7 @@ import java.util.Arrays;
  * @author ：xiongcong
  * @date ：Created in 2020/4/6 18:15
  * @description： 字符串的排列  回溯算法  有点难啊
+ *    与   leetcode 46  相同， 与  leetcode 22 相似
  * @modified By：
  * @version: $
  */

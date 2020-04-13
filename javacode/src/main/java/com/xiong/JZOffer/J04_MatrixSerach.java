@@ -37,6 +37,7 @@ public class J04_MatrixSerach {
         if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
             return false;
         }
+        //从 右上角开始找
         int rows = matrix.length;
         int cols = matrix[0].length;
         //从第一行开始 从最后一列开始

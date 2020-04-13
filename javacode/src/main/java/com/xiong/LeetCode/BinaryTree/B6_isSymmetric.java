@@ -28,7 +28,7 @@ public class B6_isSymmetric {
       return  isSameval(root.left,root.right);
 
     }
-
+    //判断左右两个子树是否对称
     private boolean isSameval(TreeNode t1, TreeNode t2){
         if(t1 == null && t2 == null){
             return true;
