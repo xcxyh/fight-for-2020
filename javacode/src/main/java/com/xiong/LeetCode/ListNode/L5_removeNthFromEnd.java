@@ -14,31 +14,33 @@ import com.xiong.JZOffer.ListNode;
 public class L5_removeNthFromEnd {
 
     public ListNode removeNthFromEnd(ListNode head, int n) {
-        if (head == null) {
+        if (head == null || head.next == null){
             return null;
         }
-
-        ListNode index1 = head;
-        ListNode index2 = head;
-
-        for (int i = 0; i < n; i++) {
-            index1 = index1.next;
+        //双指针找到链表中倒数第n 个节点 然后删除
+        ListNode slow = head;
+        ListNode fast = head;
+        ListNode pre = head;
+        while(n-- > 0){
+            fast = fast.next;
         }
-        //必须判断
-        if(index1 == null){
+        // 要删除的节点为头节点时
+        if(fast == null){
             return head.next;
         }
-        while (index2.next != null) {
 
-            if (index1.next == null) {
-                index2.next = index2.next.next;
-                break;
-            }
-            index2 = index2.next;
-            index1 = index1.next;
+        while(fast != null){
+            pre = slow;
+            slow = slow.next;
+            fast = fast.next;
         }
+        //删除
+        ListNode next = slow.next;
+        slow.next = null;
+        pre.next = next;
         return head;
 
-
     }
+
+
 }

@@ -1,5 +1,6 @@
 package com.xiong.JZOffer;
 
+
 /**
  * @author ：xiongcong
  * @date ：Created in 2019/12/7 11:25
@@ -23,4 +24,25 @@ public class ListNode {
         this.val = x;
 
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("val：");
+        sb.append(this.val);
+        //临时节点，从首节点开始
+        ListNode temp = this.next;
+
+        while (temp != null) {
+
+            sb.append(" -> ");
+            sb.append(temp.val);
+            //继续下一个
+            temp = temp.next;
+        }
+       //sb.append("\n");
+
+        return sb.toString();
+    }
+
 }

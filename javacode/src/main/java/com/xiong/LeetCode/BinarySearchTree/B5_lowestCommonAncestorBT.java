@@ -16,21 +16,18 @@ public class B5_lowestCommonAncestorBT {
         if (root == null || root == p || root == q) {
             return root;
         }
-        TreeNode left_ca = lowestCommonAncestor(root.left, p, q);//去左子树中找这两个节点 的公共祖先
-        TreeNode right_ca = lowestCommonAncestor(root.right, p, q);
-        //p和q均不在树中
-        if (left_ca == null && right_ca == null) {
-            return null;
+        TreeNode left = lowestCommonAncestor(root.left, p, q);//去左子树中找这两个节点 的公共祖先
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+
+        /*if (left == null){ // 左为空 就返回 右的结果
+            return right;
         }
-        // 一个为空 一个不为空 则 公共祖先为不为空那个
-        if (right_ca != null && left_ca == null) {
-            return right_ca;
+        if (right == null){ // 右为空 就返回 左的结果
+            return left;
         }
-        if (left_ca != null && right_ca == null) {
-            return left_ca;
-        }
-        //两个都不为空 证明 公共祖先为根节点
-        return root;
+        return root;*/ // 两个都不为空  就返回 root
+        // 三元运算符表示
+        return left == null ? right : right == null ? left : root;
 
     }
 }
