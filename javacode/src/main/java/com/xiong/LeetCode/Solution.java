@@ -1,7 +1,5 @@
 package com.xiong.LeetCode;
 
-import sun.reflect.generics.tree.Tree;
-
 import java.util.*;
 
 /**
@@ -13,7 +11,6 @@ import java.util.*;
  */
 public class Solution {
 
-    public static void main(String[] args) {
 
-    }
+
 }

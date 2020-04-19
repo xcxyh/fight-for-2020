@@ -2,29 +2,14 @@ package com.xiong.LeetCode.ListNode;
 
 import com.xiong.JZOffer.ListNode;
 
-
 /**
  * @author ：xiongcong
- * @date ：Created in 2020/3/2 16:42
- * @description： 判断是否回文链表 ac
+ * @date ：Created in 2020/4/16 18:33
+ * @description： 234. 回文链表  简单
  * @modified By：
  * @version: $
  */
-public class L8_isPalindrome {
-
-
-    public static void main(String[] args) {
-
-        ListNode head = new ListNode(1);
-        ListNode l1 = new ListNode(2);
-        ListNode l2 = new ListNode(2);
-        ListNode l3 = new ListNode(1);
-
-        head.next = l1;
-        l1.next = l2;
-        l2.next = l3;
-        System.out.println(new L8_isPalindrome().isPalindrome(head));
-    }
+public class Leet234_isPalindrome {
 
     public boolean isPalindrome(ListNode head) {
         if (head == null || head.next == null){
@@ -66,5 +51,4 @@ public class L8_isPalindrome {
         }
         return pre;
     }
-
 }
