@@ -27,6 +27,9 @@ public class AcWing2_01Package {
 
     }
     //dp 求解01 背包的 基本方法
+    // 01背包方程：  dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - v] + w)
+    // 完全背包方程：dp[i][j] = max(dp[i - 1][j], dp[i][j - v] + w)
+    // 注意是 dp[i][j - v] + w  这个是推导得到的
     private static int dp_basic(int N, int[] v, int[] w, int V) {
 
         //dp[i][j] 表示 i 件物品 体积为j 时 最大价值

@@ -1,6 +1,6 @@
 package com.xiong.LeetCode;
 
-import java.util.*;
+
 
 /**
  * @author ：xiongcong
@@ -10,7 +10,6 @@ import java.util.*;
  * @version: $
  */
 public class Solution {
-
 
 
 }

@@ -16,7 +16,7 @@ public class S409_longestPalindome {
      *  执行用时 : 1 ms, 在所有 Java 提交中击败了100.00%的用户
      */
     public int longestPalindrome(String s) {
-        int[] arr = new int[58]; //大写字母 + 小写字母个数
+        int[] arr = new int[100]; //大写字母 + 小写字母个数
         char[] chars = s.toCharArray();
         for (char c : chars) {
             arr[c - 'A'] += 1;

@@ -11,6 +11,10 @@ package com.xiong.LeetCode.BinarySearch;
  */
 public class B1_mySqrt {
 
+    public static void main(String[] args) {
+        System.out.println(new B1_mySqrt().mySqrt_Newton(3));
+    }
+    //二分法
     public int mySqrt(int x) {
         if (x <= 1) {
             return x;
@@ -33,4 +37,13 @@ public class B1_mySqrt {
         return high;
 
     }
+    //牛顿法 f(x) = x^2 - a ,求 x 。  =====>  x' = 1/2 * ( x + a / x)
+    public int mySqrt_Newton(int a) {
+        double x = 1.0;
+        while (Math.abs(x * x - a) > 0.01) { // 可调精度
+            x = (x + a / x) / 2.0;
+        }
+        return (int) x;
+    }
+
 }
