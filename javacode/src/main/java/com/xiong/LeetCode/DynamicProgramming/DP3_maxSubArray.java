@@ -29,25 +29,29 @@ public class DP3_maxSubArray {
         }
         return ans;
     }
-
-    //我做的dp  与上面的 dp 数组的含义不同
-    public static int maxSubArray(int[] nums) {
-        if(nums == null||nums.length == 0){
+    // 第二次做的写法
+    public int maxSubArray(int[] nums) {
+        if (nums == null || nums.length == 0){
             return 0;
         }
-        int n = nums.length;
-        int[] dp =new int[n];
-        dp[0]=nums[0];
-        // dp[i] 表示从起点到index=i的这个段内的最大子序和。
-        for(int i = 1; i< n ; i++){
-            int max = nums[i];
-            int temp =nums[i];
-            for(int j = i-1; j >=0; j--){
-                temp+=nums[j];
-                max =Math.max(max,temp);
+        int len = nums.length;
+        //dp
+        int[] dp = new int[len];
+        dp[0]= nums[0];
+        for(int i = 1; i < len; i++){
+            if (dp[i-1] > 0){// 前面的子序和大于0 时 加上
+                dp[i] = dp[i-1] + nums[i];
+            }else{
+                dp[i] = nums[i];
             }
-            dp[i] = Math.max(dp[i-1],max);
+
         }
-        return dp[n-1];
+        int ans = dp[0];
+        for(int i = 0; i < len; i++){
+            ans = Math.max(ans,dp[i]);
+        }
+
+        return ans;
+
     }
 }

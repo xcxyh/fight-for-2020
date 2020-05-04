@@ -1,4 +1,4 @@
-package com.xiong.LeetCode.DailyProblems;
+package com.xiong.LeetCode.GreedyAlgorithm;
 
 /**
  * @author ：xiongcong

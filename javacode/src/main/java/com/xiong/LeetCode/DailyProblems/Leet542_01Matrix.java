@@ -1,5 +1,8 @@
 package com.xiong.LeetCode.DailyProblems;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * @author ：xiongcong
  * @date ：Created in 2020/4/15 9:33
@@ -19,7 +22,7 @@ public class Leet542_01Matrix {
      *  @Date: 2020/4/15 9:33
      *  @Description:  dp 动态规划的方式
      */
-    public int[][] updateMatrix(int[][] matrix) {
+    public int[][] updateMatrix_dp(int[][] matrix) {
         if (matrix == null ){
             return null;
         }
@@ -74,8 +77,43 @@ public class Leet542_01Matrix {
 
             }
         }
-
         return dp;
+    }
+
+    //多源广度优先遍历
+    public int[][] updateMatrix(int[][] matrix) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0){
+            return matrix;
+        }
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+        int[][] ans = new int[rows][cols];
+        Queue<int[]> queue= new LinkedList<>();
+        int[][] dir = new int[][]{{-1,0},{1,0},{0,1},{0,-1}};
+        // 所有的0 的位置 入队
+        for(int i =0; i< rows; i++){
+            for(int j = 0; j< cols; j++){
+                if (matrix[i][j] == 0){
+                    queue.offer(new int[]{i,j});
+                }
+            }
+        }
+        while(!queue.isEmpty()){
+            int[] temp = queue.poll();
+            for(int[] d : dir){
+                int x = temp[0] + d[0];
+                int y = temp[1] + d[1];
+
+                if (x >=0 && x < rows && y >=0 && y < cols && matrix[x][y] == 1){
+                    ans[x][y] = ans[temp[0]][temp[1]] + 1;
+                    matrix[x][y] = 0; //visited
+                    queue.offer(new int[]{x,y});
+                }
+
+            }
+        }
+        return ans;
 
     }
+
 }

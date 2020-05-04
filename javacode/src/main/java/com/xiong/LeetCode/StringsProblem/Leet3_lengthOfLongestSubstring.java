@@ -12,24 +12,37 @@ import java.util.Set;
  */
 public class Leet3_lengthOfLongestSubstring {
 
-    public int lengthOfLongestSubstring(String s) {
+    public static void main(String[] args) {
+        System.out.println(lengthOfLongestSubstring("abcabcbb"));
+    }
 
-        if(s == null && s.length() == 0){
+    public static int lengthOfLongestSubstring(String s) {
+        if (s == null) {
             return 0;
         }
-        //滑动窗口
+        if (s.length() <= 1) {
+            return s.length();
+        }
+        //双指针 + set 实现滑动窗口
         Set<Character> window = new HashSet<>();
-        int len = s.length();
-        char[] chars = s.toCharArray();
-        int i = 0;int j =0;
+
+        int left = 0; //滑动窗口 左端点
+        int right = 0;//滑动窗口 右端点
+
         int ans = 0;
-        while(i < len && j < len ){
-            if (! window.contains(chars[j])){
-                window.add(chars[j++]);
-                ans = Math.max(ans,j - i);
-            }else{
-                window.remove(chars[i++]);
+        char[] chars = s.toCharArray();
+        int len = chars.length;
+        while (left < len && right < len) {
+
+            if (! window.contains(chars[right])) {
+                window.add(chars[right]);
+                right++;
+            } else {
+                window.remove(chars[left]);
+                left++;
+                ans = Math.max(ans, right - left + 1);
             }
+
         }
         return ans;
     }

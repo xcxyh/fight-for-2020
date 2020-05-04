@@ -47,30 +47,29 @@ public class J14_CutRope {
      *  @Date: 2020/1/3 13:54
      *  @Description: 贪心
      *  尽可能多剪长度为 3 的绳子，并且不允许有长度为 1 的绳子出现。
-     *  数学证明： 当 f(n) = (L/n)^n 取极大值时， L/n = e  即 每段长度都为 e 时 乘积最大
+     *  数学证明：设 x 为 每段绳子的长度， 当 f(x) = x^(n/x) 取极大值时，
+     *   两边同时取 ln 然后 两边同时求导 可得 y' = n * (1- lnx) / x^2 * y = 0
+     *   可得 1 - lnx = 0 -----> x = e
+     *  x = e  即 每段长度都为 e 时 乘积最大
      *  又 每段长度 为整数 所以取3  即 尽可能多剪长度为 3 的绳子
      */
     public static int integerBreak_greedy(int n) {
 
-        if(n < 2){
-            return 0;
+        // 长度为 3 的 数量尽可能多即为最最优
+        //例外 是 4 不能分成 3 和 1
+
+        if (n <= 3){
+            return n - 1;
         }
 
-        if(n == 2){
-            return 1;
+        if (n % 3 == 1){
+            return (int)Math.pow(3, n / 3.0 - 1) * 4;
         }
 
-        if(n == 3){
-            return 2;
+        if (n % 3 == 2){
+            return (int)Math.pow(3, n / 3.0) * 2;
         }
 
-        int timeof3 = n / 3; // 3 的个数
-
-        if((n - timeof3 * 3) == 1){ //不允许出现1 当出现 1 时，少一个3 组成 4
-            timeof3--;
-        }
-        int timesof2 = (n - timeof3 * 3) / 2; // 2 的个数
-
-        return (int)(Math.pow(3,timeof3) * Math.pow(2,timesof2)); // 3*3*3*...*2*2
+        return (int)Math.pow(3, n / 3.0);
     }
 }

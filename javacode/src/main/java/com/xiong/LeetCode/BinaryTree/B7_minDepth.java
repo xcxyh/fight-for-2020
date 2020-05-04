@@ -26,6 +26,7 @@ public class B7_minDepth {
         if (leftDepth == 0 || rightDepth == 0) {
             return leftDepth + rightDepth + 1;
         }
+        // 左右 深度 都不为 0
          return Math.min(leftDepth,rightDepth) + 1;
 
     }
