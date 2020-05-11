@@ -22,15 +22,24 @@ import com.xiong.LeetCode.TreeNode;
 public class B4_lowestCommonAncestor {
 
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        if (root.val > p.val && root.val > q.val) {
-            //证明最近公共祖先在左子树中
-            return lowestCommonAncestor(root.left, p, q);
+        //base case
+        if (root == null || root == p || root == q){
+            return root;
         }
-        if (root.val < p.val && root.val < q.val) {
-            //证明最近公共祖先在右子树中
-            return lowestCommonAncestor(root.right, p, q);
+
+        TreeNode left_com = lowestCommonAncestor(root.left, p, q);
+
+        TreeNode right_com = lowestCommonAncestor(root.right, p, q);
+        //左子树找不到 直接返回右子树的结果
+        if (left_com == null){
+            return right_com;
         }
-        // 一大一小在中间 最近公共祖先为根节点
+
+        if (right_com == null ){
+            return left_com;
+        }
+
+        // 两个 都不为null 证明 一个为p  一个为 q 直接返回 root 即为最低公共祖先
         return root;
 
     }

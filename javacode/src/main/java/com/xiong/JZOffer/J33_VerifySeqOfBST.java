@@ -9,48 +9,39 @@ package com.xiong.JZOffer;
  */
 public class J33_VerifySeqOfBST {
 
-    public boolean verifySquenceOfBST(int [] sequence) {
-        if(sequence.length ==0){
-            return false;
-        }
-        if(sequence.length == 1){
+    public boolean verifyPostorder(int[] postorder) {
+        if (postorder == null || postorder.length <= 1){
             return true;
         }
-        return verify(sequence, 0, sequence.length - 1);
-
+        return verifyPostorder(postorder, 0, postorder.length - 1);
     }
 
-    public boolean verify(int [] sequence, int begin, int end){
+    private boolean verifyPostorder(int[] postorder, int begin, int end){
 
-        if(sequence.length == 1){
+        if (begin >= end){
             return true;
         }
 
-        //取出 序列中最后一个值 即根节点
-        // 将 序列分为两部分 判断 右半部分是否有小于root的 有则为fasle  左半部分不用判断
-        int root = sequence[end];
-        int i = begin;
-        //找到第一个大于root的节点
-        while(i < end){
-            if(sequence[i] > root){
+        int root = postorder[end];
+
+        //找到 比 root 大的第一个数 即右子树的元素
+        int i;
+        for (i = begin; i < end ; i++){
+            if (postorder[i] > root){
                 break;
             }
-            i++;
         }
-        //判断 右半部分是否有小于root的
-        int j = i;
-        while (j < end){
-           if(sequence[j] < root){
-               return false;
-           }
-           j++;
-       }
-
-        //对 小于根节点的 左子树 继续递归
-        // 对 大于根节点的 右子树 继续递归
-        return verify(sequence,begin,i - 1) && verify(sequence,i, end-1);
-
-
+       // [1 3 2 6 5]  ---> 左 ：[1 3 2]  中： 5  右： [6]
+        // [4, 8, 6, 12, 16, 14, 10] -----> [4, 8, 6]  10  [12, 16, 14]
+        // 判断 这个数（12）  右边的元素(不包括 root) 是否小于 root
+        // 小于 则 返回false
+        for(int j = i; j < end; j++){
+            if (postorder[j] < root ){
+                return false;
+            }
+        }
+        // 对小于根节点的所有元素  和 大于根节点的所有元素 分别递归
+        return verifyPostorder(postorder,begin, i- 1 ) && verifyPostorder(postorder, i, end - 1);
     }
 
 }

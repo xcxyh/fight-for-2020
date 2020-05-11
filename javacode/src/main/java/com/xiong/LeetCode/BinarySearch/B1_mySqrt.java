@@ -16,27 +16,28 @@ public class B1_mySqrt {
     }
     //二分法
     public int mySqrt(int x) {
-        if (x <= 1) {
+
+        if (x <= 1){
             return x;
         }
-        int low = 1;
-        int high = x;
-        while (low <= high) { // 循环条件 为  <=
-            int m = low + (high - low) / 2;
-            int sqrt = x / m;
-            if (sqrt == m) {
-                return m;
-            } else if (m > sqrt) { //在左半部分
-                high = m - 1;
-            } else { //在右半部分
-                low = m + 1;
-            }
-        }
-        //没找到 就返回 保留整数的部分，小数部分将被舍去。
-        //此时 high < low  所以 返回 high
-        return high;
+        long left = 0;
+        long right = x / 2; // 一个数的平方根 一定小于 等于  x / 2
+        while(left < right){
+            // 这里选择右中位数
+            // 注意：针对特殊测试用例，例如 2147395599
+            // 要把搜索的范围设置成长整型
+            long mid = left + (right - left + 1) / 2;
 
+            if (mid * mid > x){
+                right = mid - 1;
+            }else {
+                left = mid;
+            }
+
+        }
+        return (int) left;
     }
+
     //牛顿法 f(x) = x^2 - a ,求 x 。  =====>  x' = 1/2 * ( x + a / x)
     public int mySqrt_Newton(int a) {
         double x = 1.0;

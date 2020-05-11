@@ -7,9 +7,9 @@ import java.util.Set;
  * @author ：xiongcong
  * @date ：Created in 2020/3/22 10:02
  * @description： 945. 使数组唯一的最小增量
- *
+ * <p>
  * 给定整数数组 A，每次 move 操作将会选择任意 A[i]，并将其递增 1。
- *
+ * <p>
  * 返回使 A 中的每个值都是唯一的最少操作次数。
  * @modified By：
  * @version: $
@@ -17,33 +17,42 @@ import java.util.Set;
 public class D945_minIncrementForUnique {
 
     public static void main(String[] args) {
-        System.out.println(new D945_minIncrementForUnique().minIncrementForUnique_2(new int[]{3,2,1,2,1,7}));
+        System.out.println(new D945_minIncrementForUnique().minIncrementForUnique_2(new int[]{3, 2, 1, 2, 1, 7}));
     }
 
-
-    //超时了。。。。
+    // 头条面试有出  原题
     public int minIncrementForUnique(int[] A) {
-        Set<Integer> set = new HashSet<>();
-        int count = 0;
-        for (int i = 0; i <A.length ; i++) {
-            while (set.contains(A[i])){
-                A[i]++;
-                count++;
-            }
-            set.add(A[i]);
+        int[] bucket = new int[40001];
+
+        for (int i = 0; i < A.length; i++) {
+            bucket[A[i]]++;
         }
-        return count;
+        int ans = 0;
+        for (int i = 0; i < bucket.length - 1; i++) {
+            if (bucket[i] > 1) {
+                ans += bucket[i] - 1;
+                bucket[i + 1] += bucket[i] - 1;
+            }
+        }
+
+        // 单独 处理一下 最后一个
+        if (bucket[40000] > 1) {
+            int d = bucket[40000] - 1;
+            // 从 1 到 d 的 和
+            ans += (d + 1) * d / 2;
+        }
+        return ans;
     }
 
     public int minIncrementForUnique_2(int[] A) {
-      int[] bucket = new int[40001];
-    int max = -1;
+        int[] bucket = new int[40001];
+        int max = -1;
         for (int num : A) {
             bucket[num]++;
             max = Math.max(max, num);
         }
         int count = 0;
-        for (int i = 0; i <bucket.length - 1 ; i++) {
+        for (int i = 0; i < bucket.length - 1; i++) {
             if (bucket[i] > 1) {
                 int d = bucket[i] - 1;
                 count += d;
@@ -56,6 +65,6 @@ public class D945_minIncrementForUnique {
         int d = bucket[max + 1] - 1;
         count += (1 + d) * d / 2;
 
-        return  count;
+        return count;
     }
 }

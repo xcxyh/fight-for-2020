@@ -46,14 +46,16 @@ public class Leet50_myPow {
 
         if (n < 0) { // 负数情况
             if (n == Integer.MIN_VALUE) { // 极端情况
-                return (1.0 / x) * myPow(1.0 / x, Integer.MAX_VALUE);
+                return (1.0 / x) * myPow_recusive(1.0 / x, Integer.MAX_VALUE);
             }
-            return 1.0 / myPow(x, -n);
+            return 1.0 / myPow_recusive(x, -n);
         }
 
-        if (n % 2 == 1) { // 奇数情况 可以写成 (N & 1) == 1
-            return x * myPow(x, n - 1);
+        if (n % 2 == 1) { // 奇数情况 可以写成 (n & 1) == 1
+            return x * myPow_recusive(x, n - 1);
         }
-        return myPow(x * x, n / 2); // 快速幂法, n/2 ---> n >> 1
+        double sub = myPow_recusive(x, n / 2);
+
+        return sub * sub; // 快速幂法, n/2 ---> n >> 1
     }
 }

@@ -41,7 +41,7 @@ public class Leet160_getIntersectionNode {
             if (b == null){
                 b = headA;
             }
-            if (a == b){
+            if (a == b){ // 不要比较值
                 return a;
             }
             a = a.next;
