@@ -12,34 +12,33 @@ import java.util.Stack;
 public class S3_minStack {
 
     //使用两个栈
-    Stack<Integer> dataStack;
-    Stack<Integer> minStack;
-    Integer min;
+    private Stack<Integer> data;
+    private Stack<Integer> min;
     /** initialize your data structure here. */
     public S3_minStack() {
-        dataStack = new Stack<>();
-        minStack = new Stack<>();
-        min = Integer.MAX_VALUE;
+        data = new Stack<>();
+        min = new Stack<>();
     }
 
     public void push(int x) {
-        dataStack.push(x);
-        min = Math.min(min,x);
-        minStack.push(min);
+        data.push(x);
+        if (min.isEmpty()){
+            min.push(x);
+        }else{
+            min.push(Math.min(x, min.peek()));
+        }
     }
 
     public void pop() {
-        dataStack.pop();
-        minStack.pop();
-        //弹栈时 要判断 是否为空 来更新 min
-        min = minStack.isEmpty() ? Integer.MAX_VALUE : minStack.peek();
+        data.pop();
+        min.pop();
     }
 
     public int top() {
-        return dataStack.peek();
+        return data.peek();
     }
 
     public int getMin() {
-        return minStack.peek();
+        return min.peek();
     }
 }

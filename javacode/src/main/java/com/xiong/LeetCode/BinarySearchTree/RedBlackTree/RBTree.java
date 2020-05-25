@@ -1,4 +1,4 @@
-package com.xiong.LeetCode.BinarySearchTree;
+package com.xiong.LeetCode.BinarySearchTree.RedBlackTree;
 
 /**
  * @author ：xiongcong
@@ -8,4 +8,8 @@ package com.xiong.LeetCode.BinarySearchTree;
  * @version: $
  */
 public class RBTree {
+
+
+
+
 }

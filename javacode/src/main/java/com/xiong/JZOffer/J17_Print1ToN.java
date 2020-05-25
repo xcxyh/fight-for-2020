@@ -35,6 +35,7 @@ public class J17_Print1ToN {
         for (int i = 0; i <10 ; i++) {
             number[digit] = (char) (i + '0');
             print1ToMaxOfNDigits(number,digit + 1);
+
         }
     }
     //将字符数组中的数字打印出来【0000000123】

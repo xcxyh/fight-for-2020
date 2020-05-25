@@ -159,7 +159,7 @@ public class GenerateGraphMatrix {
     /**
      * @author: xiongcong
      * @Date: 2020/3/15 16:16
-     * @Description: 使用 最短路径算法 进行 出行链划分
+     * @Description: 使用 最短路径算法 进行 出行链划分, 修正后 O 与 D 的误差为 1.05%
      */
     private static void separateChain() throws ParseException {
 
@@ -189,8 +189,8 @@ public class GenerateGraphMatrix {
                 int interval = (int) (time2 - time1) / 1000; //单位为秒
 
                 boolean flag = true; //true 代表 不分开
-                //当间隔时间小于2分钟时 不用 运行dj算法 默认属于同一条链上的节点
-                if (interval > 120) {
+                //当间隔时间小于1分钟时 不用 运行dj算法 默认属于同一条链上的节点
+                if (interval > 60) {
                     flag = isoneChain(interval, node1, node2, graph);
                 }
                 int reset = 0;
@@ -201,17 +201,16 @@ public class GenerateGraphMatrix {
                     node2.setStatus("M");
                 } else {
                     if (j == 0 ) {
-                        node1.setStatus("O");
-                        node2.setStatus("D");
-                    }
-                    if ("D".equals(node1.getStatus())){
+                        node1.setStatus("X");
                         node2.setStatus("O");
-                    }else if ("M".equals(node1.getStatus())){
+                    }
+                    if ("M".equals(node1.getStatus())){
                         //此时 node1 和node2 分别 属于不同的出行链
                         node1.setStatus("D");
                         node2.setStatus("O");
-                    }else{
-                        node2.setStatus("D");
+                    }else if("O".equals(node1.getStatus())){
+                        node1.setStatus("X");
+                        node2.setStatus("O");
                     }
 
 
@@ -219,7 +218,11 @@ public class GenerateGraphMatrix {
                 }
                 //如果到达最后
                 if (j == chainModels.size() - 2) {
-                    node2.setStatus("D");
+                    if ("D".equals(node1.getStatus()) || "X".equals(node1.getStatus())){
+                        node2.setStatus("X");
+                    }else{
+                        node2.setStatus("D");
+                    }
                 }
                 chainService.updateStatus(node1);
                 chainService.updateStatus(node2);

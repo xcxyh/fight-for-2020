@@ -24,24 +24,22 @@ public class J03_DuplicateNum {
         System.out.println(duplicate(nums, nums.length));
     }
 
-    public static boolean duplicate(int[] nums, int length) {
+    private static int duplicate(int[] nums, int length) {
         //边界检查
         if (nums == null || length <= 0) {
-            return false;
+            return -1;
         }
-        for (int i = 0; i < nums.length; i++) {
-            //数组元素和index 不一致
-            while (i != nums[i]) {
-                //如果该数与 对应的index 上的数相等，证明重复了
-                if (nums[i] == nums[nums[i]]) {
-                    return true;
+        for(int i = 0; i < nums.length; i++){
+            while(nums[i] != i){
+                if (nums[i] == nums[nums[i]]){
+                    return nums[i];
                 }
-                //将数组元素和index 一一对应，如果不对应就交换位置
-                int temp = nums[nums[i]];
-                nums[nums[i]] = nums[i];
-                nums[i] = temp;
+                //交换
+                int temp = nums[i];
+                nums[i] = nums[temp]; // 不要写 nums[nums[i]] 容易死循环
+                nums[temp] = temp;
             }
         }
-        return false;
+        return -1;
     }
 }

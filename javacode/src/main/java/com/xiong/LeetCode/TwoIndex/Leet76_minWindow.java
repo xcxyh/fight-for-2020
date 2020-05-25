@@ -17,7 +17,59 @@ public class Leet76_minWindow {
         System.out.println(new Leet76_minWindow().minWindow(s, t));
     }
 
+
+    //第二次写
     public String minWindow(String s, String t) {
+        //sliding window
+        Map<Character, Integer> window = new HashMap<>();
+        Map<Character, Integer> target = new HashMap<>();
+
+        //init 记录目标中各字符出现次数
+        for(char c : t.toCharArray()){
+            target.put(c, target.getOrDefault(c, 0) + 1);
+        }
+        int left = 0;
+        int right = 0;
+        int minLen = Integer.MAX_VALUE;
+        int len = s.length();
+        int match = 0; //有多少 种 字符匹配了
+
+        int ansleft = 0;
+        int ansright = 0;
+        while(right < len){
+            char c = s.charAt(right);
+            if (target.containsKey(c)){
+                window.put(c, window.getOrDefault(c, 0) + 1);
+                if (window.get(c).intValue() == target.get(c).intValue()){
+                    match++;
+                }
+            }
+            right++;
+            //全匹配了
+            while (match == target.size()){
+                //更新结果
+                if (right - left < minLen){
+                    minLen = right - left;
+                    ansleft = left;
+                    ansright = right;
+                }
+                //滑窗左端点移动
+                char cleft = s.charAt(left);
+                if (target.containsKey(cleft)){
+                    window.put(cleft, window.get(cleft) - 1);
+                    if (window.get(cleft) < target.get(cleft)){
+                        match--;
+                    }
+                }
+                left++;
+            }
+
+        }
+        return minLen == Integer.MAX_VALUE ? "" : s.substring(ansleft, ansright);
+
+    }
+
+    public String minWindow_1(String s, String t) {
         //滑动窗口
         int left = 0;
         int right = 0;

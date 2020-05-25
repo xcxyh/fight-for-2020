@@ -1,4 +1,4 @@
-package com.xiong.JZOffer;
+package com.xiong.LeetCode.JianZhiOffer;
 
 /**
  * @author ：xiongcong

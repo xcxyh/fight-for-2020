@@ -12,33 +12,31 @@ package com.xiong.LeetCode.DynamicProgramming;
 
 
 /**
- *  @author: xiongcong
-
-
- 300. 最长上升子序列  lengthOfLIS  一维dp
-
- 5. 最长回文子串 longestSubPalindome  二维dp
-
- 516. 最长回文子序列 longestPalindromeSubseq 二维dp
-
-1143. 最长公共子序列  longestCommonSubsequence  二维dp （另一种形式）
-
-72. 编辑距离  minDistance  二维dp （另一种形式）
-
+ * @author: xiongcong
+ * 字符串的动态规划问题:
+ * <p>
+ * 300. 最长上升子序列  lengthOfLIS  一维dp
+ * <p>
+ * 5. 最长回文子串 longestSubPalindome  二维dp
+ * <p>
+ * 516. 最长回文子序列 longestPalindromeSubseq 二维dp
+ * <p>
+ * 1143. 最长公共子序列  longestCommonSubsequence  二维dp （另一种形式）
+ * <p>
+ * 72. 编辑距离  minDistance  二维dp （另一种形式）
  */
-public class S5_longestSubPalindome {
+public class Leet5_longestSubPalindome {
     /**
      * @author: xiongcong
      * @Date: 2020/3/21 18:25
      * @Description: 也可以通过扩展字符串的方式 和 动态规划的方式
      */
     public static void main(String[] args) {
-        System.out.println(new S5_longestSubPalindome().longestPalindrome("dbabd"));
+        System.out.println(new Leet5_longestSubPalindome().longestPalindrome("dbabd"));
     }
 
     private int maxLen = 0;
     private String subString;
-
     public String longestPalindrome(String s) {
         if (s.length() <= 1) {
             return s;
@@ -47,14 +45,10 @@ public class S5_longestSubPalindome {
             extendSubstring(s, i, i);  //从一位 的 子串开始扩展
             extendSubstring(s, i, i + 1); //从两位的子串开始扩展
         }
-
         return subString;
     }
-
     private void extendSubstring(String s, int start, int end) {
-
         while (start >= 0 && end < s.length() && s.charAt(start) == s.charAt(end)) {
-
             if (end - start + 1 > maxLen) {
                 maxLen = end - start + 1;
                 subString = s.substring(start, end + 1);
@@ -62,7 +56,6 @@ public class S5_longestSubPalindome {
             start--;
             end++;
         }
-
     }
 
     //能 ac  的 dp 写法

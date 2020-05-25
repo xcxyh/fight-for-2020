@@ -31,6 +31,12 @@
                 <artifactId>commons-dbcp</artifactId>
                 <version>1.4</version>
             </dependency>
+
+            <dependency>
+                <groupId>cglib</groupId>
+                <artifactId>cglib</artifactId>
+                <version>3.2.12</version>
+            </dependency>
             <!--postgres数据库驱动-->
             <dependency>
                 <groupId>postgresql</groupId>

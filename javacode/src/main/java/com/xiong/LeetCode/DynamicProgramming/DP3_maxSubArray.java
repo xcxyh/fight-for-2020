@@ -3,7 +3,7 @@ package com.xiong.LeetCode.DynamicProgramming;
 /**
  * @author ：xiongcong
  * @date ：Created in 2020/3/30 14:52
- * @description：
+ * @description：  53. 最大子序和
  * @modified By：
  * @version: $
  */

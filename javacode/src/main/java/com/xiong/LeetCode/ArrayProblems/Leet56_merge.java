@@ -13,6 +13,40 @@ import java.util.List;
  * @version: $
  */
 public class Leet56_merge {
+    // 第二次手打
+    public int[][] merge_new(int[][] intervals) {
+        if (intervals == null || intervals.length == 0 || intervals[0].length == 0){
+            return intervals;
+        }
+
+        Arrays.sort(intervals, (o1, o2) -> o1[0] - o2[0]);
+        ArrayList<int[]> list = new ArrayList<>();
+        list.add(intervals[0]);
+        for(int i = 1; i < intervals.length; i++){
+            int[] cur = intervals[i];
+            int[] pre = list.get(list.size() -1);
+            if (cur[0] <= pre[1]){
+                int end = Math.max(cur[1], pre[1]);
+                list.set(list.size() -1, new int[]{pre[0], end});
+            }else{
+                list.add(cur);
+            }
+
+        }
+        //list.toArray(new int[0][]); 等效以下代码
+        int size = list.size();
+        int[][] ans = new int[size][2];
+        for(int i = 0; i < size; i++){
+            int[] temp = list.get(i);
+            ans[i]= temp;
+        }
+
+        return ans;
+    }
+
+
+
+
     public int[][] merge(int[][] intervals) {
         if (intervals == null ||intervals.length == 0 || intervals[0].length == 0){
             return intervals;

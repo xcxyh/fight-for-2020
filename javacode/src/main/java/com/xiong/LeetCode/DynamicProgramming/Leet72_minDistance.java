@@ -1,4 +1,4 @@
-package com.xiong.LeetCode.DailyProblems;
+package com.xiong.LeetCode.DynamicProgramming;
 
 /**
  * @author ：xiongcong
@@ -7,7 +7,7 @@ package com.xiong.LeetCode.DailyProblems;
  * @modified By：
  * @version: $
  */
-public class D72_minDistance {
+public class Leet72_minDistance {
 
     public static void main(String[] args) {
         System.out.println(minDistance("cat", "animal"));
