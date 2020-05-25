@@ -1,4 +1,4 @@
-package com.xiong.LeetCode.StringsProblem;
+package com.xiong.LeetCode.DynamicProgramming;
 
 /**
  * @author ：xiongcong
@@ -8,6 +8,23 @@ package com.xiong.LeetCode.StringsProblem;
  * 给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为 1000。
  * @modified By：
  * @version: $
+ */
+
+
+/**
+ *  @author: xiongcong
+
+
+ 300. 最长上升子序列  lengthOfLIS  一维dp
+
+ 5. 最长回文子串 longestSubPalindome  二维dp
+
+ 516. 最长回文子序列 longestPalindromeSubseq 二维dp
+
+1143. 最长公共子序列  longestCommonSubsequence  二维dp （另一种形式）
+
+72. 编辑距离  minDistance  二维dp （另一种形式）
+
  */
 public class S5_longestSubPalindome {
     /**
