@@ -11,8 +11,8 @@ import java.util.*;
  * @version: $
  */
 public class Solution {
-
     public static void main(String[] args) {
-
+        HashMap<String, Integer> map = new HashMap<>();
     }
+
 }

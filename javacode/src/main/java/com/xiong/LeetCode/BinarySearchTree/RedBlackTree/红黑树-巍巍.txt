@@ -258,7 +258,7 @@ public class RBTree <K extends Comparable<K>, V> {
                     }
 
                     //插入节点为其父节点的右子节点（RR情况）=>
-                    //变色（父节点变黑，爷爷节点变红），右旋爷爷节点
+                    //变色（父节点变黑，爷爷节点变红），左旋爷爷节点
                     if(node == parent.right) {
                         setBlack(parent);
                         setRed(gparent);

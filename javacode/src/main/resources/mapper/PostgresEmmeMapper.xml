@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiong.Kakou.dao.PostgresEmmeMapper">
+    
+    <select id="selectNodeByID" parameterType="Integer" resultType="com.xiong.Kakou.entity.EmmeNodeModel">
+
+        SELECT  afromnode as id, ST_Astext(ST_transform(geom, 4326),7) as geom
+        FROM public."node_emmeCore"
+        where afromnode = #{id};
+
+    </select>
+
+</mapper>

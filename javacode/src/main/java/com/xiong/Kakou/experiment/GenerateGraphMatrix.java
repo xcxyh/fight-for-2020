@@ -4,8 +4,10 @@ import com.xiong.Kakou.entity.*;
 import com.xiong.Kakou.service.CarService;
 import com.xiong.Kakou.service.ChainService;
 import com.xiong.Kakou.service.LinkService;
+import com.xiong.Kakou.service.PostgresEmmeService;
 import com.xiong.Kakou.util.*;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.*;
 
@@ -23,8 +25,13 @@ public class GenerateGraphMatrix {
     static LinkService linkService = new LinkService();
 
     static ChainService chainService = new ChainService();
+
+    static PostgresEmmeService postgresEmmeService = new PostgresEmmeService();
+
     //处理节点 新建map 存储 node 和 编号的对应关系  K nodeid  V  i
     static Map<String, Integer> nodeMap = new HashMap<>();
+
+
 
     //编号 从 1 开始到 node_size  卡口station 从 1 开始编号
     static Map<String, Integer> stationMap = new HashMap<>();
@@ -32,6 +39,9 @@ public class GenerateGraphMatrix {
     private static final String FORMAT = "yyyy-MM-dd HH:mm:ss";
     //存储 node 和  卡口编号之间的关系 vdmap    K vd  V  nodeid
     static Map<String, String> vdmap = new HashMap<>();
+
+    // 存储一个点的经纬度
+    static Map<Integer, double[]>  latLonMap = new HashMap<>();
 
     public static void main(String[] args) throws Exception {
         //取出对应关系
@@ -191,7 +201,7 @@ public class GenerateGraphMatrix {
                 boolean flag = true; //true 代表 不分开
                 //当间隔时间小于1分钟时 不用 运行dj算法 默认属于同一条链上的节点
                 if (interval > 60) {
-                    flag = isoneChain(interval, node1, node2, graph);
+                    flag = isoneChain(interval, node1, node2, graph, latLonMap);
                 }
                 int reset = 0;
                 if (flag) {
@@ -200,27 +210,26 @@ public class GenerateGraphMatrix {
                     }
                     node2.setStatus("M");
                 } else {
-                    if (j == 0 ) {
+                    if (j == 0) {
                         node1.setStatus("X");
                         node2.setStatus("O");
                     }
-                    if ("M".equals(node1.getStatus())){
+                    if ("M".equals(node1.getStatus())) {
                         //此时 node1 和node2 分别 属于不同的出行链
                         node1.setStatus("D");
                         node2.setStatus("O");
-                    }else if("O".equals(node1.getStatus())){
+                    } else if ("O".equals(node1.getStatus())) {
                         node1.setStatus("X");
                         node2.setStatus("O");
                     }
-
 
 
                 }
                 //如果到达最后
                 if (j == chainModels.size() - 2) {
-                    if ("D".equals(node1.getStatus()) || "X".equals(node1.getStatus())){
+                    if ("D".equals(node1.getStatus()) || "X".equals(node1.getStatus())) {
                         node2.setStatus("X");
-                    }else{
+                    } else {
                         node2.setStatus("D");
                     }
                 }
@@ -237,29 +246,32 @@ public class GenerateGraphMatrix {
      * @Date: 2020/3/15 14:39
      * @Description: 通过 最短路径算法和 车辆速度 40 km /h -> 11.11 m/s length 单位为 m  进行划分
      */
-    private static boolean isoneChain(int interval, ChainModel node1, ChainModel node2, EdgeWeightedDiGraph<String> graph) {
-        Dijkstra dijkstra = new Dijkstra(graph);//新建一个dj
+    private static boolean isoneChain(int interval, ChainModel node1, ChainModel node2, EdgeWeightedDiGraph<String> graph,Map<Integer, double[]> latlonMap) {
+
+
+        Dijkstra dijkstra = new Dijkstra(graph, latlonMap);//新建一个dj
         String vd1 = node1.getSbbh();
         String vd2 = node2.getSbbh();
-
-        Integer from = nodeMap.get(vdmap.get(vd1));
+        // 通过 卡口 编号 得到  node 编号，  然后 得到 dijstra 里面的 编号
+        Integer from = nodeMap.get(vdmap.get(vd1)); //
         Integer to = nodeMap.get(vdmap.get(vd2));
 
         //如果 from 或者 to 为 null  则代表不在图中 跳过 直接返回true
         if (from == null || to == null) {
             return true;
         }
+
+        //得到坐标
+        double[] latlon1 = latlonMap.get(from);
+        double[] latlon2 = latlonMap.get(to);
+
+        // 得到 xc yc range_x rang_y
+        double[] range = PointUtil.getRange(latlon1[0], latlon1[1], latlon2[0], latlon2[1]);
+
         //求解最短路径
-        Iterable<DiEdge> edges = dijkstra.fromTopath(from, to);
-
-        if (edges == null) {
-            return true;
-        }
-
-        Iterator<DiEdge> it = edges.iterator();
-        Double length = 0.0;
-        while (it.hasNext()) {
-            length += it.next().weight();
+        double length = dijkstra.distTo(from, to, range);
+        if (length == -1) {
+            return true; // 不可达 不存在最短路径
         }
         double time = length / 11.11;
         //间隔大于 最短行程时间的 2倍 分开
@@ -319,14 +331,13 @@ public class GenerateGraphMatrix {
         List<LinkModel> allLink = linkService.selectAllLink();
         int size = allLink.size();
         int[][] edges;
-        List<String> vertexInfo;
         int[] weight;
         //初始化
         edges = new int[size][2];
         weight = new int[size];
-        vertexInfo = new ArrayList<>();
 
-        int k = 0;
+
+        int k = 0;  // 顶点 总数
         for (int i = 0; i < size; i++) {
             LinkModel linkModel = allLink.get(i);
             String node1 = linkModel.getFrom_node();
@@ -338,10 +349,19 @@ public class GenerateGraphMatrix {
             if (nodeMap.get(node2) == null) {
                 nodeMap.put(node2, k++);
             }
-        }
-        //将编号 添加到 vertexInfo
-        for (int i = 0; i < k; i++) {
-            vertexInfo.add(i + "");
+            double[] latlon1 =  getlatlon(node1);
+            if (latlon1 != null){
+                // 得到 图中 所有的 点 对应的 经纬度  key 为 dijstra 中的 id
+                latLonMap.put(nodeMap.get(node1),latlon1);
+            }
+            double[] latlon2 =  getlatlon(node2);
+            if (latlon2 != null){
+                // 得到 图中 所有的 点 对应的 经纬度  key 为 dijstra 中的 id
+                // todo 这里 nodeMap 大小为 804 latlonMap 大小为 758 有的点没对上
+                latLonMap.put(nodeMap.get(node2),latlon2);
+
+            }
+
         }
 
         //生成图  将node 转成 编号
@@ -355,11 +375,27 @@ public class GenerateGraphMatrix {
         }
 
 
-        EdgeWeightedDiGraph<String> graph = new EdgeWeightedDiGraph<>(vertexInfo, edges, weight);
+        EdgeWeightedDiGraph<String> graph = new EdgeWeightedDiGraph<>(k, edges, weight);
 
         System.out.println("该图的邻接表为\n" + graph);
         System.out.println("该图的所有边：" + graph.edges());
         return graph;
+    }
+
+    private static double[] getlatlon(String node){
+        double[] res = null;
+        Integer nodeid = Integer.parseInt(node);
+        EmmeNodeModel emmeNode = postgresEmmeService.selectNodeByID(nodeid);
+        if (emmeNode != null){
+            String geom = emmeNode.getGeom();
+            geom = geom.substring(6, geom.length() - 1);
+            // todo 想办法 获得 点的经纬度
+            String[] latlon = geom.split(" ");
+            double lat = Double.parseDouble(latlon[1]); // 纬度在后面
+            double lon = Double.parseDouble(latlon[0]);
+            res = new double[]{lat,lon};
+        }
+        return res;
     }
 
 }

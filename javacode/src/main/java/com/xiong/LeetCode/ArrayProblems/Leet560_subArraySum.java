@@ -17,29 +17,8 @@ public class Leet560_subArraySum {
     public static void main(String[] args) {
         System.out.println(new Leet560_subArraySum().subarraySum(new int[]{1, 1, 1}, 2));
     }
-    // 利用前缀和数组
-    public int subarraySum(int[] nums, int k) {
-        //前缀和数组
-        int len = nums.length;
-        int[] dp = new int[len + 1];
-        dp[0] = 0;
-        for(int i = 1; i <= len; i++){
-            dp[i] = dp[i-1] + nums[i-1];
-        }
 
-        int ans = 0;
-        for(int i = 1; i <= len ; i++){
-            for(int j = 0; j < i; j++){
-                int temp = dp[i] - dp[j];
-                if (temp == k){
-                    ans++;
-                }
-            }
-        }
-        return ans;
-    }
-
-    //还有一种利用 两数之和 思想, 利用哈希表优化的 方法
+    //利用哈希表优化的 前缀和
     private int subarraySum_2(int[] nums, int k) {
         int len = nums.length;
         // 前缀和 --- 前缀和 出现次数
@@ -61,4 +40,26 @@ public class Leet560_subArraySum {
         return ans;
     }
 
+
+    // 利用前缀和数组
+    public int subarraySum(int[] nums, int k) {
+        //前缀和数组
+        int len = nums.length;
+        int[] dp = new int[len + 1];
+        dp[0] = 0;
+        for(int i = 1; i <= len; i++){
+            dp[i] = dp[i-1] + nums[i-1];
+        }
+
+        int ans = 0;
+        for(int i = 1; i <= len ; i++){
+            for(int j = 0; j < i; j++){
+                int temp = dp[i] - dp[j];
+                if (temp == k){
+                    ans++;
+                }
+            }
+        }
+        return ans;
+    }
 }
