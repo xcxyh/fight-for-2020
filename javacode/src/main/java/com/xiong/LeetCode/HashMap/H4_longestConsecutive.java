@@ -19,12 +19,51 @@ import java.util.Set;
  */
 public class H4_longestConsecutive {
 
+    //第二次  忘记做法了
+    public int longestConsecutive(int[] nums) {
+
+        if (nums == null || nums.length == 0){
+            return 0;
+        }
+
+        Set<Integer> set = new HashSet<>();
+
+        for(int n : nums){
+            set.add(n);
+        }
+        int ans = 0;
+        for(int n : nums){
+            int temp = 0;
+            if (set.contains(n)){
+                set.remove(n);
+
+                int cur = n;
+                temp = 1; // 该数本身 长度为 1
+                while(set.contains(cur - 1)){
+                    set.remove(--cur);
+                }
+                //更新temp  左边的 个数
+                temp += (n - cur);
+                cur = n;
+                while(set.contains(cur + 1)){
+                    set.remove(++cur);
+                }
+                // 右边的 个数
+                temp += (cur - n);
+            }
+
+            ans = Math.max(ans, temp);
+        }
+        return ans;
+    }
+
+
     /**
      * 输入: [100, 4, 200, 1, 3, 2]
      * 输出: 4
      * 解释: 最长连续序列是 [1, 2, 3, 4]。它的长度为 4。
      */
-    public int longestConsecutive(int[] nums) {
+    public int longestConsecutive_1(int[] nums) {
         //添加到 set 中
         Set<Integer> numsSet = new HashSet<>();
         for (int num : nums) {

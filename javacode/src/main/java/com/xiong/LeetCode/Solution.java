@@ -2,6 +2,8 @@ package com.xiong.LeetCode;
 
 
 import java.util.*;
+import java.util.concurrent.locks.AbstractQueuedSynchronizer;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author ：xiongcong
@@ -13,6 +15,9 @@ import java.util.*;
 public class Solution {
     public static void main(String[] args) {
         HashMap<String, Integer> map = new HashMap<>();
+        ReentrantLock reentrantLock =new ReentrantLock(true);
     }
+
+
 
 }
