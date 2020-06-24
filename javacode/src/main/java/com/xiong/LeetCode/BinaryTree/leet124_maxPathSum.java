@@ -31,9 +31,9 @@ public class leet124_maxPathSum {
         int right_max = Math.max(max_gain(root.right), 0);
 
         int newSum = Math.max(left_max, right_max) + val;
-
+        // 计算结果 与max_gain 的返回结果不同
         int new_path =  val + left_max + right_max;
-
+        // 更新结果
         ans = Math.max(ans, new_path);
 
         return newSum;

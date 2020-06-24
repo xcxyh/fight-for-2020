@@ -15,9 +15,10 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Solution {
     public static void main(String[] args) {
         HashMap<String, Integer> map = new HashMap<>();
-        ReentrantLock reentrantLock =new ReentrantLock(true);
+        List<Integer> list = new ArrayList<>();
+        list.add(3, 4);
+        StringBuilder ans = new StringBuilder();
     }
-
 
 
 }

@@ -3,7 +3,7 @@ package com.xiong.LeetCode.DynamicProgramming;
 /**
  * @author ：xiongcong
  * @date ：Created in 2020/4/23 12:35
- * @description：  面试题 08.11. 硬币  完全背包问题的相似问题
+ * @description：  面试题 08.11. 硬币  完全背包问题的相似问题  与 leet518 基本 相同
  * @modified By：
  * @version: $
  */

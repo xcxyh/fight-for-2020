@@ -1,5 +1,6 @@
 package com.xiong.LeetCode.StackAndQueue;
 
+import java.util.ArrayDeque;
 import java.util.Stack;
 
 /**
@@ -23,6 +24,35 @@ public class S5_dailyTemperatures {
     public static void main(String[] args) {
         new S5_dailyTemperatures().dailyTemperaturesL(new int[]{73, 74, 75, 71, 69, 72, 76, 73});
     }
+
+    //第二次做
+    public int[] dailyTemperatures(int[] T) {
+        if (T == null || T.length == 0){
+            return T;
+        }
+        int n = T.length;
+        int[] ans = new int[n];
+        // 建议用 ArrayDeque 替代 Stack
+        // J1.6 的类 肯定比 J1.0 的类好啊
+        ArrayDeque<Integer> stack = new ArrayDeque<>();
+        int i = 0;
+
+        while(i < n){
+            // 这也是对 单调栈的 使用
+            while(!stack.isEmpty() && T[stack.peek()] < T[i]){
+                int pre = stack.pop();
+                ans[pre] = i - pre;
+            }
+
+            stack.push(i); // 下标入栈 便于计算天数
+            i++;
+        }
+
+        return ans;
+    }
+
+
+
     /**
      *  @author: xiongcong
      *  @Date: 2020/3/5 12:09
@@ -46,31 +76,6 @@ public class S5_dailyTemperatures {
         return result;
 
     }
-
-    /**
-     *  @author: xiongcong
-     *  @Date: 2020/3/5 11:45
-     *  @Description: 该解法超时了 复杂度过高
-     */
-    public int[] dailyTemperatures(int[] T){
-        Stack<Integer> stack = new Stack<>();
-        int[] result = new int[T.length];
-        int k = 0;
-        for (int i = 0; i <T.length ; i++) {
-            for (int j = i + 1; j < T.length; j++) {
-                stack.push(T[j]);
-                if (!stack.isEmpty()&& stack.peek() > T[i]){
-                    result[i]=stack.size();
-                    break;
-                }
-            }
-            //清空栈
-            stack.clear();
-        }
-        return result;
-        }
-
-
 
 
 }

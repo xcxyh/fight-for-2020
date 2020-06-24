@@ -305,71 +305,11 @@ public class SortUtil {
 	 *
 	 *
      */
-    public static void heapSort(int[] arr,int size){
 
-    	int[] array = Arrays.copyOf(arr, size);
-    	//将这个数组改造成大顶堆  大顶堆则为升序排列
-		maxHeapify(array,size);
 
-		for (int i = 0; i <size ; i++) {
-			//交换数组中的头尾元素
-			swap(array,0,size-1-i);
-			//对剩余元素再次建堆i
-			heapify(array,0,size-1-i);
-		}
-		System.out.println(Arrays.toString(array));
 
-	}
 
-	/**
-	 *  @Description:  建堆，这个建堆，适用于在交换数组中的头尾元素之后，对 堆的调整
-	 *  而将一个数组完全改造成一个堆 则是maxHeapify(int[] arr,int size) 函数
-	 */
-	public static void heapify(int[] array , int currentRootNode , int size){
-    	//计算当前根节点的左右节点位置，利用完全二叉树的特性
-    	int left = currentRootNode * 2 + 1;
-		int right = currentRootNode * 2 + 2;
 
-		//记录下值最大的节点的位置，暂时为 currentRootNode
-		int maxPosition = currentRootNode;
-		//当前位置不能大于size
-		if(currentRootNode<size){
-
-			//判断 左节点值是否大于最大值
-			if(left<size){
-				//判断
-				if(array[maxPosition]<array[left]){
-					maxPosition = left;
-				}
-			}
-			//判断 右节点值是否大于最大值
-			if(right<size){
-				//判断
-				if(array[maxPosition]<array[right]){
-					maxPosition = right;
-				}
-			}
-			//如果 根节点有变化 就交换 使根节点的值为最大
-			if(maxPosition != currentRootNode){
-				swap(array,maxPosition,currentRootNode);
-				//然后对这个以 maxPosition为根节点的子树建堆
-				heapify(array,maxPosition,size);
-			}
-		}
-	}
-
-	/**
-	 * 将一个数组改造成堆  从数组最后一个元素开始
-	 * @param arr
-	 * @param size
-	 */
-	public static void maxHeapify(int[] arr, int size){
-		//倒着遍历这个数组
-		for (int i = size-1; i >=0; i--) {
-			heapify(arr,i,size);
-		}
-
-	}
 	/**
 	* @Description 交换数组中的下标为 i 和 j 两个元素
 	*/
@@ -390,7 +330,6 @@ public class SortUtil {
 	 */
     public static void main(String[] args) {
         int[] arrays = {9, 2, 1, 3, 5, 9, 2, 1, 8};
-		heapSort(arrays,arrays.length);
         //System.out.println(":" + Arrays.toString(mergeSort(arrays, 0, arrays.length - 1)));
     }
 

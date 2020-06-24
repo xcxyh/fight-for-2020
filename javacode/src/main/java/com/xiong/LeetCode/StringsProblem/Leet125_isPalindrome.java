@@ -9,7 +9,54 @@ package com.xiong.LeetCode.StringsProblem;
  */
 public class Leet125_isPalindrome {
 
+
+    // 2020.06.19 每日一题
     public boolean isPalindrome(String s) {
+
+        if (s == null || s.length() == 0){
+            return true;
+        }
+
+        int left = 0;
+        int right = s.length() - 1;
+        char[] chars = s.toCharArray();
+        while(left < right){
+            while(left < right && ! Character.isLetterOrDigit(chars[left])){
+                left++;
+            }
+
+            while(left < right && ! Character.isLetterOrDigit(chars[right])){
+                right--;
+            }
+
+            if (left < right){
+                if (istheSame(chars[left], chars[right])){
+                    left++;
+                    right--;
+                }else{
+                    return false;
+                }
+            }
+
+        }
+        return true;
+
+
+
+    }
+
+    private boolean istheSame(char a, char b){
+
+        if (Character.isLetter(a) && Character.isLetter(b)){
+            return Character.toLowerCase(a) == Character.toLowerCase(b);
+        }
+        // 有一个不是字母 就直接比较
+        return a == b;
+    }
+
+
+
+    public boolean isPalindrome_1(String s) {
         if (s == null || s.length() == 0){
             return true;
         }

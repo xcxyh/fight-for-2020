@@ -10,7 +10,7 @@ package com.xiong.LeetCode.StringsProblem;
 public class KMP_String {
 
     public static void main(String[] args) {
-        System.out.println(kmpMatch("abcabaabaabcacb", "abaabcac"));
+        System.out.println(kmpMatch("abcabaabaabcacb", "abcdabcg"));
     }
 
     //求模板字符串的 next 数组

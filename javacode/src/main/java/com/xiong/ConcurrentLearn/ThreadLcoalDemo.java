@@ -9,14 +9,13 @@ package com.xiong.ConcurrentLearn;
  */
 public class ThreadLcoalDemo {
 
-
+    private static final ThreadLocal<String> threadLocal =  new ThreadLocal<>();
     public static void main(String[] args) {
-        ThreadLocal<String> threadLocal =  new ThreadLocal<>();
-        ThreadLocal<String> threadLocal2 =  new ThreadLocal<>();
-        threadLocal.set("xi");
-        threadLocal2.set("ha");
-
+        threadLocal.set("I am  main");
         System.out.println(threadLocal.get());
-        System.out.println(threadLocal2.get());
+
+        new Thread(() -> threadLocal.set("I am A"),"A").start();
+
+        new Thread(() -> threadLocal.set("I am B"),"B").start();
     }
 }

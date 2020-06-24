@@ -8,11 +8,11 @@ import java.util.Queue;
 /**
  * @author ：xiongcong
  * @date ：Created in 2020/4/14 11:57
- * @description： 二叉树的序列化与反序列化
+ * @description： 二叉树的序列化与反序列化   BFS 方法 可能效率高点 但是写起来比较复杂
  * @modified By：
  * @version: $
  */
-public class Leet297_serializeAnddeserialize {
+public class Leet297_Codec_BFS {
     // Encodes a tree to a single string.
     public static String serialize(TreeNode root) {
         StringBuilder sb = new StringBuilder();

@@ -8,7 +8,7 @@ import java.util.*;
 /**
  *  @author: xiongcong
  *  @Date: 2019/12/30 21:13
- *  @Description: 多路复用I/O 示例
+ *  @Description: 多路复用I/O 示例   可以用 SendDataToPort 测试
  */
 public class MultiPortEcho {
     private int ports[];
@@ -34,7 +34,7 @@ public class MultiPortEcho {
             ServerSocket ss = ssc.socket();
             InetSocketAddress address = new InetSocketAddress(ports[i]);
             ss.bind(address);
-            //将新打开的 ServerSocketChannels 注册到 Selector上
+            //将新打开的 ServerSocketChannels 注册到 Selector上 ,并注册的操作为：“接收”操作
             SelectionKey key = ssc.register(selector, SelectionKey.OP_ACCEPT);
             // OP_ACCEPT 指定我们想要监听 accept 事件，也就是在新的连接建立时所发生的事件。这是适用于 ServerSocketChannel 的唯一事件类型。
             //SelectionKey 代表这个通道在此 Selector 上的这个注册
@@ -71,6 +71,7 @@ public class MultiPortEcho {
                     SocketChannel sc = (SocketChannel) key.channel();
 
                     // Echo data
+                    System.out.print("Data from " + sc.getLocalAddress() + ": ");
                     int bytesEchoed = 0;
                     while (true) {
                         echoBuffer.clear();
@@ -82,13 +83,12 @@ public class MultiPortEcho {
                         }
 
                         echoBuffer.flip();
-
+                        System.out.println(new String(echoBuffer.array(), 0, r));
                         sc.write(echoBuffer);
                         bytesEchoed += r;
                     }
 
-                    System.out.println("Echoed " + bytesEchoed + " from " + sc);
-
+                    System.out.println("Echoed " + bytesEchoed + " from " + sc.getLocalAddress());
                     it.remove();
                 }
 
