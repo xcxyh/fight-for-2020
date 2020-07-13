@@ -11,8 +11,60 @@ import java.util.Deque;
  * @version: $
  */
 public class Leet84_largestRectangleArea {
-    // 单调增栈  来 记录 当前元素 左右 的 第一个小于当前元素的元素的下标
+
     public int largestRectangleArea(int[] heights) {
+        //单调栈
+        if (heights == null || heights.length == 0){
+            return 0;
+        }
+        // 下标 入栈
+        ArrayDeque<Integer> stack = new ArrayDeque<>();
+        int n = heights.length;
+        int ans = 0;
+        for(int i = 0; i <= n; i++){
+            int nowheight  = -1;
+            if (i < n){
+                nowheight = heights[i];
+            }
+            while(!stack.isEmpty() && nowheight <=  heights[stack.peek()]){
+                int height = heights[stack.pop()];
+                int width = i;
+                if (!stack.isEmpty()){
+                    width = width - stack.peek() - 1;
+                }
+                ans = Math.max(ans, width* height);
+            }
+            stack.push(i);
+        }
+
+        return ans;
+    }
+
+    private int baoli(int[] heights){
+        if (heights == null || heights.length == 0){
+            return 0;
+        }
+        int len = heights.length;
+        int square = 0;
+        for(int i = 0; i < len; i++ ){
+            int curHigh = heights[i];
+            int curKuan = 1;
+            int left = i - 1;
+            int right = i + 1;
+            while (left >= 0 && heights[left--] >= curHigh){
+                curKuan++;
+            }
+            while (right < len && heights[right++] >= curHigh){
+                curKuan++;
+            }
+            square = Math.max(square, curHigh * curKuan);
+
+        }
+        return square;
+    }
+
+    // 单调增栈  来 记录 当前元素 左右 的 第一个小于当前元素的元素的下标
+    public int largestRectangleArea1(int[] heights) {
         if (heights == null || heights.length == 0){
             return 0;
         }
@@ -47,26 +99,4 @@ public class Leet84_largestRectangleArea {
         return square;
     }
 
-    private int baoli(int[] heights){
-        if (heights == null || heights.length == 0){
-            return 0;
-        }
-        int len = heights.length;
-        int square = 0;
-        for(int i = 0; i < len; i++ ){
-            int curHigh = heights[i];
-            int curKuan = 1;
-            int left = i - 1;
-            int right = i + 1;
-            while (left >= 0 && heights[left--] >= curHigh){
-                curKuan++;
-            }
-            while (right < len && heights[right++] >= curHigh){
-                curKuan++;
-            }
-            square = Math.max(square, curHigh * curKuan);
-
-        }
-        return square;
-    }
 }

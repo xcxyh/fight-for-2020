@@ -1,5 +1,7 @@
 package com.xiong.JZOffer;
 
+import com.xiong.ListNode;
+
 /**
  * @author ：xiongcong
  * @date ：Created in 2020/2/2 11:58

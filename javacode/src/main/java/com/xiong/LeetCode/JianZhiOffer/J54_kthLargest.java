@@ -14,28 +14,25 @@ import java.util.Queue;
  */
 public class J54_kthLargest {
 
-    private Queue<Integer> queue;
-    private int len = 0;
+    private int global_k ;
+    private int ans = 0;
     public int kthLargest(TreeNode root, int k) {
-        if (root == null){
-            return 0;
-        }
-        queue = new LinkedList<>();
-        len = k;
-        inorder(root);
-        return queue.peek();
+        global_k = k;
+
+        reverseInorder(root);
+        return ans;
     }
-    private void inorder(TreeNode root){
+    // 中序遍历的 反遍历   右 -->  中 --> 左
+    private void reverseInorder(TreeNode root){
         if (root == null){
             return;
         }
-        inorder(root.left);
-        if (queue.size() < len){
-            queue.offer(root.val);
-        }else{
-            queue.poll();
-            queue.offer(root.val);
+        reverseInorder(root.right);
+        global_k--;
+        if (global_k == 0){
+            ans = root.val;
+            return;
         }
-        inorder(root.right);
+        reverseInorder(root.left);
     }
 }

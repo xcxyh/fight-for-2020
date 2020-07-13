@@ -12,6 +12,47 @@ import java.util.List;
  * @version: $
  */
 public class J57_findContinuousSequence {
+
+    public int[][] findContinuousSequence2(int target) {
+        // 双指针
+
+        int left = 1;
+        int right =1;
+        int sum = 0;
+        List<int[]> ans = new ArrayList<>();
+        while(right < target){
+            if (sum < target){
+                sum += right;
+                right++;
+            }else if (sum > target){
+                sum -= left;
+                left++;
+            }else{
+                int[] temp = new int[right - left];
+
+                for(int i = left; i < right; i++){
+                    temp[i - left] = i;
+                }
+                ans.add(temp);
+                //更新
+                sum += right;
+                sum -= left;
+                left++;
+                right++;
+            }
+        }
+        int[][] ret = new int[ans.size()][];
+
+        for(int i = 0; i < ans.size(); i++){
+            ret[i] = ans.get(i);
+        }
+
+        return ret;
+    }
+
+
+
+
     //这么写  能快很多
     public int[][] findContinuousSequence(int target) {
         List<int[]> ans = new ArrayList<>();

@@ -43,7 +43,7 @@ public class D22_generateKuohao {
         if (n == 0) {
             return ans;
         }
-        Stack<Character> stack = new Stack<>();
+
         backtracking(0, 0, n, new StringBuilder());
         return ans;
     }

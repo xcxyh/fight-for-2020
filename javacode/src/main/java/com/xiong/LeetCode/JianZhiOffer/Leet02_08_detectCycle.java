@@ -1,6 +1,6 @@
 package com.xiong.LeetCode.JianZhiOffer;
 
-import com.xiong.JZOffer.ListNode;
+import com.xiong.ListNode;
 
 /**
  * @author ：xiongcong

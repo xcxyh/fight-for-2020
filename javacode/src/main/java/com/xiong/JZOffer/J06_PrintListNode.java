@@ -1,5 +1,7 @@
 package com.xiong.JZOffer;
 
+import com.xiong.ListNode;
+
 import java.util.ArrayList;
 import java.util.Stack;
 

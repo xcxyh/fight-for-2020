@@ -1,4 +1,4 @@
-package com.xiong.JZOffer;
+package com.xiong;
 
 
 /**
@@ -23,6 +23,23 @@ public class ListNode {
         pre.next = this;
         this.val = x;
 
+    }
+    /**
+     *  @author: xiongcong
+     *  @Date: 2020/6/25 17:16
+     *  @Description: 工具类，根据 数组 生成 单链表，返回头节点
+     */
+    public static ListNode generateListNodeFromArr(int[] arr) {
+        if (arr == null || arr.length < 1){
+            return null;
+        }
+        ListNode newHead = new ListNode(arr[0]);
+        ListNode cur = newHead;
+        for (int i = 1; i < arr.length; i++) {
+            cur.next = new ListNode(arr[i]);
+            cur = cur.next;
+        }
+        return newHead;
     }
 
     @Override

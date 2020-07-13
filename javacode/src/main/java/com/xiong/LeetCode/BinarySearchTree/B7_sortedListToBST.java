@@ -1,6 +1,6 @@
 package com.xiong.LeetCode.BinarySearchTree;
 
-import com.xiong.JZOffer.ListNode;
+import com.xiong.ListNode;
 import com.xiong.LeetCode.TreeNode;
 
 /**

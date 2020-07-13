@@ -1,5 +1,7 @@
 package com.xiong.JZOffer;
 
+import com.xiong.ListNode;
+
 /**
  * @author ：xiongcong
  * @date ：Created in 2020/2/4 15:07
@@ -17,7 +19,7 @@ public class J25_MergeList {
      *  @Date: 2020/2/4 15:09
      *  @Description: 递归
      */
-    public static ListNode merge(ListNode list1,ListNode list2){
+    public static ListNode merge(ListNode list1, ListNode list2){
 
         if(list1 == null){
             return list2;

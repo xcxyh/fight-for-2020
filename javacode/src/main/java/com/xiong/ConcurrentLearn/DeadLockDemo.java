@@ -1,5 +1,6 @@
 package com.xiong.ConcurrentLearn;
 
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -64,6 +65,7 @@ public class DeadLockDemo {
         String lockB="lockB";
         new Thread(new deadTesk(lockA,lockB),"ThreadAAAAA").start();
         new Thread(new deadTesk(lockB,lockA),"ThreadBBBBB").start();
+        //ConcurrentHashMap
     }
 
 

@@ -1,4 +1,4 @@
-package com.xiong.AForkTheWork.CompanyZHAOYIN;
+package com.xiong.AForkTheWork.CompanyZhaoYin;
 
 import com.xiong.DesignPattern.proxy.dynamicProxy.jdk.Person;
 

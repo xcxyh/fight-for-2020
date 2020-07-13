@@ -1,6 +1,6 @@
 package com.xiong.LeetCode.ListNode;
 
-import com.xiong.JZOffer.ListNode;
+import com.xiong.ListNode;
 
 import java.util.Stack;
 
