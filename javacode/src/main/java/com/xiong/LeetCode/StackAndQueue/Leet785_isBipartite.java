@@ -1,6 +1,8 @@
 package com.xiong.LeetCode.StackAndQueue;
 
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 /**
@@ -13,6 +15,40 @@ import java.util.Stack;
 public class Leet785_isBipartite {
 
     public boolean isBipartite(int[][] graph) {
+        int size = graph.length;
+
+        //先 初始化 color
+        int[] color = new int[size];
+
+        //init  1 -1 两种颜色  0 为 未着色
+
+        for(int i = 0; i < size; i++){
+            if (color[i] == 0){
+                // bfs 遍历
+                Queue<Integer> q = new LinkedList<>();
+
+                q.offer(i);
+                //着色
+                color[i] = 1;
+                while(!q.isEmpty()){
+                    int cur = q.poll();
+
+                    for(int n : graph[cur]){
+                        if (color[n] == 0){ //反色
+                            color[n] = color[cur] * (-1);
+                            q.offer(n);
+                        }else if (color[n] == color[cur]){
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+
+    public boolean isBipartite_dfs(int[][] graph) {
         //深度优先遍历 着色
         int size = graph.length;
 

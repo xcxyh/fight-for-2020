@@ -48,7 +48,7 @@ public class LRUCache_LinkedListAndMap {
         CacheNode node = new CacheNode(key, value);
 
         if (map.containsKey(key)){
-            // 删除 cacheList 中的旧的，先从map中得到旧的再删除
+            //先从map中得到旧的 再 删除 cacheList 中的旧的，
             CacheNode oldNode = map.get(key);
             cacheList.remove(oldNode);
             //新的node 插入到头部

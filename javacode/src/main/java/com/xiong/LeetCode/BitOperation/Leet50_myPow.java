@@ -39,23 +39,28 @@ public class Leet50_myPow {
 
 
     //递归
-    private double myPow_recusive(double x, int n) {
-        if (n == 0) { // base case
+    public double myPow_r(double x, int n) {
+        int N = n;
+        // n 为负 ，
+        if (n < 0){
+            // n 为 Integer.MIN_VALUE  的特殊情况
+            if (n == Integer.MIN_VALUE){
+                return 1 / x * myPow_r(1 / x, Integer.MAX_VALUE);
+            }
+            // n 为负的处理
+            N = -n;
+            x = 1 / x;
+        }
+        // base case
+        if (N == 0){
             return 1.0;
         }
-
-        if (n < 0) { // 负数情况
-            if (n == Integer.MIN_VALUE) { // 极端情况
-                return (1.0 / x) * myPow_recusive(1.0 / x, Integer.MAX_VALUE);
-            }
-            return 1.0 / myPow_recusive(x, -n);
+        // n 为 奇数
+        if ( (N & 1) == 1){
+            return myPow_r(x, N - 1) * x;
         }
-
-        if (n % 2 == 1) { // 奇数情况 可以写成 (n & 1) == 1
-            return x * myPow_recusive(x, n - 1);
-        }
-        double sub = myPow_recusive(x, n / 2);
-
-        return sub * sub; // 快速幂法, n/2 ---> n >> 1
+        // n 为 偶数
+        return myPow_r( x*x , N / 2);
     }
+
 }

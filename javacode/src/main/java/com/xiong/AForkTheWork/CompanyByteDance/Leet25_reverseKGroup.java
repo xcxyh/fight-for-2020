@@ -67,7 +67,7 @@ public class Leet25_reverseKGroup {
             // 找到尾节点
             for (int i = 1; i < k && tail != null; i++)
                 tail = tail.next;
-            // 如果不满足 k 个了，那么此时 tail 为 null，直接反转并跳出循环
+            // 如果不满足 k 个了，那么此时 tail 为 null，直接跳出循环
             if (tail == null) {
                 break;
             }
