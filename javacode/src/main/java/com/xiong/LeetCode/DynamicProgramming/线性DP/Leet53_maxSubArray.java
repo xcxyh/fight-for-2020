@@ -1,4 +1,4 @@
-package com.xiong.LeetCode.DynamicProgramming;
+package com.xiong.LeetCode.DynamicProgramming.线性DP;
 
 /**
  * @author ：xiongcong
@@ -7,11 +7,36 @@ package com.xiong.LeetCode.DynamicProgramming;
  * @modified By：
  * @version: $
  */
-public class DP3_maxSubArray {
+public class Leet53_maxSubArray {
 
     public static void main(String[] args) {
         System.out.println(maxSubArray_dp(new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4}));
     }
+
+    //第三次做
+    public int maxSubArray3(int[] nums) {
+        if (nums == null || nums.length == 0){
+            return 0;
+        }
+        int n = nums.length;
+        //dp[i] 表示 以 i 位置元素结尾的 连续子数组最大和
+        int[] dp = new int[n];
+
+        dp[0] = nums[0];
+        int max = dp[0];
+        for(int i = 1; i < n; i++){
+
+            dp[i] = nums[i];
+
+            if (dp[i - 1] > 0){
+                dp[i] += dp[i - 1];
+            }
+            max = Math.max(max, dp[i]);
+        }
+        return max;
+    }
+
+
 
     //真正的dp
     public static int maxSubArray_dp(int[] nums) {

@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @author ：xiongcong
  * @date ：Created in 2020/6/27 12:28
- * @description： 41. 缺失的第一个正数   原地hash 法，  将 大小为 x 的元素 放置在 下标为 x - 1 的位置上
+ * @description：  面经中的， 41. 缺失的第一个正数   原地hash 法，  将 大小为 x 的元素 放置在 下标为 x - 1 的位置上
  * @modified By：
  * @version: $
  */

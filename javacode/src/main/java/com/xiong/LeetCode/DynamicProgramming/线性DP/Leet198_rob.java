@@ -1,4 +1,4 @@
-package com.xiong.LeetCode.DynamicProgramming;
+package com.xiong.LeetCode.DynamicProgramming.线性DP;
 
 /**
  * @author ：xiongcong
@@ -7,11 +7,39 @@ package com.xiong.LeetCode.DynamicProgramming;
  * @modified By：
  * @version: $
  */
-public class DP4_rob {
+public class Leet198_rob {
+
+    //第四次做
+    public int rob4(int[] nums) {
+        if (nums == null || nums.length == 0){
+            return 0;
+        }
+        int n = nums.length;
+        if (n == 1){
+            return nums[0];
+        }
+
+        if (n == 2){
+            return Math.max(nums[0], nums[1]);
+        }
+
+        //dp[] 表示 从 0 到 i 房间 最高金额
+        // dp[i] = max(dp[i - 1], cur + dp[i - 2]);
+        // 由于只和前 两个状态有关 ，压缩一下
+        int robprepre = nums[0];
+        int robpre = Math.max(nums[0], nums[1]);
+        int ans = robpre;
+        for(int i = 2; i < nums.length; i++){
+            ans = Math.max(robpre, robprepre + nums[i]);
+            robprepre = robpre;
+            robpre = ans;
+        }
+        return ans;
+    }
 
 
     //第3次做
-    public int rob(int[] nums) {
+    public int rob3(int[] nums) {
         if (nums == null || nums.length == 0) {
             return 0;
         }

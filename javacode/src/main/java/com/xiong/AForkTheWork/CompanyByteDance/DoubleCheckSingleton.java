@@ -3,7 +3,7 @@ package com.xiong.AForkTheWork.CompanyByteDance;
 /**
  * @author ：xiongcong
  * @date ：Created in 2020/7/8 19:49
- * @description：  双重检查单例
+ * @description：  双重检查单例  二面
  * @modified By：
  * @version: $
  */

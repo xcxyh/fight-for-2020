@@ -15,7 +15,46 @@ import java.util.List;
  */
 public class Leet95_generateTrees {
 
+    // 第二次写
     public List<TreeNode> generateTrees(int n) {
+        if (n <= 0){
+            return new ArrayList<>();
+        }
+        return generateTreesBetween(1, n);
+    }
+    // 生成 从 start 到 end 的所有二叉树
+    private List<TreeNode> generateTreesBetween(int start, int end){
+
+        List<TreeNode> list = new ArrayList<>();
+        if (start > end){
+            list.add(null); // 这里list 里面要有元素，null 也算一个元素
+            return list; // 直接返回
+        }
+
+        for(int i = start; i <= end; i++){
+            // 左边的集合
+            List<TreeNode> leftList = generateTreesBetween(start, i-1);
+            // 右边的集合
+            List<TreeNode> rightList = generateTreesBetween(i+1, end);
+            // 左右 取 一个 笛卡尔积
+            for(TreeNode left : leftList){
+                for(TreeNode right : rightList){
+                    TreeNode root = new TreeNode(i);
+                    root.left = left;
+                    root.right = right;
+                    list.add(root);
+                }
+            }
+        }
+        return list;
+    }
+
+
+
+
+
+
+    public List<TreeNode> generateTrees1(int n) {
         if (n <= 0){
             return new ArrayList<>();
         }

@@ -1,5 +1,7 @@
-package com.xiong.LeetCode.DynamicProgramming;
+package com.xiong.LeetCode.DynamicProgramming.线性DP;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -10,6 +12,43 @@ import java.util.List;
  * @version: $
  */
 public class Leet120_minimumTotal {
+
+
+    public static void main(String[] args) {
+
+        List<List<Integer>> triangle = new ArrayList<>();
+
+        triangle.add(Arrays.asList(2));
+        triangle.add(Arrays.asList(3,4));
+        triangle.add(Arrays.asList(6,5,7));
+        triangle.add(Arrays.asList(4,1,8,3));
+
+        System.out.println(minimumTotal_new(triangle));
+    }
+
+    public static int minimumTotal_new(List<List<Integer>> triangle) {
+        // 先将 这个三角形 左对齐
+        //  [2],
+        //  [3,4],
+        //  [6,5,7],
+        //  [4,1,8,3]
+        // 从下向上 得到 最小值
+        int n = triangle.size();
+        int[] dp = new int[n + 1];
+
+        // dp 表示当前层 i 位置上的 最小值
+        for(int i = n - 1; i >= 0; i--){
+            List<Integer> curLevel = triangle.get(i);
+            for(int j = 0; j <= i; j++){
+
+                dp[j] = Math.min(dp[j], dp[j + 1]);
+
+                dp[j] += curLevel.get(j);
+            }
+        }
+
+        return dp[0];
+    }
 
     //    作者：sweetiee
     //    链接：https://leetcode-cn.com/problems/triangle/solution/di-gui-ji-yi-hua-dp-bi-xu-miao-dong-by-sweetiee/

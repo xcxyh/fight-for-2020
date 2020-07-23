@@ -5,7 +5,7 @@ import com.xiong.ListNode;
 /**
  * @author ：xiongcong
  * @date ：Created in 2020/7/8 19:48
- * @description： 25. K 个一组翻转链表
+ * @description： 25. K 个一组翻转链表  二面
  * @modified By：
  * @version: $
  */

@@ -1,20 +1,15 @@
-package com.xiong.LeetCode;
-
-
-import java.util.*;
+package com.xiong.LeetCode.DynamicProgramming;
 
 /**
  * @author ：xiongcong
- * @date ：Created in 2020/3/19 9:38
- * @description：
+ * @date ：Created in 2020/7/23 8:46
+ * @description： 64. 最小路径和
  * @modified By：
  * @version: $
  */
-public class Solution {
-    public static void main(String[] args) {
-        System.out.println(minPathSum(new int[][]{{1,3,1},{1,5,1},{4,2,1}}));
-    }
-    public static int minPathSum(int[][] grid) {
+public class Leet64_minPathSum {
+
+    public int minPathSum(int[][] grid) {
 
         if (grid == null || grid.length == 0 || grid[0].length == 0){
             return 0;
@@ -33,11 +28,9 @@ public class Solution {
                 if (j > 0){
                     temp = Math.min(temp, grid[i][j - 1]);
                 }
-                grid[i][j] += temp== Integer.MAX_VALUE ? 0 : temp;
+                grid[i][j] += temp == Integer.MAX_VALUE ? 0 : temp;
             }
         }
-
-
         return grid[m - 1][n - 1];
     }
 }
