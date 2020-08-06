@@ -10,6 +10,19 @@ import java.util.*;
  * @version: $
  */
 public class Twitter {
+
+    //带时间戳单链表
+    class Tweet {
+        int id;
+        int timestamp;
+        Tweet next;
+
+        Tweet(int id, int timestamp) {
+            this.id = id;
+            this.timestamp = timestamp;
+        }
+    }
+
     private Map<Integer, Tweet> tweetMap = new HashMap<>(); // map + 链表
     private Map<Integer, Set<Integer>> followMap = new HashMap<>();
     private int timestamp = 0;//全局时间戳
@@ -98,19 +111,6 @@ public class Twitter {
 
 
     }
-}
-
-//带时间戳单链表
-class Tweet {
-    int id;
-    int timestamp;
-    Tweet next;
-
-    Tweet(int id, int timestamp) {
-        this.id = id;
-        this.timestamp = timestamp;
-    }
-
 
     public static void main(String[] args) {
         Twitter twitter = new Twitter();

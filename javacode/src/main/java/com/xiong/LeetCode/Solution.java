@@ -1,5 +1,6 @@
 package com.xiong.LeetCode;
 
+import com.xiong.ListNode;
 
 import java.util.*;
 
@@ -12,32 +13,29 @@ import java.util.*;
  */
 public class Solution {
     public static void main(String[] args) {
-        System.out.println(minPathSum(new int[][]{{1,3,1},{1,5,1},{4,2,1}}));
+
     }
-    public static int minPathSum(int[][] grid) {
 
-        if (grid == null || grid.length == 0 || grid[0].length == 0){
-            return 0;
-        }
+    // 史莱姆分裂
+    private static int split(int slam, int target) {
 
-        int m = grid.length;
-        int n = grid[0].length;
+        int i = 2;  // i 代表 切完后 史莱姆的个数， 那么 i- 1 代表 切的次数
+        while (slam / i > 1) {
+            double part = slam / (i + 0.0);
 
+            int Cn2 = i * (i - 1) / 2;
 
-        for(int i = 0; i< m; i++){
-            for(int j = 0; j < n; j ++){
-                int temp = Integer.MAX_VALUE;
-                if (i > 0){
-                    temp =  grid[i - 1][j];
-                }
-                if (j > 0){
-                    temp = Math.min(temp, grid[i][j - 1]);
-                }
-                grid[i][j] += temp== Integer.MAX_VALUE ? 0 : temp;
+            double sum = Cn2 * part * part;
+
+            if (sum >= target) {
+                return i - 1;
             }
+            i++;
         }
 
 
-        return grid[m - 1][n - 1];
+        return -1;
     }
+
+
 }

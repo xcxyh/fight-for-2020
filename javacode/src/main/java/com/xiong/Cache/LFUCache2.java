@@ -10,22 +10,11 @@ import java.util.Map;
  * @modified By：
  * @version: $
  */
-class Node2 {
-    int key; // 键
-    int value; //值
-    int frequency = 1; // 使用频率
-    Node2 pre;
-    Node2 next;
 
-    public Node2() {
-    }
-
-    public Node2(int key, int value) {
-        this.key = key;
-        this.value = value;
-    }
-}
 public class LFUCache2 {
+
+
+
     public static void main(String[] args) {
         LFUCache2 cache = new LFUCache2( 2 /* capacity (缓存容量) */ );
 
@@ -39,6 +28,22 @@ public class LFUCache2 {
         cache.get(1);       // 返回 -1 (未找到 key 1)
         cache.get(3);       // 返回 3
         cache.get(4);       // 返回 4
+    }
+
+    class Node2 {
+        int key; // 键
+        int value; //值
+        int frequency = 1; // 使用频率
+        Node2 pre;
+        Node2 next;
+
+        public Node2() {
+        }
+
+        public Node2(int key, int value) {
+            this.key = key;
+            this.value = value;
+        }
     }
 
     //map

@@ -10,18 +10,21 @@ import java.util.*;
  * @modified By：
  * @version: $
  */
-class Node {
-    int key; // 键
-    int value; //值
-    int frequency = 1; // 使用频率
 
-    Node(int key, int value) {
-        this.key = key;
-        this.value = value;
+public class LFUCache {
+
+    class Node {
+        int key; // 键
+        int value; //值
+        int frequency = 1; // 使用频率
+
+        Node(int key, int value) {
+            this.key = key;
+            this.value = value;
+        }
+
     }
 
-}
-public class LFUCache {
     private Map<Integer, Node> cache;  // 存储缓存的内容
     private Map<Integer, LinkedHashSet<Node>> freqMap; // 存储每个频次对应的双向链表
     private int size;

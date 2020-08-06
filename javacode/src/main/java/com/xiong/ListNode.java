@@ -50,6 +50,10 @@ public class ListNode {
         //临时节点，从首节点开始
         ListNode temp = this.next;
 
+        if (isCircle()){
+            return "链表成环。";
+        }
+
         while (temp != null) {
 
             sb.append(" -> ");
@@ -60,6 +64,23 @@ public class ListNode {
        //sb.append("\n");
 
         return sb.toString();
+    }
+
+    private boolean isCircle(){
+
+        ListNode slow = this;
+        ListNode fast = this.next;
+        while (fast != null && fast.next != null){
+
+            if (fast == slow){
+                return true;
+            }
+
+            fast = fast.next.next;
+            slow = slow.next;
+
+        }
+        return false;
     }
 
 }

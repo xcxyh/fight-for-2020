@@ -1,4 +1,4 @@
-package com.xiong.AForkTheWork.CompanyByteDance;
+package com.xiong.AForkTheWork.ByteDance;
 
 import java.util.*;
 

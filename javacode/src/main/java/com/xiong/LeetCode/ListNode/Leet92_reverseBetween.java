@@ -11,6 +11,44 @@ import com.xiong.ListNode;
  */
 public class Leet92_reverseBetween {
 
+    public ListNode reverseBetween_diedai(ListNode head, int m, int n) {
+        if (head == null || head.next == null){
+            return head;
+        }
+        ListNode pre = null;
+        ListNode cur = head;
+        // 让 cur 指向 m 位置的元素
+        while(m > 1){
+            pre = cur;
+            cur = cur.next;
+            m--;
+            n--;
+        }
+        // 记录 con 为 前面分界点 第一个元素 ， tail 为第一个分界点 第二个元素
+        ListNode con = pre; ListNode tail = cur;
+        // 反转， 反转完之后 让 cur 指向 n 位置元素 后面的那个元素
+        while(n-- > 0){
+            ListNode next = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = next;
+        }
+
+        if (con != null){
+            con.next = pre;
+        }else{
+            head = pre;
+        }
+
+        tail.next = cur;
+
+        return head;
+
+
+    }
+
+
+
     public ListNode reverseBetween(ListNode head, int m, int n) {
         if (m == 1){
             return reverseN(head, n);
