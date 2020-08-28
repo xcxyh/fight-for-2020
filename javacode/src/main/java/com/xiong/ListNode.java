@@ -1,6 +1,9 @@
 package com.xiong;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author ：xiongcong
  * @date ：Created in 2019/12/7 11:25
@@ -81,6 +84,37 @@ public class ListNode {
 
         }
         return false;
+    }
+
+
+    private static  void solve(int n){
+        int max =0;
+
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, 0);
+        for(int i = 1; i <= n; i++){
+            int temp = i / 10;
+            int z = i % 10;
+            map.put(i, getSum(temp) + z);
+        }
+
+
+        for(int i = 0; i < n / 2 + 1; i++){
+            int a = map.get(i);
+            int b = map.get(n - i);
+
+            max = Math.max(max, a+ b);
+        }
+        System.out.println(max);
+    }
+
+    private static int getSum(int x){
+        int sum = 0;
+        while(x > 0){
+            sum += x % 10;
+            x = x /10;
+        }
+        return sum;
     }
 
 }

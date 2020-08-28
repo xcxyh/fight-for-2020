@@ -13,6 +13,19 @@ public class Leet201_rangeBitwiseAnd {
     // 返回此范围内所有数字的按位与（包含 m, n 两端点）。
 
     public int rangeBitwiseAnd(int m, int n) {
+        int shift = 0;
+
+        while(m < n){
+            m = m >> 1;
+            n = n >> 1;
+            ++shift;
+        }
+        // n == m 然后 右移恢复
+        return n << shift;
+    }
+
+
+    public int rangeBitwiseAnd2(int m, int n) {
 
         // 1001 010
         // 1001 110

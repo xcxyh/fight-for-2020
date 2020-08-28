@@ -11,6 +11,19 @@ package com.xiong.LeetCode.BitOperation;
 public class Leet201_rangeBitwiseAnd {
 
     public int rangeBitwiseAnd(int m, int n) {
+        int shift = 0;
+
+        while(m < n){
+            m = m >> 1;
+            n = n >> 1;
+            ++shift;
+        }
+        // n == m 然后 右移恢复
+        return n << shift;
+    }
+
+
+    public int rangeBitwiseAnd2(int m, int n) {
 
         //           1001 010
         //           1001 011

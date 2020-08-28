@@ -1,6 +1,8 @@
 package com.xiong.LeetCode.JianZhiOffer;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author ：xiongcong
@@ -13,10 +15,60 @@ public class J29_spiralOrder {
 
 
     public static void main(String[] args) {
-        System.out.println(Arrays.toString(new J29_spiralOrder().spiralOrder(new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}})));
+
     }
 
-    public int[] spiralOrder(int[][] matrix) {
+    public List<Integer> spiralOrder(int[][] matrix) {
+
+
+        List<Integer> ans = new ArrayList<>();
+
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0){
+            return ans;
+        }
+
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+
+        int rs = 0, re = rows -1, cs = 0, ce = cols - 1;
+
+        while (rs <= re && cs <= ce) {
+
+            // right
+            for(int i = cs; i <= ce; i++){
+                ans.add(matrix[rs][i]);
+            }
+            // down
+            for(int i = rs + 1; i <= re; i++){
+                ans.add(matrix[i][ce]);
+            }
+            // left
+            if (rs != re) {
+                for (int i = ce - 1; i >= cs; i--) {
+                    ans.add(matrix[re][i]);
+                }
+            }
+            // up
+            if (cs != ce) {
+                // 因为第一行已经打印过了 这里 i 不要再等于 rs 了
+                for (int i = re - 1; i > rs; i--) {
+                    ans.add(matrix[i][cs]);
+                }
+            }
+
+            cs++;
+            rs++;
+            ce--;
+            re--;
+
+        }
+
+        return ans;
+
+    }
+
+
+    public static int[] spiralOrder2(int[][] matrix) {
         if (matrix == null || matrix.length == 0 || matrix[0].length == 0){
             return new int[]{};
         }
@@ -50,7 +102,8 @@ public class J29_spiralOrder {
 
             //向上,  先判断 列是否相遇  4
             if (col_start != col_end) {
-                for (int i = row_end - 1; i > row_start; i--) {
+                // 因为第一行已经打印过了 这里 i 不要再等于 row_start 了
+                for (int i = row_end - 1; i > row_start; i--) { //   i > row_start 这里不等 ！！
                     ans[k++] = matrix[i][col_start];
                 }
             }

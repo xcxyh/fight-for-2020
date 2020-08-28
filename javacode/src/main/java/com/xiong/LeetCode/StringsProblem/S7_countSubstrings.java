@@ -52,6 +52,54 @@ public class S7_countSubstrings {
 
     /**
      *  @author: xiongcong
+     *  @Date: 2020/8/19 9:04
+     *  @Description:
+     */
+    public int countSubstrings2(String s) {
+        if (s == null || s.length() == 0){
+            return 0;
+        }
+
+        //dp[i][j] 从 i 到 j 的 子串是否是 回文串
+        //  s[i] == s[j]  dp[i][j] = dp[i + 1][j - 1]
+
+        int n = s.length();
+
+        boolean[][] dp  = new boolean[n][n];
+        int count = 0;
+        //init
+        for(int i = 0; i < n; i++){
+            dp[i][i] = true;
+            count++;
+        }
+
+        for(int i =  n - 2; i >= 0; i--){
+            for(int j = i + 1; j < n; j++){
+                if (s.charAt(i) == s.charAt(j)){
+                    if (i + 1 < j - 1){
+                        dp[i][j] = dp[i + 1][j - 1];
+                    }else{
+                        dp[i][j] = true;
+                    }
+                }else{
+                    dp[i][j] = false;
+                }
+
+                if (dp[i][j]){
+                    count++;
+                }
+            }
+        }
+
+        return count;
+
+    }
+
+
+
+
+    /**
+     *  @author: xiongcong
      *  @Date: 2020/3/21 18:04
      *  @Description: 动态规划的方法
      */

@@ -1,5 +1,7 @@
 package com.xiong.LeetCode.BinarySearch;
 
+import java.util.Arrays;
+
 /**
  * @author ：xiongcong
  * @date ：Created in 2020/2/24 15:15
@@ -31,6 +33,37 @@ public class B2_nextGreatestLetter {
         }else{
             return letters[0];
         }
+    }
+
+    public int minDays(int n) {
+        if (n == 1){
+            return 1;
+        }
+        if (n < 4){
+            return 2;
+        }
+
+
+        int[] dp = new int[n  + 1];
+
+
+        Arrays.fill(dp , Integer.MAX_VALUE);
+        dp[1] = 1;
+        dp[2] = 2;
+        dp[3] = 2;
+
+        for(int i = 4; i <= n ; i++){
+            dp[i] = Math.min(dp[i], dp[i - 1] + 1);
+            if ( i % 2 == 0){
+                dp[i] = Math.min(dp[i], dp[i- i/2]  + 1);
+            }
+            if ( i % 3 == 0){
+                dp[i] = Math.min(dp[i], dp[i / 3] + 1);
+            }
+        }
+        return dp[n];
+
+
     }
 
 

@@ -11,7 +11,7 @@ import java.util.LinkedList;
  * @version: $
  */
 public class Race_200 {
-    // 1 5475. 统计好三元组
+    // 1 1534. 统计好三元组
     public int countGoodTriplets(int[] arr, int a, int b, int c) {
         int ans = 0;
         for(int i = 0; i < arr.length; i++){
@@ -25,7 +25,7 @@ public class Race_200 {
         }
         return ans;
     }
-    // 2 5476. 找出数组游戏的赢家
+    // 2 1535. 找出数组游戏的赢家
     public int getWinner(int[] nums, int k) {
         int n = nums.length;
         if (k >= n){
@@ -70,7 +70,7 @@ public class Race_200 {
         }
     }
 
-    //3 5477. 排布二进制网格的最少交换次数
+    //3 1536. 排布二进制网格的最少交换次数
     public int minSwaps(int[][] grid) {
         int n = grid.length;
         ArrayList<Integer> list = new ArrayList<>();
@@ -106,9 +106,37 @@ public class Race_200 {
         return res;
     }
 
-    // 4 5478. 最大得分
+    // 4 1537. 最大得分
     public int maxSum(int[] nums1, int[] nums2) {
-        return 0;
+        int len1 = nums1.length;
+
+        int len2 = nums2.length;
+
+        // nums1 中 以 元素 nums1[i] 结尾的 maxSum
+        // int[] dp1 = new int[len1 + 1];
+
+        // int[] dp2 = new int[len2 + 1];
+        int mod = 1000000007;
+        int i = 0;
+        int j = 0;
+        long a  =0;
+        long b  = 0;
+        while (i < len1 || j < len2) {
+            if ( i < len1 && j < len2 && nums1[i] == nums2[j]){
+                a = b = Math.max(a, b) + nums1[i];
+                i++;
+                j++;
+            }else if (i < len1 && (j == len2 || nums1[i] < nums2[j])) {
+                a = a + nums1[i];
+                i++;
+            }else if (j < len2 && (i == len1 || nums1[i] > nums2[j])) {
+                b = b + nums2[j];
+                j++;
+            }
+        }
+
+        return (int)(Math.max(a, b) % mod);
+
     }
 
 }

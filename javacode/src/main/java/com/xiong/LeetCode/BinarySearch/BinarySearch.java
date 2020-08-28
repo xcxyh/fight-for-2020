@@ -1,5 +1,7 @@
 package com.xiong.LeetCode.BinarySearch;
 
+import java.util.*;
+
 /**
  * @author ：xiongcong
  * @date ：Created in 2020/2/24 14:38
@@ -109,4 +111,6 @@ public class BinarySearch {
     public static void main(String[] args) {
         System.out.println(new BinarySearch().binarySearch_2(new int[]{8, 8, 8, 8, 10}, 9));
     }
+
+
 }

@@ -1,5 +1,8 @@
 package com.xiong.LeetCode.StringsProblem;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author ：xiongcong
  * @date ：Created in 2020/3/23 18:10
@@ -24,10 +27,43 @@ public class S9_countBinarySubstrings {
      */
 
     public static void main(String[] args) {
+
+
         System.out.println(countBinarySubstrings("0111111"));
     }
 
+
+    // 记录相同的 0  或 1 出现的次数，然后 list 中 相邻 次数 取最小值
     public static int countBinarySubstrings(String s) {
+
+        List<Integer> list = new ArrayList<>();
+        // 在尾部 添加一个 无效字符
+        s = s + "#";
+        char[] chars = s.toCharArray();
+        int n = chars.length;
+
+        int sum = 1;
+        char curChar = chars[0];
+        for(int i = 1; i < n; i++ ){
+            if (chars[i] != curChar){
+                list.add(sum);
+                sum = 1;
+                curChar = chars[i];
+            }else{
+                sum++;
+            }
+        }
+        int ans = 0;
+        for(int i = 1; i < list.size(); i++){
+            ans += Math.min(list.get(i), list.get(i - 1));
+        }
+
+        return ans;
+    }
+
+
+
+    public static int countBinarySubstrings2(String s) {
         int count = 0;
         int curlen = 1;
         int prelen = 0;

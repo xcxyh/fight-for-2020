@@ -13,6 +13,49 @@ import com.xiong.LeetCode.TreeNode;
 public class B7_sortedListToBST {
 
     public TreeNode sortedListToBST(ListNode head) {
+        if (head == null){
+            return null;
+        }
+        if (head.next == null){
+            return new TreeNode(head.val);
+        }
+
+        ListNode slowpre= null;
+        ListNode slow = head;
+        ListNode fast = head.next;
+
+        while(fast != null && fast.next != null){
+            slowpre = slow;
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+
+        TreeNode root = new TreeNode(slow.val);
+        ListNode mid = slow.next;
+        slow.next = null;
+
+        if (slowpre != null){
+            slowpre.next = null;
+        }else{
+            head =null;
+        }
+
+        TreeNode left = sortedListToBST(head);
+
+        TreeNode right = sortedListToBST(mid);
+
+
+        root.left= left;
+        root.right = right;
+
+        return root;
+
+    }
+
+
+
+
+    public TreeNode sortedListToBST2(ListNode head) {
         //与数组不同，链表的长度未知，先快慢指针遍历链表 找到链表的中间节点
         if (head == null) {
             return null;
@@ -42,7 +85,7 @@ public class B7_sortedListToBST {
      *  @Date: 2020/2/22 16:24
      *  @Description: 官方解答
      */
-    public TreeNode sortedListToBST_2(ListNode head) {
+    public TreeNode sortedListToBST3(ListNode head) {
         if (head == null) return null;
         if (head.next == null) return new TreeNode(head.val);
         ListNode preMid = preMid(head);
