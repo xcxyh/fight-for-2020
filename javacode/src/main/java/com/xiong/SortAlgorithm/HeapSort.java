@@ -19,63 +19,59 @@ public class HeapSort {
      * 这样会得到n个元素的次小值。如此反复执行，便能得到一个有序序列了
      */
     public static void main(String[] args) {
-        int[] arr = {9, 8, 7, 6, 3, 4, 5, 2, 1};
-        heapSort(arr);
+        int[] arr = {25,84,21,47,15,27,68,35,20};
+        new HeapSort().heapSort(arr);
         System.out.println(Arrays.toString(arr));
     }
+    //1 将无序序列构建成一个堆，根据升序降序需求选择大顶堆或小顶堆;
+    //1.1 从最后一个非叶子结点开始 第一个非叶子结点下标 x = len / 2 - 1
+    // 怎么算的呢？
+    // len 为奇数 则右叶子节点存在，2*x + 2 = len - 1 ----> x = (len - 1)/2 -1
+    // len 为偶数 则右叶子节点不存在， 2*x + 1 = len - 1 ----> x = len / 2 - 1
+    //又因为 当 len 为奇数时， len/2 的 取整结果 即为 (len - 1)/ 2
+    // 综合两种情况， 可以得到 x = len / 2 - 1
 
-    //堆排序
-    private static int[] heapSort(int[] arr) {
-        if (arr == null || arr.length <= 1) {
-            return arr;
+    public int[] heapSort(int[] nums) {
+        if (nums == null || nums.length < 2) {
+            return nums;
         }
-        int len = arr.length;
-        //1 将无序序列构建成一个堆，根据升序降序需求选择大顶堆或小顶堆;
-
-        //1.1 从最后一个非叶子结点开始 第一个非叶子结点下标 x = len / 2 - 1
-        // 怎么算的呢？
-        // len 为奇数 则右叶子节点存在，2*x + 2 = len - 1 ----> x = (len - 1)/2 -1
-        // len 为偶数 则右叶子节点不存在， 2*x + 1 = len - 1 ----> x = len / 2 - 1
-        //又因为 当 len 为奇数时， len/2 的 取整结果 即为 (len - 1)/ 2
-        // 综合两种情况， 可以得到 x = len / 2 - 1
-        for (int i = len / 2 - 1; i >= 0; i--) {
-            //1.2 从下至上 ，从左至右调整
-            adjustHeap(arr, i, len);
+        // 堆排序
+        int n = nums.length;
+        // 建堆， 大顶堆
+        for (int i = n / 2 - 1; i >= 0; i--) {
+            adjust(nums, i, n);
         }
-
-        //4 重复执行 2 3 两步，直至 整个数组有序
-        for (int j = len - 1; j >= 0; j--) {
-            //2 将堆顶元素与末尾元素交换，将最大元素"沉"到数组末端;
-            swap(arr, 0, j);
-            //3 对剩下的 cur_len - 1 个元素 调整成一个 大顶堆 或小顶堆;
-            adjustHeap(arr, 0, j);
+        // 排序
+        for (int i = n - 1; i >= 0; i--) {
+            swap(nums, 0, i);
+            // 调整
+            adjust(nums, 0, i);
         }
 
-        return arr;
+        return nums;
     }
     // 前提是  arr 在调整之前基本是一个 大顶堆，即除了 当前元素 ，其他 元素都在合适的位置上
     // 调整大顶堆 将 arr 中 从 i 到 curLen 的所有元素调整为 一个大顶堆
     // 该函数只是 将 位置 i 的元素放到了 大顶堆的 合适的位置，
-    private static void adjustHeap(int[] arr, int i, int curLen) {
-        int cur = arr[i];
-        // cur的左子节点 下标为 2*i + 1
-        // cur的右子节点 下标为 2*i + 2
-        for (int k = 2 * i + 1; k < curLen; k++) {// 从 左子节点 开始
-            // 找出 两个子节点（如果存在）中较大的那个
-            if (k + 1 < curLen && arr[k] < arr[k + 1]){//如果左子结点小于右子结点，k指向右子结点
-                k++;
+    // arr  当前节点下标  当前堆的长度。 复杂度  logn
+    private void adjust(int[] nums, int cur, int curLen) {
+
+        // 从 左子节点开始
+        while (2 * cur + 1 < curLen) {
+            int i = 2 * cur + 1;
+            // 若有右子节点 则判断是否大于 左
+            if (i + 1 < curLen && nums[i] < nums[i + 1]) {
+                i++;
             }
-            //较大的那个子节点 比 根节点 要大
-            if (arr[k] > cur){
-                arr[i] = arr[k]; //将子节点值赋给父节点（不用进行交换）
-                i = k;
-            }else{
+
+            if (nums[i] > nums[cur]) {
+                swap(nums, i, cur);
+            } else {
                 break;
             }
 
+            cur = i;
         }
-
-        arr[i] = cur;//将 cur 值放到最终的位置
 
     }
 

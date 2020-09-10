@@ -38,85 +38,85 @@ import java.util.concurrent.locks.ReentrantLock;
  * @version: $
  */
 
-class ShareResource{
 
-    private int number = 1; // 标志位
-
-    private Lock lock = new ReentrantLock();
-    private Condition con1 = lock.newCondition();
-    private Condition con2 = lock.newCondition();
-    private Condition con3 = lock.newCondition();
-
-
-    public void print5(){
-        // 哪个线程调用该方法 哪个线程就拥有这个 condition
-        //即这个 condition 就控制哪个线程
-        lock.lock();
-        try{
-            //判断
-            while (number != 1){
-                con1.await();
-            }
-            //do
-            for (int i = 1; i <=5 ; i++) {
-                System.out.println(Thread.currentThread().getName() + "\t" + i);
-            }
-            //通知
-            number =2;
-            con2.signal();
-        }catch(Exception e){
-               e.printStackTrace();
-        }finally{
-            lock.unlock();
-        }
-    }
-
-    public void print10(){
-        lock.lock();
-        try{
-            //判断
-            while (number != 2){
-                con2.await();
-            }
-            //do
-            for (int i = 1; i <=10 ; i++) {
-                System.out.println(Thread.currentThread().getName() + "\t" + i);
-            }
-            //通知
-            number =3;
-            con3.signal();
-        }catch(Exception e){
-            e.printStackTrace();
-        }finally{
-            lock.unlock();
-        }
-    }
-
-    public void print15(){
-        lock.lock();
-        try{
-            //判断
-            while (number != 3){
-                con3.await();
-            }
-            //do
-            for (int i = 1; i <=15 ; i++) {
-                System.out.println(Thread.currentThread().getName() + "\t" + i);
-            }
-            //通知
-            number =1;
-            con1.signal();
-        }catch(Exception e){
-            e.printStackTrace();
-        }finally{
-            lock.unlock();
-        }
-    }
-
-}
 
 public class SyncAndReentrantLockDemo {
+   static class ShareResource{
 
+        private int number = 1; // 标志位
+
+        private Lock lock = new ReentrantLock();
+        private Condition con1 = lock.newCondition();
+        private Condition con2 = lock.newCondition();
+        private Condition con3 = lock.newCondition();
+
+
+        public void print5(){
+            // 哪个线程调用该方法 哪个线程就拥有这个 condition
+            //即这个 condition 就控制哪个线程
+            lock.lock();
+            try{
+                //判断
+                while (number != 1){
+                    con1.await();
+                }
+                //do
+                for (int i = 1; i <=5 ; i++) {
+                    System.out.println(Thread.currentThread().getName() + "\t" + i);
+                }
+                //通知
+                number =2;
+                con2.signal();
+            }catch(Exception e){
+                e.printStackTrace();
+            }finally{
+                lock.unlock();
+            }
+        }
+
+        public void print10(){
+            lock.lock();
+            try{
+                //判断
+                while (number != 2){
+                    con2.await();
+                }
+                //do
+                for (int i = 1; i <=10 ; i++) {
+                    System.out.println(Thread.currentThread().getName() + "\t" + i);
+                }
+                //通知
+                number =3;
+                con3.signal();
+            }catch(Exception e){
+                e.printStackTrace();
+            }finally{
+                lock.unlock();
+            }
+        }
+
+        public void print15(){
+            lock.lock();
+            try{
+                //判断
+                while (number != 3){
+                    con3.await();
+                }
+                //do
+                for (int i = 1; i <=15 ; i++) {
+                    System.out.println(Thread.currentThread().getName() + "\t" + i);
+                }
+                //通知
+                number =1;
+                con1.signal();
+            }catch(Exception e){
+                e.printStackTrace();
+            }finally{
+                lock.unlock();
+            }
+        }
+
+    }
     /**
      *  @author: xiongcong
      *  @Date: 2020/3/18 14:06

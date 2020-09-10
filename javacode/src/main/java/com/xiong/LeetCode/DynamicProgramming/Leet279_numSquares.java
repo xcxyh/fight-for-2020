@@ -23,6 +23,40 @@ public class Leet279_numSquares {
         System.out.println(numSquares_bfs(4));
     }
 
+
+    public int numSquares(int n) {
+
+        Queue<Integer> q = new LinkedList<>();
+
+        q.offer(n);
+        // 从 n 到 0 至少需要几步
+        int step = 0;
+        while (! q.isEmpty()) {
+
+            int size = q.size();
+
+            while (size-- > 0) {
+                int t = q.poll();
+                int max = (int) Math.floor(Math.sqrt(t));
+
+                for (int i = max; i >= 0; i--) {
+                    if (t - i * i == 0) {
+                        return step+ 1;
+                    }else {
+                        q.offer(t - i * i);
+                    }
+                }
+            }
+
+            step++;
+
+        }
+
+        return 0;
+
+    }
+
+
     /**
      * @author: xiongcong
      * @Date: 2020/4/23 15:41

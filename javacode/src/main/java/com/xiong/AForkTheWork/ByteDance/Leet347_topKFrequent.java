@@ -14,7 +14,27 @@ import java.util.Queue;
  */
 public class Leet347_topKFrequent {
 
+
     public int[] topKFrequent(int[] nums, int k) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        // 存 entry 对象
+        PriorityQueue<Map.Entry<Integer, Integer>> maxheap = new PriorityQueue<>((a,b) -> b.getValue() - a.getValue());
+        int[] result = new int[k];
+        for(int i = 0; i < nums.length; i++){
+            map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
+        }
+        // 遍历entry
+        for(Map.Entry<Integer, Integer> m : map.entrySet()){
+            maxheap.offer(m);
+        }
+        for(int i = 0; i < k; i++){
+            result[i] = maxheap.poll().getKey();
+        }
+
+        return result;
+    }
+
+    public int[] topKFrequent2(int[] nums, int k) {
         Map<Integer, Integer> map = new HashMap<>();
         //小顶堆  按照 频率 排序
         Queue<Integer> q = new PriorityQueue<>((a, b) -> map.get(a)- map.get(b) );

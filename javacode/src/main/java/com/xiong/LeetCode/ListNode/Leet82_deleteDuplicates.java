@@ -23,6 +23,36 @@ public class Leet82_deleteDuplicates {
             return head;
         }
 
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        head = dummy;
+
+        while (dummy.next != null) {
+            ListNode l = dummy.next;
+            ListNode r = dummy.next;
+
+            while (r.next != null && l.val == r.next.val) {
+                r = r.next;
+            }
+
+            if (l == r) {
+                dummy = dummy.next;
+
+            }else {
+                dummy.next = r.next;
+
+            }
+        }
+
+        return head.next;
+    }
+
+
+    public static ListNode deleteDuplicates2(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+
         ListNode pcur = new ListNode(-1); // 哨兵指针
         pcur.next = head;
         head = pcur;// 保存头节点

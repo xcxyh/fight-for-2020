@@ -5,14 +5,14 @@ import com.xiong.ListNode;
 /**
  * @author ：xiongcong
  * @date ：Created in 2020/7/29 18:46
- * @description：  百度 凉了  不用看了
+ * @description：  百度
  * @modified By：
  * @version: $
  */
 public class Main {
 
     public static void main(String[] args) {
-      ListNode head =   ListNode.generateListNodeFromArr(new int[]{3,5,4,2,1});
+      ListNode head =   ListNode.generateListNodeFromArr(new int[]{3,1,4,2,5});
 
         System.out.println(quickSort(head));
 
@@ -25,7 +25,7 @@ public class Main {
     }
 
 
-    // 交换节点 而不是交换 值 的 快排, 效率最低， 反向优化 垃圾百度
+    // 交换节点 而不是交换 值 的 快排, 效率最低，
     private static ListNode quickSort(ListNode head){
         if(head == null || head.next == null) return head;
 
@@ -60,7 +60,6 @@ public class Main {
             cur = cur.next;
         }
         cur.next = right;
-
 
         return left;
 

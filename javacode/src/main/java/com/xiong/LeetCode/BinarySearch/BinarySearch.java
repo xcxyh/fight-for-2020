@@ -57,13 +57,14 @@ public class BinarySearch {
 
         while (l < h) { //  注意 :  循环条件 为  <
             int m = l + (h - l) / 2;
-            if (key == m) {
+
+            if (key == nums[m]) {
                 h = m; // 找到了 去左侧找  直到 找到最左侧的元素
                 // 例如 ： [1,2,2,2,3]  找到 了 中间的2 之后 不返回
                 // 去左侧区间，[1, 2, 2) 就 可以找到最左的索引为 1 的元素 2
-            } else if (key < m) {
+            } else if (key < nums[m]) {
                 h = m; // 去左侧区间
-            } else if (key > m) {
+            } else if (key > nums[m]) {
                 l = m + 1;// 去右侧 区间 ，此时 左闭右开 而 m 已经判断过了
                 // 直接从 m + 1 开始
             }

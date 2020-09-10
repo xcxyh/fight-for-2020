@@ -31,34 +31,39 @@ import java.util.concurrent.TimeUnit;
  * @version: $
  */
 
-class deadTesk implements Runnable{
-
-    private final String lockA;
-    private final String lockB;
-
-    public deadTesk(String lockA, String lockB) {
-        this.lockA = lockA;
-        this.lockB = lockB;
-    }
-
-
-    @Override
-    public void run() {
-        synchronized(lockA){//对象锁
-
-            System.out.println(Thread.currentThread().getName() + "\t持有锁：" +lockA+"\t尝试获得锁："+lockB);
-
-            try{ TimeUnit.SECONDS.sleep(2); } catch (InterruptedException e){e.printStackTrace();}
-            synchronized (lockB){
-
-                System.out.println(Thread.currentThread().getName() + "\t持有锁：" +lockB+"\t尝试获得锁："+lockA);
-            }
-        }
-    }
-}
 
 
 public class DeadLockDemo {
+     static class deadTesk implements Runnable {
+
+        private final String lockA;
+        private final String lockB;
+
+        public deadTesk(String lockA, String lockB) {
+            this.lockA = lockA;
+            this.lockB = lockB;
+        }
+
+
+        @Override
+        public void run() {
+            synchronized (lockA) {//对象锁
+
+                System.out.println(Thread.currentThread().getName() + "\t持有锁：" + lockA + "\t尝试获得锁：" + lockB);
+
+                try {
+                    TimeUnit.SECONDS.sleep(2);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                synchronized (lockB) {
+
+                    System.out.println(Thread.currentThread().getName() + "\t持有锁：" + lockB + "\t尝试获得锁：" + lockA);
+                }
+            }
+        }
+    }
+
     public static void main(String[] args) {
 
         String lockA="lockA";

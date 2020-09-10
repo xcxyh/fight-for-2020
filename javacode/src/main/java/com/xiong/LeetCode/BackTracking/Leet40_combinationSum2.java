@@ -63,4 +63,46 @@ public class Leet40_combinationSum2 {
 
 
     }
+
+
+    public List<List<Integer>> combinationSum20(int[] candidates, int target) {
+
+
+        Arrays.sort(candidates);
+
+        dfs(candidates, 0, 0, new ArrayList<>(), target, new boolean[candidates.length]);
+
+        return ans;
+    }
+
+    private void dfs(int[] candidates, int sum, int cur, List<Integer> list, int target, boolean[] visited) {
+        if (sum == target) {
+            ans.add(new ArrayList<>(list));
+            return;
+        }
+
+        if (sum > target) {
+            return;
+        }
+
+
+        for (int i = cur; i < candidates.length; i++) {
+            if (visited[i]) {
+                continue;
+            }
+            if (i > 0 && candidates[i] == candidates[i - 1] && !visited[i - 1]) {
+                continue;
+            }
+
+            visited[i] = true;
+
+            sum += candidates[i];
+            list.add(candidates[i]);
+            dfs(candidates, sum, i, list, target, visited);
+            sum -= candidates[i];
+            list.remove(list.size() - 1);
+
+            visited[i] = false;
+        }
+    }
 }

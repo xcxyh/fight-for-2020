@@ -11,6 +11,49 @@ import java.util.Arrays;
  */
 public class Leet300_lengthOfLIS {
 
+    public static void main(String[] args) {
+
+    }
+
+
+    // tails 数组 +  二分查找 优化
+    public int lengthOfLIS_bs(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+
+        int n = nums.length;
+
+        int[] tails = new int[n];
+        int res = 0;
+        for (int num : nums) {
+
+            // 找左侧边界的 二分法
+            int l = 0;
+            int r = res;
+            while (l < r) {
+                int mid = l + (r - l) / 2;
+
+                if (tails[mid] < num){
+                    l = mid + 1;
+                }else {
+                    r = mid;
+                }
+            }
+
+            tails[l] = num;
+            if (l == res) {
+                res++;
+            }
+
+        }
+
+        return res;
+
+    }
+
+
+
     public int lengthOfLIS(int[] nums) {
         //dp[i]表示 以 i 位置 结尾的 最长 长度
         //dp[i] = max(dp[0], dp[1], ... )

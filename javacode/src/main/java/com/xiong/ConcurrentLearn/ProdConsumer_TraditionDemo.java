@@ -16,58 +16,58 @@ import java.util.concurrent.locks.ReentrantLock;
  * @modified By：
  * @version: $
  */
-class ShareData { //资源类
-    private Integer number = 0;
-    private Lock lock = new ReentrantLock();
-    Condition condition = lock.newCondition();
 
-    //生产
-    public void increment() {
-
-        lock.lock();
-        try {
-            //有就不生产 否则生产
-            while (number != 0) { // 多线程必须用 while 判断  预防 虚假唤醒 的情况
-
-                condition.await();
-            }
-            //生产
-            number++;
-            System.out.println(Thread.currentThread().getName() + "\t" + number);
-            //通知
-            condition.signalAll();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            lock.unlock();
-        }
-    }
-
-    //消费
-    public void decrement() {
-
-        lock.lock();
-        try {
-            //有就消费 没有就不消费 等待
-            while (number == 0) { // 多线程必须用 while 判断  预防 虚假唤醒 的情况
-
-                condition.await();
-            }
-            //消费
-            number--;
-            System.out.println(Thread.currentThread().getName() + "\t" + number);
-            //通知
-            condition.signalAll();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            lock.unlock();
-        }
-    }
-}
 
 public class ProdConsumer_TraditionDemo {
+    static class ShareData { //资源类
+        private Integer number = 0;
+        private Lock lock = new ReentrantLock();
+        Condition condition = lock.newCondition();
 
+        //生产
+        public void increment() {
+
+            lock.lock();
+            try {
+                //有就不生产 否则生产
+                while (number != 0) { // 多线程必须用 while 判断  预防 虚假唤醒 的情况
+
+                    condition.await();
+                }
+                //生产
+                number++;
+                System.out.println(Thread.currentThread().getName() + "\t" + number);
+                //通知
+                condition.signalAll();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                lock.unlock();
+            }
+        }
+
+        //消费
+        public void decrement() {
+
+            lock.lock();
+            try {
+                //有就消费 没有就不消费 等待
+                while (number == 0) { // 多线程必须用 while 判断  预防 虚假唤醒 的情况
+
+                    condition.await();
+                }
+                //消费
+                number--;
+                System.out.println(Thread.currentThread().getName() + "\t" + number);
+                //通知
+                condition.signalAll();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                lock.unlock();
+            }
+        }
+    }
     public static void main(String[] args) {
         ShareData shareData = new ShareData();
 
