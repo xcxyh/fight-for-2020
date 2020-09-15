@@ -59,9 +59,9 @@ public class BiShi0903 {
     // 题2
     public static void second() {
         Scanner sc = new Scanner(System.in);
-        int T = sc.nextInt();
-        for (int i = 0; i < T; i++) {
             int n = sc.nextInt();
+            int T = sc.nextInt();
+            for (int i = 0; i < T; i++) {
             int m = sc.nextInt();
             List<int[][]> inlist = new ArrayList<>();
             int k = 0;

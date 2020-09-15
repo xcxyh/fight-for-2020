@@ -10,6 +10,33 @@ package com.xiong.LeetCode.JianZhiOffer;
 public class J49_nthUglyNumber {
 
     public int nthUglyNumber(int n) {
+
+        int[] dp = new int[n];
+
+        int index_2 = 0, index_3 = 0, index_5 = 0;
+        //计算丑数序列也就是相当于 合并 3 个有序序列。
+        dp[0] = 1;
+        for (int i  = 1; i < n; i++) {
+            int next2 = dp[index_2] * 2;
+            int next3 = dp[index_3] * 3;
+            int next5 = dp[index_5] * 5;
+
+            dp[i] = Math.min(next2, Math.min(next3, next5));
+            if (dp[i] == next2) {
+                index_2++;
+            }
+            if (dp[i] == next3) {
+                index_3++;
+            }
+            if (dp[i] == next5) {
+                index_5++;
+            }
+        }
+
+        return dp[n - 1];
+    }
+
+    public int nthUglyNumber_2(int n) {
         if (n <= 5){
             return n;
         }

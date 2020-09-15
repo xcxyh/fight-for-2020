@@ -14,6 +14,7 @@ import java.util.Queue;
  */
 public class Leet841_canVisitAllRooms {
 
+
     public static void main(String[] args) {
 
         List<List<Integer>> rooms = new ArrayList<>();

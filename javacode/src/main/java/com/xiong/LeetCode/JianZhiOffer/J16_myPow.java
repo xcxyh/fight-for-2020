@@ -9,12 +9,38 @@ package com.xiong.LeetCode.JianZhiOffer;
  */
 public class J16_myPow {
 
+
     public double myPow(double x, int n) {
+
+        if (x == 1 || n == 0) {
+            return 1;
+        }
+        if (n == 1) {
+            return x;
+        }
+
+        if (n < 0) {
+            if (n == Integer.MIN_VALUE) {
+                return 1 / x * 1 / myPow(x, Integer.MAX_VALUE);
+            }
+
+            return 1 / myPow(x, -n);
+        }
+
+        if ((n & 1) == 1) {
+            return x * myPow(x, n - 1);
+        }
+
+        return myPow(x * x, n / 2);
+    }
+
+
+    public double myPowold(double x, int n) {
         int N = n;
         // n 为负 ，
-        if (n < 0){
+        if (n < 0) {
             // n 为 Integer.MIN_VALUE  的特殊情况
-            if (n == Integer.MIN_VALUE){
+            if (n == Integer.MIN_VALUE) {
                 return 1 / x * myPow(1 / x, Integer.MAX_VALUE);
             }
             // n 为负的处理
@@ -22,15 +48,15 @@ public class J16_myPow {
             x = 1 / x;
         }
         // base case
-        if (N == 0){
+        if (N == 0) {
             return 1.0;
         }
         // n 为 奇数
-        if ( (N & 1) == 1){
+        if ((N & 1) == 1) {
             return myPow(x, N - 1) * x;
         }
         // n 为 偶数
-        return myPow( x*x , N / 2);
+        return myPow(x * x, N / 2);
 
     }
 }

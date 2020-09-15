@@ -22,10 +22,9 @@ public class Leet79_exist {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 if (first == board[i][j]) {
-                    char t = board[i][j];
                     board[i][j] = '#';
                     ans = ans || dfs(board, word, 1, i, j);
-                    board[i][j] = t;
+                    board[i][j] = first;
                 }
             }
         }
