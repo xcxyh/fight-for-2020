@@ -1,5 +1,8 @@
 package com.xiong.LeetCode.BinaryTree;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * @author ：xiongcong
  * @date ：Created in 2020/4/14 10:27
@@ -37,6 +40,43 @@ public class Leet117_connect {
         }
 
         return root;
+    }
+
+
+    public Node connect2(Node root) {
+        if (root == null) {
+            return root;
+        }
+
+        Queue<Node> q = new LinkedList<>();
+
+        q.offer(root);
+
+        while (!q.isEmpty()) {
+            int size = q.size();
+            Node pre = null;
+            while ( size-- > 0 ) {
+                Node node = q.poll();
+                if (pre == null) {
+                    pre = node;
+                }else{
+                    pre.next = node;
+                    pre = node;
+                }
+
+                if ( node.left != null ) {
+                    q.offer(node.left);
+                }
+
+                if ( node.right != null ) {
+                    q.offer(node.right);
+                }
+
+            }
+        }
+
+        return root;
+
     }
 
 }

@@ -13,8 +13,31 @@ import com.xiong.LeetCode.TreeNode;
  * @version: $
  */
 public class B3_convertBST {
+
+    private int sum = 0;
+    public TreeNode convertBST(TreeNode root) {
+        inorder(root);
+        return root;
+    }
+
+    private void inorder(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        // 右中左
+        inorder(root.right);
+        int val = root.val;
+        root.val = val + sum;
+        sum += val;
+        inorder(root.left);
+    }
+
+
+
+
+
     //反方向的中序遍历 然后累加加
-    public TreeNode convertBST(TreeNode root){
+    public TreeNode convertBST2(TreeNode root){
         inorderbst(root);
         return root;
 

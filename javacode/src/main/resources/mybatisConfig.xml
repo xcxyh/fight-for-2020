@@ -39,5 +39,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         <mapper resource="mapper/LinkModelMapper.xml" />
         <mapper resource="mapper/ChainModelMapper.xml" />
         <mapper resource="mapper/PostgresEmmeMapper.xml" />
+        <mapper resource="mapper/BeijingTaxiMapper.xml" />
     </mappers>
 </configuration>

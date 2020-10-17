@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiong.Kakou.dao.BeijingTaxiMapper">
+    <insert id="batchInsert" useGeneratedKeys="true">
+        INSERT INTO
+        beijingtaxi
+        (taxiID, gettime, longitude, latitude)
+        VALUES
+        <foreach item="item" collection="list" separator=",">
+            (#{item.taxiID}, #{item.gettime}, #{item.longitude}, #{item.latitude})
+        </foreach>
+    </insert>
+    
+    <select id="selectCountByTime" resultType="Integer" parameterType="com.xiong.Kakou.entity.NycTaxiModel">
+
+        SELECT count(*) from nyc_od_onemonth
+        where pickup_datetime BETWEEN #{startTime} and #{endTime}
+          and origin = #{origin} and dist= #{dist}
+    </select>
+    
+    
+</mapper>

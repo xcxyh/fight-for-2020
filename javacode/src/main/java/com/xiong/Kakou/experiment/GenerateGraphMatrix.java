@@ -7,6 +7,7 @@ import com.xiong.Kakou.service.LinkService;
 import com.xiong.Kakou.service.PostgresEmmeService;
 import com.xiong.Kakou.util.*;
 
+import java.io.File;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.*;
@@ -32,7 +33,6 @@ public class GenerateGraphMatrix {
     static Map<String, Integer> nodeMap = new HashMap<>();
 
 
-
     //编号 从 1 开始到 node_size  卡口station 从 1 开始编号
     static Map<String, Integer> stationMap = new HashMap<>();
 
@@ -41,7 +41,7 @@ public class GenerateGraphMatrix {
     static Map<String, String> vdmap = new HashMap<>();
 
     // 存储一个点的经纬度
-    static Map<Integer, double[]>  latLonMap = new HashMap<>();
+    static Map<Integer, double[]> latLonMap = new HashMap<>();
 
     public static void main(String[] args) throws Exception {
         //取出对应关系
@@ -51,15 +51,33 @@ public class GenerateGraphMatrix {
         System.out.println("-----出行链划分完毕-----");
         //划分好的出行链分配OD矩阵 是 node 和node 之间的 OD 矩阵
 
-        int[][] od_matrix = generateOD();
+        List<String> odlist = TXTUtil.readTxt(new File("F:\\1毕业论文相关\\论文实验\\OD矩阵估计\\old实验\\ODMAtrix.txt"));
+
+        int rows = odlist.size();
+
+        int cols = odlist.get(0).split(" ").length;
+
+        int[][] od_matrix = new int[rows][cols];  //generateOD();
+
+        for (int i = 0; i < rows; i++) {
+            String[] strs = odlist.get(i).split(" ");
+            for (int j = 0; j < cols; j++) {
+                od_matrix[i][j] = Integer.valueOf(strs[j]);
+            }
+        }
+
         System.out.println("-----出行矩阵OD生成完毕-----");
 
-        //交通小区 聚类
+        //得到交通小区之间的OD 矩阵
+        String filepath = "F:\\2论文开题\\OD矩阵资料\\实验数据\\ODMAtrix_xq.txt";
+        gengrateBigOD(od_matrix, filepath);
+        System.out.println("-----交通小区OD生成完毕-----");
+        // 将 OD 估计的结果 和 link上的流量进行 对比分析
 
-        //AreaCluster 文件完成
+    }
 
-        //聚类 得到交通小区之间的OD 矩阵
-        String filepath = "F:\\OD矩阵资料\\实验数据\\ODMAtrix_xq.txt";
+    private static void gengrateBigOD(int[][] od_matrix, String filepath) {
+
         ArrayList<VDToNodeModel> vdtonode = carService.mapvdtonode();
         Map<Integer, Integer> clusterMap = new HashMap<>();
 
@@ -67,19 +85,36 @@ public class GenerateGraphMatrix {
             clusterMap.put(model.getFID(), Integer.parseInt(model.getXqbh()));
         }
 
-        int[][] xqbh_matrix = new int[21][21];
+        Map<Integer, Integer> xqbhMap = new HashMap<>();
+        Map<Integer, Integer> reXqbhMap = new HashMap<>();
+        Set<Integer> xqbhSet = new HashSet<>();
+        for (VDToNodeModel model : vdtonode) {
+            xqbhSet.add(Integer.valueOf(model.getXqbh()));
+        }
+        int k = 1;
+        for (int x : xqbhSet) {
+            xqbhMap.put(k, x);
+            reXqbhMap.put(x, k);
+            k++;
+        }
+        int size = xqbhSet.size();
+        int[][] xqbh_matrix = new int[size + 1][size + 1];
 
         //行列初始化
         for (int i = 1; i < xqbh_matrix.length; i++) {
-            xqbh_matrix[i][0] = i;
+            xqbh_matrix[i][0] = xqbhMap.get(i);
         }
         for (int i = 1; i < xqbh_matrix[0].length; i++) {
-            xqbh_matrix[0][i] = i;
+            xqbh_matrix[0][i] = xqbhMap.get(i);
         }
 
         for (int i = 1; i < od_matrix.length; i++) {
             for (int j = 1; j < od_matrix[0].length; j++) {
-                xqbh_matrix[clusterMap.get(i)][clusterMap.get(j)] += od_matrix[i][j];
+
+                int x = reXqbhMap.get(clusterMap.get(i));
+                int y = reXqbhMap.get(clusterMap.get(j));
+
+                xqbh_matrix[x][y] += od_matrix[i][j];
             }
         }
 
@@ -94,9 +129,6 @@ public class GenerateGraphMatrix {
         }
         //交通小区间的OD 矩阵为 xqbh_matrix
         TXTUtil.writeTxt(filepath, result);
-
-        // 将 OD 估计的结果 和 link上的流量进行 对比分析
-
     }
 
     /**
@@ -106,7 +138,7 @@ public class GenerateGraphMatrix {
      */
     public static int[][] generateOD() {
         //输出到文件
-        String filepath = "F:\\OD矩阵资料\\实验数据\\ODMAtrix.txt";
+        String filepath = "F:\\2论文开题\\OD矩阵资料\\实验数据\\ODMAtrix.txt";
         ArrayList<VDToNodeModel> vdtonode = carService.mapvdtonode();
         int node_size = vdtonode.size();
         for (int i = 0; i < node_size; i++) {
@@ -246,7 +278,7 @@ public class GenerateGraphMatrix {
      * @Date: 2020/3/15 14:39
      * @Description: 通过 最短路径算法和 车辆速度 40 km /h -> 11.11 m/s length 单位为 m  进行划分
      */
-    private static boolean isoneChain(int interval, ChainModel node1, ChainModel node2, EdgeWeightedDiGraph<String> graph,Map<Integer, double[]> latlonMap) {
+    private static boolean isoneChain(int interval, ChainModel node1, ChainModel node2, EdgeWeightedDiGraph<String> graph, Map<Integer, double[]> latlonMap) {
 
 
         Dijkstra dijkstra = new Dijkstra(graph, latlonMap);//新建一个dj
@@ -349,16 +381,16 @@ public class GenerateGraphMatrix {
             if (nodeMap.get(node2) == null) {
                 nodeMap.put(node2, k++);
             }
-            double[] latlon1 =  getlatlon(node1);
-            if (latlon1 != null){
+            double[] latlon1 = getlatlon(node1);
+            if (latlon1 != null) {
                 // 得到 图中 所有的 点 对应的 经纬度  key 为 dijstra 中的 id
-                latLonMap.put(nodeMap.get(node1),latlon1);
+                latLonMap.put(nodeMap.get(node1), latlon1);
             }
-            double[] latlon2 =  getlatlon(node2);
-            if (latlon2 != null){
+            double[] latlon2 = getlatlon(node2);
+            if (latlon2 != null) {
                 // 得到 图中 所有的 点 对应的 经纬度  key 为 dijstra 中的 id
                 // todo 这里 nodeMap 大小为 804 latlonMap 大小为 758 有的点没对上
-                latLonMap.put(nodeMap.get(node2),latlon2);
+                latLonMap.put(nodeMap.get(node2), latlon2);
 
             }
 
@@ -382,18 +414,18 @@ public class GenerateGraphMatrix {
         return graph;
     }
 
-    private static double[] getlatlon(String node){
+    private static double[] getlatlon(String node) {
         double[] res = null;
         Integer nodeid = Integer.parseInt(node);
         EmmeNodeModel emmeNode = postgresEmmeService.selectNodeByID(nodeid);
-        if (emmeNode != null){
+        if (emmeNode != null) {
             String geom = emmeNode.getGeom();
             geom = geom.substring(6, geom.length() - 1);
             // todo 想办法 获得 点的经纬度
             String[] latlon = geom.split(" ");
             double lat = Double.parseDouble(latlon[1]); // 纬度在后面
             double lon = Double.parseDouble(latlon[0]);
-            res = new double[]{lat,lon};
+            res = new double[]{lat, lon};
         }
         return res;
     }

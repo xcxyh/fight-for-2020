@@ -11,6 +11,36 @@ import com.xiong.LeetCode.TreeNode;
  */
 public class Leet106_reConstructBTreeInAndPost {
 
+
+    public TreeNode buildTree1(int[] inorder, int[] postorder) {
+
+        return  build(inorder, 0, inorder.length - 1, postorder, 0, postorder.length - 1);
+    }
+
+    private TreeNode build(int[] inorder,int inl, int inr, int[] postorder, int pl, int pr) {
+
+        if (inl > inr || pl > pr) {
+            return null;
+        }
+
+        int val = postorder[pr];
+
+        TreeNode root = new TreeNode(val);
+        int i;
+        for (i = 0; i < inorder.length; i++) {
+            if (inorder[i] == val) {
+                break;
+            }
+        }
+
+        root.left = build(inorder, inl, i - 1, postorder, pl, pl + i - inl - 1);
+        root.right = build(inorder, i + 1, inr, postorder, pl + i - inl, pr - 1);
+
+        return root;
+
+    }
+
+    //2
     public TreeNode buildTree(int[] inorder, int[] postorder) {
         if(inorder == null || inorder.length == 0 || postorder == null || postorder.length == 0){
             return null;

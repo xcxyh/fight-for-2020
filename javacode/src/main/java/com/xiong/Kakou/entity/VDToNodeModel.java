@@ -16,34 +16,7 @@ public class VDToNodeModel {
     private String xqbh;
     private String latitude;
     private String longitude;
-
-    @Override
-    public String toString() {
-        return "VDToNodeModel{" +
-                "FID=" + FID +
-                ", vd='" + vd + '\'' +
-                ", node='" + node + '\'' +
-                ", xqbh='" + xqbh + '\'' +
-                ", latitude='" + latitude + '\'' +
-                ", longitude='" + longitude + '\'' +
-                '}';
-    }
-
-    public String getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
-
-    public String getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
-    }
+    private String id_link;
 
     public Integer getFID() {
         return FID;
@@ -75,5 +48,42 @@ public class VDToNodeModel {
 
     public void setXqbh(String xqbh) {
         this.xqbh = xqbh;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getId_link() {
+        return id_link;
+    }
+
+    public void setId_link(String id_link) {
+        this.id_link = id_link;
+    }
+
+    @Override
+    public String toString() {
+        return "VDToNodeModel{" +
+                "FID=" + FID +
+                ", vd='" + vd + '\'' +
+                ", node='" + node + '\'' +
+                ", xqbh='" + xqbh + '\'' +
+                ", latitude='" + latitude + '\'' +
+                ", longitude='" + longitude + '\'' +
+                ", id_link='" + id_link + '\'' +
+                '}';
     }
 }
