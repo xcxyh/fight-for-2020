@@ -23,8 +23,88 @@ public class NycDataProcess {
 
 
     public static void main(String[] args) throws Exception {
-        extractOD();
+        extractOD_1day();
     }
+
+    private static void extractOD_1day() throws Exception {
+        String filePath = "F:\\1毕业论文相关\\论文实验\\OD矩阵预测\\nyc实验\\nyc_od\\";
+
+        Date curTime = DateUtils.strToDate("2016-01-19 00:00:00", format);
+        Date end = DateUtils.strToDate("2016-07-00 00:00:00", format);
+        List<String[]> list = new ArrayList<>();
+
+        while (curTime.compareTo(end) < 0) {
+
+            Date nextTime = DateUtils.addOrSubDayByDate(curTime, 1);
+
+            String startTime = DateUtils.dateToStr(curTime, format);
+            String endTime;
+            String timeStramp = startTime.substring(0, 10);
+            endTime = DateUtils.dateToStr(DateUtils.addOrSubDayByDateStr(startTime, 1, format), format);
+
+            // matrix 52 * 52
+            for (int j = 1; j <= 52; j++) {
+                for (int k = 1; k <= 52; k++) {
+                    NycTaxiModel model = new NycTaxiModel(startTime, endTime, j, k);
+
+                    int count = service.selectCountByTime(model);
+
+                    list.add(new String[]{j + "", k + "", timeStramp, count + ""});
+
+                }
+            }
+
+            System.out.println("od 信息：" + DateUtils.dateToStr(curTime, format) + " 生成完毕");
+            curTime = nextTime;
+
+        }
+
+        CSVUtil.createCSV(list, filePath + "nyc_steps_1day_all.csv", new String[]{"from", "to", "time_gap", "count"});
+        System.out.println("写入成功");
+
+
+    }
+
+
+    private static void extractOD_1hour() throws Exception {
+        String filePath = "F:\\1毕业论文相关\\论文实验\\OD矩阵预测\\nyc实验\\nyc_od\\";
+
+        Date curTime = DateUtils.strToDate("2016-01-19 00:00:00", format);
+        Date end = DateUtils.strToDate("2016-02-20 00:00:00", format);
+        List<String[]> list = new ArrayList<>();
+
+        while (curTime.compareTo(end) < 0) {
+
+            Date nextTime = DateUtils.addOrSubHourByDate(curTime, 1);
+
+            String startTime = DateUtils.dateToStr(curTime, format);
+            String endTime;
+
+            endTime = DateUtils.dateToStr(DateUtils.addOrSubHourByDateStr(startTime, 1, format), format);
+
+            // matrix 52 * 52
+            for (int j = 1; j <= 52; j++) {
+                for (int k = 1; k <= 52; k++) {
+                    NycTaxiModel model = new NycTaxiModel(startTime, endTime, j, k);
+
+                    int count = service.selectCountByTime(model);
+
+                    list.add(new String[]{j + "", k + "", startTime, count + ""});
+
+                }
+            }
+
+            System.out.println("od 信息：" + DateUtils.dateToStr(curTime, format) + " 生成完毕");
+            curTime = nextTime;
+
+        }
+
+        CSVUtil.createCSV(list, filePath + "nyc_steps_1hour_1month.csv", new String[]{"from", "to", "time_gap", "count"});
+        System.out.println("写入成功");
+
+
+    }
+
 
     private static void extractOD() throws Exception {
 
@@ -38,7 +118,7 @@ public class NycDataProcess {
         String filePath = "F:\\1毕业论文相关\\论文实验\\OD矩阵预测\\nyc实验\\nyc_od\\";
 
         Date curTime = DateUtils.strToDate("2016-01-19 00:00:00", format);
-        Date end = DateUtils.strToDate("2016-02-20 00:00:00", format);
+        Date end = DateUtils.strToDate("2016-07-00 00:00:00", format);
 
         while (curTime.compareTo(end) < 0) {
 
@@ -48,7 +128,7 @@ public class NycDataProcess {
             // String[] name = {"00_07", "07_09","09_13","13_17","17_20","20_24"};
             String startTime = DateUtils.dateToStr(curTime, format);
             String endTime;
-            String timegap = startTime.substring(0,10);
+            String timegap = startTime.substring(0, 10);
 
             for (int i = 0; i < arr.length; i++) {
                 List<String[]> list = new ArrayList<>();
@@ -92,11 +172,10 @@ public class NycDataProcess {
                 startTime = endTime;
 
             }
-            System.out.println("od 信息：" + DateUtils.dateToStr(curTime,format) +" 生成完毕");
+            System.out.println("od 信息：" + DateUtils.dateToStr(curTime, format) + " 生成完毕");
             curTime = nextTime;
 
         }
-
 
 
         CSVUtil.createCSV(list00_07, filePath + "nyc00_07.csv", new String[]{"from", "to", "time_gap", "count"});

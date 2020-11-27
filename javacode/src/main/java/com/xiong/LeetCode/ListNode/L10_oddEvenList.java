@@ -18,6 +18,32 @@ import com.xiong.ListNode;
  * @version: $
  */
 public class L10_oddEvenList {
+
+    public ListNode oddEvenList1(ListNode head) {
+        if (head == null || head.next == null){
+            return head;
+        }
+
+        ListNode odd = head;
+        ListNode oddHead = head;
+        ListNode even = head.next;
+        ListNode evenHead = head.next;
+
+        while (even != null && even.next != null){
+            odd.next = even.next;
+            odd = odd.next;
+            even.next = odd.next;
+            even = even.next;
+        }
+
+        odd.next = evenHead;
+
+        return oddHead;
+
+
+    }
+
+
     /**
      * @author: xiongcong
      * @Date: 2020/3/3 15:33

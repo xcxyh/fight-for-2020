@@ -1,7 +1,6 @@
 package com.xiong.kotlin.leet
 
 import java.util.*
-import kotlin.test.currentStackTrace
 
 class Leet18_fourSum {
 

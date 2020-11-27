@@ -13,7 +13,7 @@
     
     <select id="selectCountByTime" resultType="Integer" parameterType="com.xiong.Kakou.entity.NycTaxiModel">
 
-        SELECT count(*) from nyc_od_onemonth
+        SELECT count(*) from nyc_od_6month
         where pickup_datetime BETWEEN #{startTime} and #{endTime}
           and origin = #{origin} and dist= #{dist}
     </select>

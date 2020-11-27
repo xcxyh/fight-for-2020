@@ -9,6 +9,45 @@ package com.xiong.LeetCode.ArrayProblems;
  */
 public class Leet31_nextPermutation {
 
+    // 官方
+    public void nextPermutation1(int[] nums) {
+        if (nums == null || nums.length == 0){
+            return;
+        }
+        int n = nums.length;
+        int i = n - 2;
+        // 从后向前查找
+        while (i >=0 && nums[i] >= nums[i + 1]) {
+            i--;
+        }
+        if (i >=0){
+            int j = n - 1;
+            while (j > i && nums[j] <= nums[i]){
+                j--;
+            }
+            //交换 i 和 j 位置的元素
+            int t = nums[j];
+            nums[j] = nums[i];
+            nums[i] = t;
+        }
+        //翻转 j+1 , n
+        reverse(nums, i + 1, n - 1);
+
+    }
+    private void reverse(int[] nums, int start, int end) {
+        while( start < end){
+            int t = nums[start];
+            nums[start] = nums[end];
+            nums[end] = t;
+            start++;
+            end--;
+        }
+    }
+
+
+
+
+
     public void nextPermutation(int[] nums) {
         int n = nums.length;
         for(int i = n - 1; i > 0; i--){
