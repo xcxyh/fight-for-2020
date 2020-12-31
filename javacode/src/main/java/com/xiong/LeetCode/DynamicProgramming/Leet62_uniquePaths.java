@@ -7,7 +7,7 @@ package com.xiong.LeetCode.DynamicProgramming;
  * @modified By：
  * @version: $
  */
-public class Leet62_uniquePath {
+public class Leet62_uniquePaths {
 
 
     public int uniquePaths(int m, int n) {

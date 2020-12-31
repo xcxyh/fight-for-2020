@@ -30,19 +30,22 @@ public class S6_isIsomorphic {
      * 输出: true
      */
     public static boolean isIsomorphic(String s, String t) {
-        int[] s_arr = new int[256];
-        int[] t_arr = new int[256];
-        for (int i = 0; i < s.length(); i++) {
-            char sc = s.charAt(i);
-            char tc = t.charAt(i);
-            if (s_arr[sc] != t_arr[tc]){ // ???
+        int[] sc = new int[256];
+        int[] tc = new int[256];
+
+        for (int i = 0; i < s.length(); i++){
+            char c1 = s.charAt(i);
+            char c2 = t.charAt(i);
+
+            //上一轮中 分别所映射的值不等
+            if (sc[c1] != tc[c2]){
                 return false;
             }
-            s_arr[sc] = i + 1;
-            t_arr[tc] = i + 1;
+            // 将不同的字符映射到相同的值 ，这个值为 当前下标 + 1
+            sc[c1] = i + 1;
+            tc[c2] = i + 1;
         }
         return true;
-
     }
 
 }
