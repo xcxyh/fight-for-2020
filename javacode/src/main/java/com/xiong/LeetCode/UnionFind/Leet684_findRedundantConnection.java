@@ -9,7 +9,42 @@ package com.xiong.LeetCode.UnionFind;
  */
 public class Leet684_findRedundantConnection {
 
+
     public int[] findRedundantConnection(int[][] edges) {
+
+        int n = edges.length;
+        int[] f= new int[n + 1];
+
+        for (int i = 0;i < n; i++) {
+            f[i] = i;
+        }
+
+        for (int[] edge : edges) {
+            int p = edge[0];
+            int q = edge[1];
+            int fp = find(f, p);
+            int fq = find(f, q);
+            if (fp != fq) {
+                f[fp] = fq;
+            } else {
+                return edge;
+            }
+        }
+
+        return new int[]{};
+    }
+
+    private int find(int[] f, int x) {
+        while (f[x] != x) {
+            f[x] = f[f[x]];
+            x = f[x];
+        }
+
+        return f[x];
+    }
+
+
+    public int[] findRedundantConnection1(int[][] edges) {
 
 
         int n = edges.length;

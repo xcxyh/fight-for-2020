@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiong.Kakou.dao.FuseLinkMapper">
+
+    <select id="selectLinkByID" parameterType="String" resultType="com.xiong.Kakou.entity.FuseLinkModel">
+
+        SELECT ID_Link, StartTime, VehicleCount
+        from `flow_14394_real_updown27-04` where ID_Link = #{ID_Link} order  by  StartTime;
+
+    </select>
+
+
+    <select id="selectValByModel" parameterType="com.xiong.Kakou.entity.FuseLinkModel" resultType="String">
+
+        SELECT VehicleCount
+        from `flow_14394_real_updown27-04` where ID_Link = #{ID_Link} and StartTime = #{StartTime};
+
+    </select>
+
+    <insert id="instertIntoNew" parameterType="com.xiong.Kakou.entity.FuseLinkModel">
+
+        INSERT into `flow_14394_real_updown20-26`
+            (ID_Link, StartTime, VehicleCount)
+        VALUES
+        (#{ID_Link}, #{StartTime}, #{VehicleCount})
+
+    </insert>
+
+</mapper>

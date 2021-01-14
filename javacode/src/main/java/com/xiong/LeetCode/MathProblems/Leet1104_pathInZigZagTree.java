@@ -28,7 +28,7 @@ public class Leet1104_pathInZigZagTree {
             list.add(0, uplabel);
             label = uplabel;
         }
-
         return list;
     }
+
 }
