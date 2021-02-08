@@ -45,7 +45,7 @@ public class RegexValidTest {
         }
 
         if (RegexValidUtil.check(user2)){ // 不通过 抛异常!!
-            System.out.println(user2 + "正则校验通过");
+            System.out.println(user2 + "正则校验不通过");
         }
 
     }
