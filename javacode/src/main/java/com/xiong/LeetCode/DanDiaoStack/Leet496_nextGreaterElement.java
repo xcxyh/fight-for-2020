@@ -1,8 +1,6 @@
 package com.xiong.LeetCode.DanDiaoStack;
 
-import java.util.ArrayDeque;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author ：xiongcong
@@ -12,6 +10,39 @@ import java.util.Map;
  * @version: $
  */
 public class Leet496_nextGreaterElement {
+
+
+    public int[] nextGreaterElement2(int[] nums1, int[] nums2) {
+
+        int n = nums2.length;
+
+        Stack<Integer> stack = new Stack<>();
+
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < n; i++) {
+            map.put(nums2[i], i);
+        }
+
+        int[] next = new int[n];
+        Arrays.fill(next, -1);
+        for (int i = 0;  i< n; i++) {
+
+            while (!stack.isEmpty() && nums2[stack.peek()] < nums2[i]) {
+                next[stack.pop()] = nums2[i];
+            }
+
+            stack.push(i);
+        }
+
+        for (int i = 0; i < nums1.length; i++) {
+
+            nums1[i] = next[map.get(nums1[i])];
+        }
+
+        return nums1;
+    }
+
 
     /**
      // 单调栈的通用写法 ：

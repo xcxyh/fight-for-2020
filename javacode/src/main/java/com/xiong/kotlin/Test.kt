@@ -1,6 +1,13 @@
 package com.xiong.kotlin
 
 class Test {
+    // 函数和 属性重名的话  使用  Test::post 这种 成员引用会报错
+    val post1: String = "haha"
+
+    fun post() {
+        println(post1)
+    }
+
     companion object { //我是静态块
         /**
         这里面定义的静态变量跟静态方法，类似java的：static
@@ -42,7 +49,17 @@ fun forTest() {
 }
 
 fun main() {
-    forTest()
+
+    val test = Test()
+    // 使用 类 名 引用  要传入一个实例作为参数
+    val post2 = Test::post
+    // 不传一个实例参数， 报错
+    post2(test)
+
+    // 绑定应用  直接使用实例 引用
+    val post1 = Test()::post
+    post1()
+
 }
 
 

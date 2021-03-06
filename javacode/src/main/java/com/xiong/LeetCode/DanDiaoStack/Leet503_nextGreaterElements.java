@@ -1,4 +1,4 @@
-package com.xiong.LeetCode.DFSandBFS;
+package com.xiong.LeetCode.DanDiaoStack;
 
 import java.util.Arrays;
 import java.util.Stack;
@@ -17,11 +17,37 @@ import java.util.Stack;
  * @modified By：
  * @version: $
  */
-public class S6_nextGreaterElements {
+public class Leet503_nextGreaterElements {
 
     public static void main(String[] args) {
-        System.out.println(Arrays.toString(new S6_nextGreaterElements().nextGreaterElements(new int[]{1, 2, 1})));
+        System.out.println(Arrays.toString(new Leet503_nextGreaterElements().nextGreaterElements(new int[]{1, 2, 1})));
     }
+
+    // 循环数组处理方式：遍历原数组两倍长度，下标 i % len
+    // 单调栈：  单调递减栈找下一个最大元素， 让下标入栈 记录下之前的元素位置
+    public int[] nextGreaterElements_2(int[] nums) {
+        int n = nums.length;
+
+        Stack<Integer> stack = new Stack<>();
+        int[] ans = new int[n];
+
+        // init
+        Arrays.fill(ans, -1);
+        for (int i = 0; i < n * 2; i++) {
+            int curNum = nums[i % n];
+            while (!stack.isEmpty() && nums[stack.peek()] < curNum) {
+                ans[stack.pop()] = curNum;
+            }
+
+            if (i < n) {
+                stack.push(i);
+            }
+
+        }
+
+        return ans;
+    }
+
 
     /**
      *  @author: xiongcong
