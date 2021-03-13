@@ -19,14 +19,15 @@ public class Leet224_calculate {
 
     //执行用时：7 ms, 在所有 Java 提交中击败了95.37%的用户
     //内存消耗：39.7 MB, 在所有 Java 提交中击败了89.21%的用户
-
+    //----------------------
+    private int i = 0;
+    //----------------------
     public int calculate(String s) {
 
         return calculateHelp(s);
 
     }
-    // 全局变量
-    private int i = 0;
+
     private int calculateHelp(String s){
         Deque<Integer> stack  = new ArrayDeque<>();
         int n  = s.length();
@@ -35,13 +36,13 @@ public class Leet224_calculate {
 
         while(i < n) {
             char c = s.charAt(i);
-
+            //----------------------
             if (c == '(') {
-                // 这里要 i++ 要越过这个 左括号
+                // 这里要 i++ 要越过这个 左括号， 不然直接爆栈
                 i++;
                 num = calculateHelp(s);
             }
-
+            //----------------------
             if (Character.isDigit(c)){
                 num = num* 10 + (c - '0');
             }
@@ -66,13 +67,16 @@ public class Leet224_calculate {
                     default:
                         break;
                 }
-                sign = c;
-                // 重置
-                num = 0;
+
+                //----------------------
                 // 遇到右括号 弹出
                 if (c == ')') {
                     break;
                 }
+                //----------------------
+                sign = c;
+                // 重置
+                num = 0;
             }
 
             i++;
