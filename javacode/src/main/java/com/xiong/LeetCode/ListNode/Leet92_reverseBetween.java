@@ -11,6 +11,48 @@ import com.xiong.ListNode;
  */
 public class Leet92_reverseBetween {
 
+    public ListNode reverseBetween1(ListNode head, int left, int right) {
+        if (head == null) {
+            return null;
+        }
+
+        ListNode cur = head;
+        ListNode pre = null;
+
+        while (left > 1) {
+            pre = cur;
+            cur = cur.next;
+            left--;
+            right--;
+        }
+
+        ListNode con = pre;
+        ListNode tail = cur;
+
+        while (right-- > 0) {
+
+            ListNode next = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = next;
+
+        }
+
+        if (con == null) {
+            head = pre;
+        }else {
+            con.next = pre;
+        }
+
+
+
+        tail.next = cur;
+
+        return head;
+
+    }
+
+
     public ListNode reverseBetween_diedai(ListNode head, int m, int n) {
         if (head == null || head.next == null){
             return head;

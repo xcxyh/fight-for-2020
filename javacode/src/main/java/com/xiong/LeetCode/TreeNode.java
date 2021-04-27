@@ -1,9 +1,7 @@
 package com.xiong.LeetCode;
 
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * @author ：xiongcong
@@ -68,6 +66,35 @@ public class TreeNode {
         iterateMediumOrder(node.left);
         operate(node);
         iterateMediumOrder(node.right);
+
+    }
+
+    /**
+     *  @author: xiongcong
+     *  @Date: 2021/4/13 10:28
+     *  @Description: 中序遍历非递归
+     */
+    public List<Integer> inorderTraversal(TreeNode root) {
+
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        List<Integer> list = new ArrayList<>();
+        TreeNode cur = root;
+
+        while (cur != null || !stack.isEmpty()) {
+
+            while (cur != null) {
+                stack.push(cur);
+                cur = cur.left;
+            }
+
+            TreeNode temp = stack.pop();
+            list.add(temp.val);
+
+            cur = temp.right;
+
+        }
+
+        return list;
 
     }
 

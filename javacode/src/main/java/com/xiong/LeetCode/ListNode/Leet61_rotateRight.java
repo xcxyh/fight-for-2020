@@ -24,6 +24,55 @@ public class Leet61_rotateRight {
 
         System.out.println(rotateRight(l1, 2));
     }
+
+    public ListNode rotateRightNew(ListNode head, int k) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        int n = 0;
+
+        ListNode cur = head;
+
+        while (cur != null) {
+            cur = cur.next;
+            n++;
+        }
+        k = k % n;
+
+        int i = n - k;
+        cur = head;
+        while (i-- > 1) {
+            cur = cur.next;
+        }
+
+        ListNode sec = cur.next;
+
+        ListNode newFirst = reverse(head, sec);
+        ListNode newSec = reverse(sec, null);
+
+        head.next = newSec;
+
+        return reverse(newFirst, null);
+    }
+
+    private ListNode reverse(ListNode head, ListNode tail){
+
+        ListNode pre = null;
+
+        while (head != tail) {
+            ListNode next = head.next;
+            head.next = pre;
+            pre = head;
+            head = next;
+        }
+
+        return pre;
+    }
+
+
+
+
     //ac
     // 先翻转前半部分 再翻转后半部分  连接之后  整体翻转 即可
     // 注意 k > size 的情况   应对 k % size 取余

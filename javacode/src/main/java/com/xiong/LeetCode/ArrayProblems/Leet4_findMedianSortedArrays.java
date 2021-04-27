@@ -11,20 +11,21 @@ public class Leet4_findMedianSortedArrays {
 
     // 时间 O(log(m+n)) 空间 不考虑 递归栈  O(1)
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        int totalLen = nums1.length + nums2.length;
+        // 折半删除的 二分方法 log(m + n)
+        int len = nums1.length + nums2.length;
 
-        if (totalLen % 2 == 0) {
-            int left = find(nums1, 0, nums2, 0 , totalLen / 2);
-            int right = find(nums1, 0, nums2, 0 , totalLen / 2  + 1);
+        if (len % 2 == 0) {
+            int left = find(nums1, 0, nums2, 0, len / 2);
+            int right = find(nums1, 0, nums2, 0, len / 2 + 1);
             return (left + right) / 2.0;
-        }else{
-            return find(nums1, 0, nums2, 0 , totalLen / 2 + 1);
+        } else {
+            return find(nums1, 0, nums2, 0, len / 2 + 1);
         }
-
     }
 
-    private int find(int[] nums1,int i, int[] nums2, int j, int k) {
-        // 保证 nums2 一定 长于 nums1
+    // 找这两个正序数组分别从下标i，j开始的组成的正序数组的 第 k 小的数
+    private int find(int[] nums1, int i, int[] nums2, int j, int k) {
+        // 保证 len1 - i 一定 长于 len2 - j
         if (nums1.length - i > nums2.length - j) {
             return find(nums2, j, nums1, i, k);
         }
@@ -37,15 +38,15 @@ public class Leet4_findMedianSortedArrays {
             return Math.min(nums1[i], nums2[j]);
         }
 
-        int si = Math.min(nums1.length, i + k / 2); int sj = j + k - k / 2;
+        // 比较 各自 k / 2 处的 元素大小
+        int si = Math.min(nums1.length, i + k / 2);
+        int sj = j + k - k / 2;  // k - k / 2 不能写成 k / 2
 
-        if (nums1[si - 1] > nums2[sj - 1]){
-            // k - (sj - j) , k 要减去 删除的元素的个数
-            return find(nums1, i, nums2, sj, k - (sj - j));
-        }else{
+        if (nums1[si - 1] > nums2[sj - 1]) {
+            return find(nums1, i, nums2, sj, k - (sj - j));  // k - (sj - j) , k 要减去 删除的元素的个数
+        }else {
             return find(nums1, si, nums2, j, k - (si - i));
         }
-
     }
 
 

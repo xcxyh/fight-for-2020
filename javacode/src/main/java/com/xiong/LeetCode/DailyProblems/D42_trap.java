@@ -14,6 +14,32 @@ public class D42_trap {
 
     }
 
+    public int traps(int[] height) {
+        int n = height.length;
+
+        int[] ldp = new int[n];
+        int[] rdp = new int[n];
+
+        for (int i = 1; i < n; i++) {
+            ldp[i] = Math.max(ldp[i - 1], height[i - 1]);
+        }
+        for (int i = n - 2; i >= 0; i--) {
+            rdp[i] = Math.max(rdp[i + 1], height[i + 1]);
+        }
+        int ans = 0;
+        for (int i = 0; i < n; i++) {
+            int temp = Math.min(ldp[i], rdp[i]) - height[i];
+
+            if (temp < 0) {
+                temp = 0;
+            }
+
+            ans += temp;
+        }
+
+        return ans;
+    }
+
     /**
      * @author: xiongcong
      * @Date: 2020/4/4 10:56

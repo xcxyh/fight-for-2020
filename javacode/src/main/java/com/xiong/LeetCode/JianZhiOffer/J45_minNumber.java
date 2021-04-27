@@ -1,11 +1,12 @@
 package com.xiong.LeetCode.JianZhiOffer;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 /**
  * @author ：xiongcong
  * @date ：Created in 2020/6/5 17:00
- * @description：
+ * @description：  跟  leet179 一致
  * @modified By：
  * @version: $
  */
@@ -23,7 +24,7 @@ public class J45_minNumber {
         for(int i = 0; i < n ; i++){
             strs[i] = String.valueOf(nums[i]);
         }
-
+        Comparator<String> comparator =  (a, b) -> (b+a).compareTo(a+b);
         //按照 规则  a + b compareTo  b + a 进行排序
         Arrays.sort(strs, (a, b) -> (a + b).compareTo( b + a));
 

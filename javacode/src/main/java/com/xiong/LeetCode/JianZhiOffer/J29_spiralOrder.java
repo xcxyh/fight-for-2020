@@ -32,6 +32,7 @@ public class J29_spiralOrder {
 
         int rs = 0, re = rows -1, cs = 0, ce = cols - 1;
 
+        // 这两个判断都不能省， 虽然同步递减， 但是matrix 不是正方形
         while (rs <= re && cs <= ce) {
 
             // right

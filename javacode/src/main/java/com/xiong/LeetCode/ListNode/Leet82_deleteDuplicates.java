@@ -5,17 +5,34 @@ import com.xiong.ListNode;
 /**
  * @author ：xiongcong
  * @date ：Created in 2020/6/25 17:06
- * @description： 82. 删除排序链表中的重复元素 II, 三指针法  ， pcur + left + right
+ * @description： 82. 删除排序链表中的重复元素 II, 递归，，，，或者  三指针法  ， pcur + left + right
  * @modified By：
  * @version: $
  */
 public class Leet82_deleteDuplicates {
 
-
     public static void main(String[] args) {
         ListNode head = ListNode.generateListNodeFromArr(new int[] {1,1,2,2,3,4});
 
         System.out.println(deleteDuplicates(head));
+    }
+
+    public ListNode deleteDuplicates_dg(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        if (head.val == head.next.val) {
+            while (head.next != null && head.val == head.next.val) {
+                head = head.next;
+            }
+            // 与 83 唯一的区别
+            return deleteDuplicates_dg(head.next);
+        }else {
+            head.next = deleteDuplicates_dg(head.next);
+
+            return head;
+        }
     }
 
     public static ListNode deleteDuplicates(ListNode head) {

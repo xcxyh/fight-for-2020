@@ -40,7 +40,7 @@ public class Trie {
         TrieNode cur = root;
         for(int i = 0 ; i < word.length(); i++){
             char c = word.charAt(i);
-
+            //   当前位置中 node 为 null 时 才要新建
             if (!cur.containsKey(c)){
                 cur.put(c, new TrieNode());
             }
