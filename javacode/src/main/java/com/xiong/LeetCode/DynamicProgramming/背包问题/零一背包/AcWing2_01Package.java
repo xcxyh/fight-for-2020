@@ -1,11 +1,11 @@
-package com.xiong.LeetCode.DynamicProgramming;
+package com.xiong.LeetCode.DynamicProgramming.背包问题.零一背包;
 
 import java.util.Scanner;
 
 /**
  * @author ：xiongcong
  * @date ：Created in 2020/4/19 18:34
- * @description：   AcWing02   01 背包问题
+ * @description：   AcWing02   01 背包问题   Leet416. 分割等和子集 Leet474. 一和零 Leet494. 目标和
  * @modified By：
  * @version: $
  */

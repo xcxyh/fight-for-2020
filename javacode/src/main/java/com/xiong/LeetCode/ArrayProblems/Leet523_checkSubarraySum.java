@@ -1,5 +1,8 @@
 package com.xiong.LeetCode.ArrayProblems;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author ：xiongcong
  * @date ：Created in 2020/5/15 11:19
@@ -9,7 +12,29 @@ package com.xiong.LeetCode.ArrayProblems;
  */
 public class Leet523_checkSubarraySum {
 
+
     public boolean checkSubarraySum(int[] nums, int k) {
+        Map<Integer, Integer> map = new HashMap<>();
+        int n = nums.length;
+        map.put(0, -1);
+        int sum = 0;
+        for (int i = 0; i < n; i++) {
+            sum += nums[i];
+            if (!map.containsKey(sum % k)) {
+                map.put(sum % k, i);
+            }else {
+                int preIndex = map.get(sum % k);
+                if (i - preIndex > 1) {
+                    return true;
+                }
+            }
+
+        }
+        return false;
+
+    }
+
+    public boolean checkSubarraySum1(int[] nums, int k) {
 
         //前缀和
         int len = nums.length;

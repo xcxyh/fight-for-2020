@@ -1,7 +1,15 @@
-package com.xiong.LeetCode.DynamicProgramming;
+package com.xiong.LeetCode.DynamicProgramming.背包问题.完全背包;
 
 import java.util.LinkedList;
 import java.util.Queue;
+
+/**
+ * LeetCode 上的完全背包问题
+ * 279. 完全平方数
+ * 322. 零钱兑换
+ * 518. 零钱兑换II
+ * 1449. 数位成本和为目标值的最大数字
+ */
 
 /**
  * @author ：xiongcong
@@ -22,6 +30,42 @@ public class Leet279_numSquares {
     public static void main(String[] args) {
         System.out.println(numSquares_bfs(4));
     }
+
+    /**
+     * @author: xiongcong
+     * @Date: 2020/4/23 15:41
+     * @Description: 转化为 完全背包问题 使用 dp 求解
+     */
+    public int numSquares_dp(int n) {
+        if (n <= 1) {
+            return n;
+        }
+
+        int max = 1;
+
+        while (max * max <= n) {
+            max++;
+        }
+
+        //dp[i][j] 表示 使用前 i 个完全平方数表示 j 最少 的个数
+        //dp[i][j] = min (dp[i-1][j], dp[i-1][j- i^2]+1,dp[i-1][j- 2*i^2]+ 2,....)
+        //完全背包问题
+        int[][] dp = new int[max + 1][n + 1];
+        for (int i = 0; i <= n; i++) {
+            dp[1][i] = i;
+        }
+        for (int i = 2; i < max; i++) {
+            for (int j = 0; j <= n; j++) {
+                dp[i][j] = dp[i - 1][j];
+                if (j >= i * i) {
+                    dp[i][j] = Math.min(dp[i][j], dp[i][j - i * i] + 1);
+                }
+
+            }
+        }
+        return dp[max - 1][n];
+    }
+
 
 
     public int numSquares(int n) {
@@ -54,42 +98,6 @@ public class Leet279_numSquares {
 
         return 0;
 
-    }
-
-
-    /**
-     * @author: xiongcong
-     * @Date: 2020/4/23 15:41
-     * @Description: 转化为 完全背包问题 使用 dp 求解
-     */
-    public int numSquares_dp(int n) {
-        if (n <= 1) {
-            return n;
-        }
-
-        int max = 1;
-
-        while (max * max <= n) {
-            max++;
-        }
-
-        //dp[i][j] 表示 使用前 i 个完全平方数表示 j 最少 的个数
-        //dp[i][j] = min (dp[i-1][j], dp[i-1][j- i^2]+1,dp[i-1][j- 2*i^2]+ 2,....)
-        //完全背包问题？
-        int[][] dp = new int[max + 1][n + 1];
-        for (int i = 0; i <= n; i++) {
-            dp[1][i] = i;
-        }
-        for (int i = 2; i < max; i++) {
-            for (int j = 0; j <= n; j++) {
-                dp[i][j] = dp[i - 1][j];
-                if (j >= i * i) {
-                    dp[i][j] = Math.min(dp[i][j], dp[i][j - i * i] + 1);
-                }
-
-            }
-        }
-        return dp[max - 1][n];
     }
 
     /**

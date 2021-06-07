@@ -1,4 +1,4 @@
-package com.xiong.LeetCode.DynamicProgramming;
+package com.xiong.LeetCode.DynamicProgramming.背包问题.完全背包;
 
 /**
  * @author ：xiongcong

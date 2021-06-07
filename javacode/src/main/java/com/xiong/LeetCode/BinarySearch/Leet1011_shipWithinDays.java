@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * @author ：xiongcong
  * @date ：Created in 2021/4/26 10:29
- * @description：  1011. 在 D 天内送达包裹的能力  得到目标值边界（最大，最小），然后在这个边界内二分
+ * @description：  1011. 在 D 天内送达包裹的能力  得到目标值边界（最大，最小），然后在这个边界内二分  Leet1482 相同
  * @modified By：
  * @version: $
  */
